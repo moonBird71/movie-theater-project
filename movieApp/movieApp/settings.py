@@ -81,7 +81,7 @@ DATABASES = {
 	'NAME': 'mydb',
 	'USER': 'remoteUser',
 	'PASSWORD': 'farawayeveryday',
-	'HOST': 'localhost',
+	'HOST': 'ec2-18-219-8-122.us-east-2.compute.amazonaws.com',
 	#Also need to run: python3 manage.py migrate : before restarting apache	
     }
 }

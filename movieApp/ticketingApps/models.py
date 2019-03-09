@@ -46,8 +46,8 @@ class Movie(models.Model):
 
 
 class Movieshowing(models.Model):
-    room_roomnumber = models.ForeignKey('Room', models.DO_NOTHING, db_column='Room_RoomNumber', primary_key=True)  # Field name made lowercase.
-    room_theater_theaterid = models.ForeignKey('Room', models.DO_NOTHING, db_column='Room_Theater_TheaterID')  # Field name made lowercase.
+    room_roomnumber = models.ForeignKey('Room', models.DO_NOTHING, db_column='Room_RoomNumber', primary_key=True, related_name="room_of")  # Field name made lowercase.
+    room_theater_theaterid = models.ForeignKey('Room', models.DO_NOTHING, db_column='Room_Theater_TheaterID', related_name="theater_of")  # Field name made lowercase.
     movie_idmovie = models.ForeignKey(Movie, models.DO_NOTHING, db_column='Movie_idMovie')  # Field name made lowercase.
 
     class Meta:
@@ -80,9 +80,9 @@ class Room(models.Model):
 
 class Seatsbought(models.Model):
     seatnumber = models.CharField(db_column='SeatNumber', max_length=10)  # Field name made lowercase.
-    movieshowing_room_roomnumber = models.ForeignKey(Movieshowing, models.DO_NOTHING, db_column='MovieShowing_Room_RoomNumber', primary_key=True)  # Field name made lowercase.
-    movieshowing_room_theater_theaterid = models.ForeignKey(Movieshowing, models.DO_NOTHING, db_column='MovieShowing_Room_Theater_TheaterID')  # Field name made lowercase.
-    movieshowing_movie_idmovie = models.ForeignKey(Movieshowing, models.DO_NOTHING, db_column='MovieShowing_Movie_idMovie')  # Field name made lowercase.
+    movieshowing_room_roomnumber = models.ForeignKey(Movieshowing, models.DO_NOTHING, db_column='MovieShowing_Room_RoomNumber', primary_key=True, related_name="room_of")  # Field name made lowercase.
+    movieshowing_room_theater_theaterid = models.ForeignKey(Movieshowing, models.DO_NOTHING, db_column='MovieShowing_Room_Theater_TheaterID', related_name="theater_of")  # Field name made lowercase.
+    movieshowing_movie_idmovie = models.ForeignKey(Movieshowing, models.DO_NOTHING, db_column='MovieShowing_Movie_idMovie', related_name="movie_of")  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -104,10 +104,10 @@ class Ticket(models.Model):
     ticketid = models.AutoField(db_column='TicketID', primary_key=True)  # Field name made lowercase.
     order_orderid = models.ForeignKey(Order, models.DO_NOTHING, db_column='Order_OrderID')  # Field name made lowercase.
     user_userid = models.ForeignKey('User', models.DO_NOTHING, db_column='User_UserID')  # Field name made lowercase.
-    seatsbought_movieshowing_room_roomnumber = models.ForeignKey(Seatsbought, models.DO_NOTHING, db_column='SeatsBought_MovieShowing_Room_RoomNumber')  # Field name made lowercase.
-    seatsbought_movieshowing_room_theater_theaterid = models.ForeignKey(Seatsbought, models.DO_NOTHING, db_column='SeatsBought_MovieShowing_Room_Theater_TheaterID')  # Field name made lowercase.
-    seatsbought_movieshowing_movie_idmovie = models.ForeignKey(Seatsbought, models.DO_NOTHING, db_column='SeatsBought_MovieShowing_Movie_idMovie')  # Field name made lowercase.
-    seatsbought_seatnumber = models.ForeignKey(Seatsbought, models.DO_NOTHING, db_column='SeatsBought_SeatNumber')  # Field name made lowercase.
+    seatsbought_movieshowing_room_roomnumber = models.ForeignKey(Seatsbought, models.DO_NOTHING, db_column='SeatsBought_MovieShowing_Room_RoomNumber', related_name="room_of")  # Field name made lowercase.
+    seatsbought_movieshowing_room_theater_theaterid = models.ForeignKey(Seatsbought, models.DO_NOTHING, db_column='SeatsBought_MovieShowing_Room_Theater_TheaterID', related_name="theater_of")  # Field name made lowercase.
+    seatsbought_movieshowing_movie_idmovie = models.ForeignKey(Seatsbought, models.DO_NOTHING, db_column='SeatsBought_MovieShowing_Movie_idMovie', related_name="movie_of")  # Field name made lowercase.
+    seatsbought_seatnumber = models.ForeignKey(Seatsbought, models.DO_NOTHING, db_column='SeatsBought_SeatNumber', related_name="seat_of")  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -116,10 +116,10 @@ class Ticket(models.Model):
 
 class User(models.Model):
     userid = models.AutoField(db_column='UserID', primary_key=True)  # Field name made lowercase.
-    userfirstname = models.CharField(db_column='UserFirstName', max_length=45, blank=True, null=True)  # Field name made lowercase.
-    userlastname = models.CharField(db_column='UserLastName', max_length=45, blank=True, null=True)  # Field name made lowercase.
-    useremail = models.CharField(db_column='UserEmail', max_length=45, blank=True, null=True)  # Field name made lowercase.
-    userphone = models.CharField(db_column='UserPhone', max_length=45, blank=True, null=True)  # Field name made lowercase.
+    userfirstname = models.CharField(db_column='UserFirstName', max_length=45, blank=True, null=True, verbose_name="first name")  # Field name made lowercase.
+    userlastname = models.CharField(db_column='UserLastName', max_length=45, blank=True, null=True, verbose_name="last name")  # Field name made lowercase.
+    useremail = models.CharField(db_column='UserEmail', max_length=45, blank=True, null=True, verbose_name="email")  # Field name made lowercase.
+    userphone = models.CharField(db_column='UserPhone', max_length=45, blank=True, null=True, verbose_name="phone")  # Field name made lowercase.
 
     class Meta:
         managed = False

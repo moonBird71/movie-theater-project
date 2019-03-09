@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '4)7v3j=k#m^@6o8b!t_g@4k(+7-_tpx87ri7@bb(co6c$mlbde'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['ec2-18-219-8-122.us-east-2.compute.amazonaws.com','127.0.0.1']
+ALLOWED_HOSTS = ['ec2-18-219-8-122.us-east-2.compute.amazonaws.com']
 
 
 # Application definition
@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'ticketingApps',
 ]
 
 MIDDLEWARE = [
@@ -76,13 +75,13 @@ WSGI_APPLICATION = 'movieApp.wsgi.application'
 
 DATABASES = {
     'default': {
-        #'ENGINE': 'django.db.backends.sqlite3',
-        #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    	'ENGINE': 'django.db.backends.mysql',
-	'NAME': 'mydb',
-	'USER': 'remoteUser',
-	'PASSWORD': 'farawayeveryday',
-	'HOST': 'ec2-18-219-8-122.us-east-2.compute.amazonaws.com',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    	#'ENGINE': 'django.db/backends.mysql',
+	#'NAME': **Database Name**,
+	#'USER': **User name**,
+	#'PASSWORD': **User password**,
+	#'HOST': 'localhost',
 	#Also need to run: python3 manage.py migrate : before restarting apache	
     }
 }

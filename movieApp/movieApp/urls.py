@@ -19,4 +19,5 @@ from django.urls import include, path
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('helloworld/', include('helloWorld.urls')),
+    path('addTheater/', include('addTheater.urls')),#url pointing to addTheater.urls
 ]

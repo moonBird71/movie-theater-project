@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['ec2-18-219-8-122.us-east-2.compute.amazonaws.com','127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'addTheater.apps.AddtheaterConfig',#reference to addTheater/apps.py
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

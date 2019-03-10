@@ -11,6 +11,7 @@
 <h3> Add New User </h3>
 <form method="post">{% csrf_token %}
     {% bootstrap_form form %}
+    {{ form.as_p }}
     {% buttons %}
     <input type="submit" value="Save">
     {% endbuttons %}

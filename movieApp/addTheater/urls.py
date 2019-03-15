@@ -1,8 +1,7 @@
 from django.urls import path
 
-from . import views
+from addTheater import views
 
 urlpatterns = [
-    #path('', views.index, name='index')
-    path('', views.addTheater, name='addTheater'),#url poining to addTheater view
+        path('', views.AddTheater.as_view(), name='addTheater'),#url poining to addTheater view
 ]

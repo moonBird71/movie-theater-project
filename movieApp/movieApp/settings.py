@@ -38,7 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ticketingApps',
-    'addTheater.apps.AddtheaterConfig'#reference to addTheater/apps.py
+    #'addTheater.apps.AddtheaterConfig',#reference to addTheater/apps.py
+    'addTheater',
+    'bootstrap4',
+
 ]
 
 MIDDLEWARE = [

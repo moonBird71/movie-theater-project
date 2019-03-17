@@ -1,0 +1,9 @@
+<h1> Movie Ticketing </h1>
+<h3> Theater List </h3>
+<ul>
+	{% for theater in theater_list %}
+		<li> {{theater.theaterid}} {{theater.theatername}} {{theater.theateraddress}}</li>
+	{% empty %}
+		<li> No users yet. </li>
+	{% endfor %}
+</ul>

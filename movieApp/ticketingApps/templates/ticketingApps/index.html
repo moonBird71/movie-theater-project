@@ -1,0 +1,16 @@
+{# Load the tag library #}
+{% load bootstrap4 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+<h1> Movie Reservations </h1>
+<h2> Home Page </h2>
+<ul>
+    <li><a href=""> Login </a></li><!--link to Login page-->
+    <li><a href=""> Create Account </a></li><!--link to Add User form-->
+	<li><a href=""> Movie List </a></li><!--link to Showings List page-->
+</ul>

@@ -17,7 +17,7 @@ class Creditcard(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'CreditCard'
+        db_table = 'CreditCard' 
 
 
 class Login(models.Model):
@@ -98,6 +98,12 @@ class Theater(models.Model):
     class Meta:
         managed = False
         db_table = 'Theater'
+		
+	#def __str__(self):	#returns theatername as a string. Placeholder
+		#return self.theatername
+		
+	#def get_absolute_url(self): #returns url to individual theater; need to include in urls.py
+		#return reverse('orderIn:add-theater')#correct format? 
 
 
 class Ticket(models.Model):

@@ -3,15 +3,12 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy, reverse
-from ticketingApps.models import User, Theater
+from ticketingApps.models import User, Theater, Ticket
 from datetime import datetime
 
 #index/home page
 class IndexPage(TemplateView):
     template_name = "ticketingApps/index.html"
-    
-#def index(request):
-    #return render(request, 'index.html', {})
 
 #Add User Page
 class UserCreate(CreateView):
@@ -39,5 +36,15 @@ class TheaterListView(ListView):
 #Add Theater
 class AddTheater(CreateView):
     model = Theater
-    fields = ['ID', 'Address', 'Name']#change to '__all__'?
+    fields = '__all__'
     template_name = "ticketingApps/theater_form.html"
+	
+#Print ticket page
+class PrintTicket(TemplateView):
+    model = Ticket
+    fields = '__all__'
+    template_name = "ticketingApps/print_ticket.html"
+    def ticketprint(request):
+        if request.method == 'GET':#if directed here by another page's GET
+            return render(request, "ticketingApps/print_ticket.html", request.GET)#use input from calling page
+

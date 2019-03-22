@@ -9,8 +9,10 @@
 {% bootstrap_messages %}
 <h1> Movie Reservations </h1>
 <h2> Home Page </h2>
-<ul>
-    <li><a href=""> Login </a></li><!--link to Login page-->
-    <li><a href=""> Create Account </a></li><!--link to Add User form-->
-	<li><a href=""> Movie List </a></li><!--link to Showings List page-->
+<ul><!--add hrefs later -->
+    {% buttons %}
+    <a class="btn btn-login btn-block" href="" role="button"> Login </a><!--link to Login page-->
+    <a class="btn btn-account btn-block" href="" role="button"> Create Account </a><!--link to Add User form-->
+	<a class="btn btn-list btn-block" href="showings/list/" role="button"> Movie List </a><!--link to Showings List page-->
+	{% endbuttons %}
 </ul>

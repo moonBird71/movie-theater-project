@@ -4,6 +4,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy, reverse
 from ticketingApps.models import User, Theater, Ticket, Movieshowing
+from ticketingApps.forms import *
 from datetime import datetime
 
 #index/home page
@@ -28,6 +29,7 @@ class UserList(ListView):
 class TheaterListView(ListView):
     #context_object_name = "theater_list"
     model = Theater
+    form_class=TheaterForm
     paginate_by = 25
     template_name = "ticketingApps/theater_list.html"
     def TheaterList(self):
@@ -36,7 +38,7 @@ class TheaterListView(ListView):
 #Add Theater
 class AddTheater(CreateView):
     model = Theater
-    fields = '__all__'
+    form_class=TheaterForm
     template_name = "ticketingApps/theater_form.html"
 	
 #List of Showings

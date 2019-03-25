@@ -8,10 +8,16 @@
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
 <h1> Movie Ticketing </h1>
+<h3> Search </h3>
+<form action="{% url 'ticketingApps:search-theater' %}" type="get">
+	Theater Name: <input id="name" type="text" name="name">
+	<button id="theater_search_submit" type="submit">Search</button><br>
+</form>
+<br>
 <h3> Theater List </h3>
 <ul>
 	{% for theater in theater_list %}
-		<li> {{theater.theaterid}} {{theater.theatername}} {{theater.theateraddress}}</li>
+		<li> <b>{{theater.theatername}}</b> located at {{theater.theateraddress}}</li>
 	{% empty %}
 		<li> No theaters yet. </li>
 	{% endfor %}

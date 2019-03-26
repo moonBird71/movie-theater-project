@@ -22,7 +22,7 @@ class Creditcard(models.Model):
 
 class Login(models.Model):
     userid = models.ForeignKey('User', models.DO_NOTHING, db_column='UserID', primary_key=True)  # Field name made lowercase.
-    passwordhash = models.CharField(db_column='passwordHash', max_length=64, blank=True, null=True)  # Field name made lowercase.
+    passwordhash = models.CharField(db_column='passwordHash', max_length=256, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -92,8 +92,11 @@ class Seatsbought(models.Model):
 
 class Theater(models.Model):
     theaterid = models.AutoField(db_column='TheaterID', primary_key=True)  # Field name made lowercase.
-    theateraddress = models.CharField(db_column='TheaterAddress', max_length=45, blank=True, null=True)  # Field name made lowercase.
     theatername = models.CharField(db_column='TheaterName', max_length=45, blank=True, null=True)  # Field name made lowercase.
+    theaterstreet = models.CharField(db_column='TheaterStreet', max_length=45, blank=True, null=True)  # Field name made lowercase.
+    theatercity = models.CharField(db_column='TheaterCity', max_length=45, blank=True, null=True)  # Field name made lowercase.
+    theaterstate = models.CharField(db_column='TheaterState', max_length=45, blank=True, null=True)  # Field name made lowercase.
+    theaterzip = models.CharField(db_column='TheaterZip', max_length=45, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False

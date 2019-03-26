@@ -12,5 +12,5 @@ urlpatterns = [
     re_path(r'^showings/list/$', views.ShowingsList.as_view(), name="showings-list"),
     re_path(r'^ticket/print/$', views.PrintTicket.as_view(), name="print-ticket"),
     re_path(r'^theater/search/$',views.TheaterSearchResults.as_view(), name="search-theater"),
-    
+    re_path(r'^room/entry/$', views.AddRoom.as_view(), name ="add-room"),
 ]

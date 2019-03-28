@@ -3,9 +3,10 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy, reverse
-from ticketingApps.models import User, Theater, Ticket, Movieshowing
+from ticketingApps.models import *
 from ticketingApps.forms import *
 from datetime import datetime
+from django.contrib.auth.models import User
 
 #index/home page
 class IndexPage(TemplateView):

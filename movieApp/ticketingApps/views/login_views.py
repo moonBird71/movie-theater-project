@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from django.views.generic import TemplateView
@@ -18,4 +18,10 @@ class Signup(FormView):
         return super().form_valid(form)
 class Welcome(TemplateView):
     template_name='ticketingApps/hello.html'
-        
+
+def login_success(request):
+    if request.user.profile.isemployee:
+        return redirect('/manager/')
+    else:
+        return redirect('ticketingApps:welcome')
+       

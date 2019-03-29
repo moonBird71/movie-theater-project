@@ -16,4 +16,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     re_path(r'^signup/$', views.Signup.as_view(), name='sign-up'),
     re_path(r'^hello/$',views.Welcome.as_view(), name='welcome'),
+    re_path(r'^login_success/$',views.login_success,name='login_success'),
+    re_path(r'^manager/$',views.ManagerLanding.as_view(),name='manager-landing'),
+    re_path(r'^manager/theaters/$',views.ManagedTheaters.as_view(),name='theaters-filtered'),
 ]

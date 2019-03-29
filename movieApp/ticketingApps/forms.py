@@ -7,10 +7,13 @@ from django import forms
 class TheaterForm(ModelForm):
     class Meta:
          model=Theater
-         fields='__all__'
+         fields=['theatername','theaterstreet','theatercity','theaterstate','theaterzip']
          labels={
-             'theateraddress':'Address',
-             'theatername':'Name'
+             'theaterstreet':'Street',
+             'theatername':'Name',
+             'theatercity':'City',
+             'theaterstate':"State",
+             "theaterzip":"Zip code",
          }
 class SignupForm(UserCreationForm):
     isemployee=forms.BooleanField(required=False,label="I am registering as a theater employee")

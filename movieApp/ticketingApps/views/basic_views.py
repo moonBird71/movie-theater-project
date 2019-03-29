@@ -35,12 +35,6 @@ class TheaterListView(ListView):
     template_name = "ticketingApps/theater_list.html"
     def TheaterList(self):
         return Theater.objects.all()
-
-#Add Theater
-class AddTheater(CreateView):
-    model = Theater
-    form_class=TheaterForm
-    template_name = "ticketingApps/theater_form.html"
 	
 #List of Showings
 class ShowingsList(ListView):

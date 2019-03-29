@@ -17,7 +17,7 @@
 <h3> Theater List </h3>
 <ul>
 	{% for theater in theater_list %}
-		<li> <b>{{theater.theatername}}</b> located at {{theater.theateraddress}}</li>
+		<li> <b>{{theater.theatername}}</b> located at {{theater.theaterstreet}} {{theater.theatercity}}, {{theater.theaterstate}}</li>
 	{% empty %}
 		<li> No theaters yet. </li>
 	{% endfor %}

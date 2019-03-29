@@ -1,0 +1,17 @@
+{# Load the tag library #}
+{% load bootstrap4 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+<h1> Movie Reservations </h1>
+<h2> Employee Home Page </h2>
+<ul><!--add hrefs later -->
+    {% buttons %}
+    <a class="btn btn-block" href="{% url 'ticketingApps:theaters-filtered' %}" role="button"> Your Theaters </a>
+    <a class="btn btn-block" href="{% url 'ticketingApps:add-theater' %}" role="button"> Create New Theater </a>
+	{% endbuttons %}
+</ul>

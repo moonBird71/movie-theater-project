@@ -12,7 +12,7 @@
 <ul>
 	{% for movieshowing in movieshowing_list %}<!--add href for layout-->
 	<li><!--pass roomnumber to linked page-->
-		<a class="btn-link" href="" value="{{movieshowing.room_roomnumber}}"> {{movieshowing.room_theater_theaterid}} {{movieshowing.room_roomnumber}} {{movieshowing.movie_idmovie}} </a>
+		<a class="btn-link" href="" value="{{movieshowing.room}}"> {{movieshowing.movie}} {{movieshowing.room}} </a>
 	</li>
 	{% empty %}
 		<li> No showings yet. </li>

@@ -4,6 +4,13 @@ from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
+class ShowingForm(ModelForm):
+    class Meta:
+        model=Movieshowing
+        fields=['room','movie']
+        labels={
+
+        }
 class TheaterForm(ModelForm):
     class Meta:
          model=Theater

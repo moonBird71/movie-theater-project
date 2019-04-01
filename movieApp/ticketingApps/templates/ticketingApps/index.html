@@ -12,7 +12,7 @@
 <ul><!--add hrefs later -->
     {% buttons %}
     <a class="btn btn-login btn-block" href="accounts/login/" role="button"> Login </a><!--link to Login page-->
-    <a class="btn btn-account btn-block" href="" role="button"> Create Account </a><!--link to Add User form-->
+    <a class="btn btn-block" href="{% url 'ticketingApps:sign-up' %}" role="button"> Create Account </a><!--link to Add User form-->
 	<a class="btn btn-list btn-block" href="showings/list/" role="button"> Movie List </a><!--link to Showings List page-->
 	{% endbuttons %}
 </ul>

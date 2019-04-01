@@ -5,6 +5,31 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
 from datetime import datetime
+class SimpleOrder(ModelForm):
+    class Meta:
+        model=Creditcard
+        fields="__all__"
+        labels={
+            'name':"Name",
+            'cardnumber':"Card Number",
+            "verificationcode":"Verification Code",
+            "expiration":"Expiration (use 1 for day if needed)"
+        }
+        widgets={'expiration':forms.SelectDateWidget()}
+    def is_valid(self):
+        ticketsList = []
+        for key in toBuyArray:
+            if(Seatsbought.objects.filter(showing=showingP,seatrow=toBuyArray[key][0], seatcol=toBuyArray[key][1]).count()>0):
+                validSeats = False
+        if validSeats:
+            if self.request.user:
+                Order.objects.create(credit)
+            Order.objects.create()
+            for key in toBuyArray:
+                Seatsbought.objects.create(seatrow=toBuyArray[key][0], seatcol=toBuyArray[key][1], showing=showingP,)
+            
+
+        context['ticketList']=ticketsList
 class AddMovieForm(ModelForm):
     class Meta:
         model=Movie

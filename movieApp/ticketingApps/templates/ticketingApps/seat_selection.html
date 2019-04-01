@@ -4,16 +4,17 @@
     <script src="//unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
     <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
     <script type='text/javascript'>
+        //this is fine even though it complains. IDE doesn't understand js/Django/Vue combo
         var seatsBoughtJ = {{ seatsBought|safe }};
         var seatsPickedJ = {{seatsPicked|safe}};
         var rowsJ = {{numberRows}};
         var colsJ = {{numberCols}};
         var title = "{{showing.movie.movietitle}}";
         var mTime = "{{showing.time}}";
+        var showingId = {{showing.id}}
     </script>
     <div id="vapp">
     <head>
-      <title>Vue Demo #1: The Box App</title>
       <meta charset='utf-8' />
       <link
       type="text/css"
@@ -48,8 +49,12 @@
                 </template>
             </tr>
         </table>
-            <a v-bind:href="url">Buy Tickets </a>
-      </div>
+            <form ref="buyForm" action="{% url 'ticketingApps:order' %}">
+                <input type="hidden" name="toBuy" v-model="this.toBuy">
+                <input type="hidden" name="showingId" v-model="this.showingId">
+                <button type="submit">Buy Tickets</a>
+            </form>
+        </div>
     <!-- Our View App goes at the end of the document -->
     
     
@@ -66,34 +71,27 @@
                 seatsBought: seatsBoughtJ,
                 picked: seatsPickedJ,
                 toBuy: {},
+                showing: showingId,
             },
-            /*mounted: function(){
-                this.movieTitle=title,
-                this.time=mTime,
-                this.numberRows=rowsJ,
-                this.numberCols=colsJ,
-                this.seatsBought=seatsBoughtJ,
-                this.picked=seatsPickedJ,
-            },*/
             methods: {
-                //toggleBox() {
-                  //  this.display == 'redbox' ? this.display = 'greenbox' : this.display = 'redbox'
-               // },
                 seatClick(i,j){
                     if(this.picked[String(j)][String(i)]=="#666666"){
                         //this seat is already bought
                     }else if(this.picked[j][i]=="#0544F0"){
                         this.picked[j][i]="#00F133"
-                        this.toBuy[j*this.numberCols+i]=true
+                        this.toBuy[j*this.numberCols+i]=[j,i]
                     }else{
                         this.picked[j][i]="#0544F0"
-                        this.toBuy[j*this.numberCols+i]=false
+                        delete this.toBuy[j*this.numberCols+i]
                     }
-                }
+                },
+                //submitForm(){
+                  //  this.$refs.buyForm.$el.submit()
+                //}
             },
             computed: {
                 url: function(){
-                    
+
                 }
             }
         });

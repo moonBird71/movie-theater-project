@@ -32,4 +32,15 @@ class SeatSelectionPage(TemplateView):
         context['seatsBought']=json.dumps(seatsBoughtList)
         context['seatsPicked']=json.dumps(seatsPicked)
         return context
+class SimpleOrderPage(TemplateView):
+    template_name='ticketingApps/order.html'
+    def get_context_data(self,*args,**kwargs):
+        context['showingP']=Movieshowing.objects.get(id=self.request.POST['showingId'])
+        toBuyArray = json.loads(self.request.POST['toBuy'])
+        context['toBuy']=toBuyArray
+        ticketsList = []
+        for key in toBuyArray:
+            ticketsList.append(Seatsbought.objects.filter(seatrow=toBuyArray[key][0], seatcol=toBuyArray[key][1]))
+        context['ticketList']=ticketsList
+        return context
 

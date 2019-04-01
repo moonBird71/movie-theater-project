@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from datetime import datetime, timedelta
+from django.utils import timezone
 class Theater(models.Model):
     theaterid = models.AutoField(db_column='TheaterID', primary_key=True)   
     theatername = models.CharField(db_column='TheaterName', max_length=45, blank=True, null=True)   
@@ -74,6 +76,8 @@ class Seatsbought(models.Model):
     seatcol = models.CharField(max_length=10) 
     showing = models.ForeignKey(Movieshowing, models.DO_NOTHING, related_name="showing_of")   
     order = models.ForeignKey(Order, models.DO_NOTHING, related_name="order_of")
+    final = models.BooleanField(default=False)
+    expirationTime = models.DateTimeField(default=timezone.now()+timedelta(minutes=10))
 
 class Ticket(models.Model):
     ticketid = models.AutoField(primary_key=True)   

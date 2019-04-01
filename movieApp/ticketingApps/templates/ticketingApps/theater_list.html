@@ -15,10 +15,16 @@
 </form>
 <br>
 <h3> Theater List </h3>
-<ul>
+<table>
 	{% for theater in theater_list %}
-		<li> <b>{{theater.theatername}}</b> located at {{theater.theaterstreet}} {{theater.theatercity}}, {{theater.theaterstate}}</li>
+		<tr>
+			<th> <b>{{theater.theatername}}</b> located at {{theater.theaterstreet}} {{theater.theatercity}}, {{theater.theaterstate}}</th>
+			<th></th>
+			<th><a href="{%url 'ticketingApps:add-showing' theaterId=theater.theaterid%}">Add Showing</a></th>
+			<th></th>
+			<th><a href="{% url 'ticketingApps:add-room' theaterId=theater.theaterid%}">Add Room</a></th>
+        </tr>
 	{% empty %}
 		<li> No theaters yet. </li>
 	{% endfor %}
-</ul>
+</table>

@@ -10,6 +10,8 @@ from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django import forms
+
 class ManagerLanding(LoginRequiredMixin,UserPassesTestMixin,TemplateView):
     def test_func(self):
         return getattr(self.request.user.profile, "isemployee")
@@ -35,4 +37,27 @@ class AddTheater(LoginRequiredMixin,UserPassesTestMixin,CreateView):
         theater.save()
         self.request.user.profile.theaters.add(theater)
         return super(AddTheater,self).form_valid(form)
-  
+
+#Add Showing
+class AddShowing(LoginRequiredMixin,UserPassesTestMixin,CreateView):
+    model=Movieshowing
+    form_class=AddShowingForm
+    template_name = "ticketingApps/add_showing.html"
+    success_url='/manager/theaters/'
+    def get_form(self,form_class=AddShowingForm):
+        form = super(AddShowing, self).get_form(AddShowingForm)
+        theaterPicked = Theater.objects.get(theaterid=self.kwargs["theaterId"])
+        form.fields['room'].queryset=Room.objects.filter(theater=theaterPicked)
+        return form
+    def test_func(self):
+        return getattr(self.request.user.profile, "isemployee")
+
+class AddRoom(LoginRequiredMixin,UserPassesTestMixin,CreateView):
+    model=Room
+    form_class=AddRoomForm
+    success_url='/manager/theaters/'
+    def form_valid(self,form):
+        form.instance.theater = Theater.objects.get(theaterid=self.kwargs["theaterId"])
+        return super(AddRoom, self).form_valid(form)
+    def test_func(self):
+        return getattr(self.request.user.profile, "isemployee")

@@ -1,0 +1,101 @@
+<DOCTYPE html>
+    <html>
+    <head>
+      <title>Vue Demo #1: The Box App</title>
+      <meta charset='utf-8' />
+      <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        {# Load the tag library #}
+        {% load bootstrap4 %}
+
+        {# Load CSS and JavaScript #}   
+        {% bootstrap_css %}
+
+        {# Display django.contrib.messages as Bootstrap alerts #}
+        {% bootstrap_messages %}
+      <style type="text/css">
+        .box {
+          height: 200px;
+          width: 200px; 
+          text-align: center;
+        }
+        .blue {
+          background-color: blue;
+        }
+        .green {
+          background-color: green;
+        }
+        .gray{
+            background-color: gray;
+        }
+      </style>  
+    </head>
+    <body>
+      <h1>Seat Preview and Selection</h1>
+      <div id="vapp">
+          <table width="75%" border="0" cellpadding="1 px" cellspacing="5 px">
+           <tr>
+                <template v-for="i in numberCols">
+                    <td>
+                        <template v-for="j in numberRows">
+                            <!--<table v-if="seatBoughtYet([i,j])" width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#666666">
+                                <tr>
+                                <td> </td>
+                                </tr>
+                            </table>-->
+                            <table v-on:click="seatClick(i,j)" width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="[[ seatsPicked[i][j] ]]">
+                                <tr>
+                                    <td>
+                                        
+                                    </td>
+                                </tr>
+                            </table>
+                            <!--<colored-box v-if="seatBoughtYet([i,j])" class="gray" />
+                            <template v-else>
+                                <colored-box class="blue" v-s
+                            </template>-->
+                        </template>
+                    </td>
+                </template>
+            </tr>
+        </table>
+        {% buttons %}
+            <a v-bind:href="url">Buy Tickets </a>
+        {% endbuttons %}
+      </div>
+    <!-- Our View App goes at the end of the document -->
+    <script>
+    
+  new Vue({
+      el: '#vapp',
+      delimiters: ['[[', ']]'],
+      data: { 
+       display: 'redbox',
+       movieTitle: {{showing.movie.movieTitle}},
+       time: {{showing.time}},
+       numberRows: {{numberRows}},
+       numberCols: {{numberCols}},
+       seatsBought: {{seatsBought}},
+       picked: {{seatsPicked}},
+       toBuy: {},
+       url: ""
+      },
+      methods: {
+        toggleBox() {
+          this.display == 'redbox' ? this.display = 'greenbox' : this.display = 'redbox'
+        },
+        seatClick(i,j){
+            if(this.picked[i][j]=="#666666"){
+                //this seat is already bought
+            }else if(this.picked[i][j]=="#0544F0"){
+                Vue.set(this.picked[i][j],"#00F133");
+                Vue.set(toBuy[i*this.numberCols+j], true)
+            }else{
+                Vue.set(this.picked[i][j], "#0544F0");
+                Vue.set(toBuy[i*this.numberCols+j],false)
+            }
+        }
+      }
+    })
+    </script>
+    </body>
+    </html>

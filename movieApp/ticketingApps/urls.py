@@ -4,9 +4,6 @@ from ticketingApps import views
 app_name = "ticketingApps"
 urlpatterns = [
     re_path(r'^$', views.IndexPage.as_view(), name="index"),
-    #re_path(r'^$', views.index, name="index"),
-    #re_path(r'^user/entry/$', views.UserCreate.as_view(), name="user-create"),
-    #re_path(r'^user/list/$', views.UserList.as_view(), name="user-list"),
     re_path(r'^theater/list/$', views.TheaterListView.as_view(), name="theater-list"),
     re_path(r'^theater/entry/$', views.AddTheater.as_view(), name="add-theater"),
     re_path(r'^showings/list/$', views.ShowingsList.as_view(), name="showings-list"),
@@ -22,5 +19,7 @@ urlpatterns = [
     re_path(r'^manager/theaters/add_showing/(?P<theaterId>\d+)/$',views.AddShowing.as_view(),name='add-showing'),
     re_path(r'^manager/theaters/(?P<theaterId>\d+)/add_room/$', views.AddRoom.as_view(),name='add-room'),
     re_path(r'^manager/movie/add_movie/$', views.AddMovie.as_view(),name='add-movie'),
+    re_path(r'^showings/(?P<showing>\d+)/order/$', views.SeatSelectionPage.as_view(), name='seat-selection'),
+        
 
 ]

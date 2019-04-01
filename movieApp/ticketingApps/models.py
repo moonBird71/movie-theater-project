@@ -9,7 +9,7 @@ class Theater(models.Model):
     theatercity = models.CharField(db_column='TheaterCity', max_length=45, blank=True, null=True)   
     theaterstate = models.CharField(db_column='TheaterState', max_length=45, blank=True, null=True)   
     theaterzip = models.CharField(db_column='TheaterZip', max_length=45, blank=True, null=True)   
-		
+    price = models.IntegerField(default=10)
 	#def __str__(self):	#returns theatername as a string. Placeholder
 		#return self.theatername
 		
@@ -65,13 +65,8 @@ class Room(models.Model):
 
 class Movieshowing(models.Model):
     room = models.ForeignKey(Room, models.DO_NOTHING, related_name="room_of")   
-    #room_theater_theaterid = models.ForeignKey(Room, models.DO_NOTHING, db_column='Room_Theater_TheaterID', related_name="theater_of")   
     movie = models.ForeignKey(Movie, models.DO_NOTHING)
     time = models.DateTimeField()
-       
-
-    #class Meta:
-        #unique_together = (('room_roomnumber', 'room_theater_theaterid', 'movie_idmovie'),)
 
 
 class Seatsbought(models.Model):
@@ -79,28 +74,7 @@ class Seatsbought(models.Model):
     seatcol = models.CharField(max_length=10) 
     showing = models.ForeignKey(Movieshowing, models.DO_NOTHING, related_name="showing_of")   
     order = models.ForeignKey(Order, models.DO_NOTHING, related_name="order_of")
-    #movieshowing_room_theater_theaterid = models.ForeignKey(Movieshowing, models.DO_NOTHING, db_column='MovieShowing_Room_Theater_TheaterID', related_name="theater_of")   
-    #movieshowing_movie_idmovie = models.ForeignKey(Movieshowing, models.DO_NOTHING, db_column='MovieShowing_Movie_idMovie', related_name="movie_of")   
-
-    #class Meta:
-        #unique_together = (('movieshowing_room_roomnumber', 'movieshowing_room_theater_theaterid', 'movieshowing_movie_idmovie', 'seatnumber'),)
-
-
 
 class Ticket(models.Model):
     ticketid = models.AutoField(primary_key=True)   
     order = models.ForeignKey(Order, models.DO_NOTHING)   
-    #orders already associate tickets with profiles
-    #profile = models.ForeignKey(Profile, models.DO_NOTHING, db_column='Profile_UserID')   
-    #seatsbought_movieshowing_room_roomnumber = models.ForeignKey(Seatsbought, models.DO_NOTHING, db_column='SeatsBought_MovieShowing_Room_RoomNumber', related_name="room_of")   
-    #seatsbought_movieshowing_room_theater_theaterid = models.ForeignKey(Seatsbought, models.DO_NOTHING, db_column='SeatsBought_MovieShowing_Room_Theater_TheaterID', related_name="theater_of")   
-    #seatsbought_movieshowing_movie_idmovie = models.ForeignKey(Seatsbought, models.DO_NOTHING, db_column='SeatsBought_MovieShowing_Movie_idMovie', related_name="movie_of")   
-    #seats = models.ForeignKey(Seatsbought, models.DO_NOTHING, db_column='SeatsBought_SeatNumber', related_name="seat_of")   
-
-
-#class Usertheater(models.Model):
-#    theater_theaterid = models.ForeignKey(Theater, models.DO_NOTHING, db_column='Theater_TheaterID',primary_key=True)
-#    profile_userid = models.ForeignKey(Profile, models.DO_NOTHING, db_column='Profile_UserID')
-
-#    class Meta:
-#        unique_together = (('theater_theaterid','profile_userid'),)

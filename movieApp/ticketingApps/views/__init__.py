@@ -3,3 +3,4 @@ from .theater_views import *
 from .room_views import *
 from .login_views import *
 from .manager_views import *
+from .order_views import *

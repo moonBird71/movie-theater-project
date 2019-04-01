@@ -19,4 +19,7 @@ urlpatterns = [
     re_path(r'^login_success/$',views.login_success,name='login_success'),
     re_path(r'^manager/$',views.ManagerLanding.as_view(),name='manager-landing'),
     re_path(r'^manager/theaters/$',views.ManagedTheaters.as_view(),name='theaters-filtered'),
+    re_path(r'^manager/theaters/add_showing/(?P<theaterId>\d+)/$',views.AddShowing.as_view(),name='add-showing'),
+    re_path(r'^manager/theaters/(?P<theaterId>\d+)/add_room/$', views.AddRoom.as_view(),name='add-room'),
+
 ]

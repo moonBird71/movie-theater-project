@@ -4,13 +4,24 @@ from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-class ShowingForm(ModelForm):
-    class Meta:
-        model=Movieshowing
-        fields=['room','movie']
-        labels={
 
+class AddRoomForm(ModelForm):
+    class Meta:
+        model=Room
+        fields=['roomnumber','rows','columns']
+        labels={
+            'roomnumber':'Room Number',
+            'rows':'Number of Rows of Seats',
+            'columns':"Number of Columns of Seats"
         }
+class RoomForShowingField(forms.ModelChoiceField):
+    def label_from_instance(self,obj):
+        return "Room #%i" % obj.roomnumber
+class AddShowingForm(ModelForm):
+        room = RoomForShowingField(queryset=Room.objects.none())
+        class Meta:
+            model=Movieshowing
+            fields=['room','movie']
 class TheaterForm(ModelForm):
     class Meta:
          model=Theater

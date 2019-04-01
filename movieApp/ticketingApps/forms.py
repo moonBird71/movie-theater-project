@@ -4,7 +4,20 @@ from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-
+from datetime import datetime
+class AddMovieForm(ModelForm):
+    class Meta:
+        model=Movie
+        fields=['movietitle','movieruntime','movierating','moviereleasedate','moviegenre','moviedescription']
+        labels={
+            'movietitle':'Title',
+            'movieruntime':"Runtime (minutes)",
+            'movierating':'MPAA Rating',
+            'moviereleasedate':"Release date",
+            'moviegenre':"Genre",
+            'moviedescription':"Description"
+        }
+        widgets = {'moviereleasedate':forms.SelectDateWidget()}
 class AddRoomForm(ModelForm):
     class Meta:
         model=Room

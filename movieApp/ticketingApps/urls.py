@@ -21,5 +21,6 @@ urlpatterns = [
     re_path(r'^manager/theaters/$',views.ManagedTheaters.as_view(),name='theaters-filtered'),
     re_path(r'^manager/theaters/add_showing/(?P<theaterId>\d+)/$',views.AddShowing.as_view(),name='add-showing'),
     re_path(r'^manager/theaters/(?P<theaterId>\d+)/add_room/$', views.AddRoom.as_view(),name='add-room'),
+    re_path(r'^manager/movie/add_movie/$', views.AddMovie.as_view(),name='add-movie'),
 
 ]

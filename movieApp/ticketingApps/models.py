@@ -47,10 +47,8 @@ class Movie(models.Model):
     movieruntime = models.IntegerField(db_column='MovieRuntime', blank=True, null=True)   
     movierating = models.CharField(db_column='MovieRating', max_length=4, blank=True, null=True)   
     moviereleasedate = models.DateField(db_column='MovieReleaseDate', blank=True, null=True)   
-    moviecol = models.CharField(db_column='Moviecol', max_length=45, blank=True, null=True)   
     moviegenre = models.CharField(db_column='MovieGenre', max_length=45, blank=True, null=True)   
     moviedescription = models.CharField(db_column='MovieDescription', max_length=500, blank=True, null=True)   
-    moviecol1 = models.CharField(db_column='Moviecol1', max_length=45, blank=True, null=True)   
 
 
 

@@ -38,7 +38,6 @@ class AddTheater(LoginRequiredMixin,UserPassesTestMixin,CreateView):
         self.request.user.profile.theaters.add(theater)
         return super(AddTheater,self).form_valid(form)
 
-#Add Showing
 class AddShowing(LoginRequiredMixin,UserPassesTestMixin,CreateView):
     model=Movieshowing
     form_class=AddShowingForm
@@ -59,5 +58,14 @@ class AddRoom(LoginRequiredMixin,UserPassesTestMixin,CreateView):
     def form_valid(self,form):
         form.instance.theater = Theater.objects.get(theaterid=self.kwargs["theaterId"])
         return super(AddRoom, self).form_valid(form)
+    def test_func(self):
+        return getattr(self.request.user.profile, "isemployee")
+
+class AddMovie(LoginRequiredMixin,UserPassesTestMixin,CreateView):
+    model=Movie
+    form_class=AddMovieForm
+    success_url='/manager/theaters/'
+    def get_initial(self):
+        return {'moviereleasedate':datetime.now()}
     def test_func(self):
         return getattr(self.request.user.profile, "isemployee")

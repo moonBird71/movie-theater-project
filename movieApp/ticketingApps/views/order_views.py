@@ -8,6 +8,7 @@ from ticketingApps.forms import *
 from datetime import datetime
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
+import json
 
 class SeatSelectionPage(TemplateView):
     template_name='ticketingApps/seat_selection.html'
@@ -22,16 +23,13 @@ class SeatSelectionPage(TemplateView):
         seatsBoughtList=[]
         seatsPicked=dict()
         for i in range(showingP.room.rows):
-            seatsPicked[i]=dict()
+            seatsPicked[i+1]=dict()
             for j in range(showingP.room.columns):
-                seatsPicked[i][j]="#0544F0"
+                seatsPicked[i+1][j+1]="#0544F0"
         for seat in allSeatsBought:
             seatsBoughtList.append([seat.seatrow,seat.seatcol])
             seatsPicked[seat.seatrow][seat.seatcol]="#666666"
-        context['seatsBought']=seatsBoughtList
-        context['seatsPicked']=seatsPicked
-        seatsPicked=[]
-        
-
+        context['seatsBought']=json.dumps(seatsBoughtList)
+        context['seatsPicked']=json.dumps(seatsPicked)
         return context
 

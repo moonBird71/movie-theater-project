@@ -12,20 +12,6 @@ from django.contrib.auth.models import User
 class IndexPage(TemplateView):
     template_name = "ticketingApps/index.html"
 
-#Add User Page
-class UserCreate(CreateView):
-    model=User
-    fields = '__all__'
-    template_name="ticketingApps/user_form.html"
-    
-#Show List of Users
-class UserList(ListView):
-    model=User
-    paginate_by=25
-    template_name="ticketingApps/user_list.html"
-    def get_queryset(self):
-        return User.objects.all()
-
 #List of Theaters
 class TheaterListView(ListView):
     #context_object_name = "theater_list"

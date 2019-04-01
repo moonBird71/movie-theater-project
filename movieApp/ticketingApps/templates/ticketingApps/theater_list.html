@@ -9,8 +9,12 @@
 {% bootstrap_messages %}
 <h1> Movie Ticketing </h1>
 <h3> Search </h3>
+Search:
+You can use as many or few fields as desired
 <form action="{% url 'ticketingApps:search-theater' %}" type="get">
 	Theater Name: <input id="name" type="text" name="name">
+	Theater City: <input id="tCity" type="text" name="tCity">
+	Theater State: <input id="tState" type="text" name="tState">
 	<button id="theater_search_submit" type="submit">Search</button><br>
 </form>
 <br>

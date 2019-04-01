@@ -25,16 +25,21 @@ class AddRoomForm(ModelForm):
         labels={
             'roomnumber':'Room Number',
             'rows':'Number of Rows of Seats',
-            'columns':"Number of Columns of Seats"
+            'columns':"Number of Seats per Row"
         }
 class RoomForShowingField(forms.ModelChoiceField):
     def label_from_instance(self,obj):
         return "Room #%i" % obj.roomnumber
+class MovieForShowingField(forms.ModelChoiceField):
+    def label_from_instance(self,obj):
+        return obj.movietitle
 class AddShowingForm(ModelForm):
         room = RoomForShowingField(queryset=Room.objects.none())
+        movie = MovieForShowingField(queryset=Movie.objects.all())
         class Meta:
             model=Movieshowing
-            fields=['room','movie']
+            fields=['room','movie','time']
+            #widgets={'time':forms.}
 class TheaterForm(ModelForm):
     class Meta:
          model=Theater

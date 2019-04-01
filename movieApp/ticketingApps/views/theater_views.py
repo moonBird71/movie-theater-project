@@ -10,5 +10,13 @@ class TheaterSearchResults(ListView):
     def get_queryset(self):
         objs = Theater.objects
         tName = self.request.GET["name"]
-        objs=objs.filter(theatername__icontains=tName)
+        tCity = self.request.GET["tCity"]
+        tState = self.request.GET["tState"]
+        objs=objs.all()
+        if(tName!=""):
+            objs=objs.filter(theatername__icontains=tName)
+        if(tCity!=""):
+            objs=objs.filter(theatercity__icontains=tCity)
+        if(tState!=""):
+            objs=objs.filter(theaterstate__icontains=tState)
         return objs.all()

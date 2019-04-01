@@ -16,7 +16,6 @@ class Theater(models.Model):
 	#def get_absolute_url(self): #returns url to individual theater; need to include in urls.py
 		#return reverse('orderIn:add-theater')#correct format? 
 
-
 class Profile(models.Model):
     userid = models.AutoField(db_column='UserID', primary_key=True)   
     #first name, last name and email are included in the built-in User class. Access them through the user field
@@ -51,8 +50,6 @@ class Movie(models.Model):
     moviedescription = models.CharField(db_column='MovieDescription', max_length=500, blank=True, null=True)   
 
 
-
-
 class Order(models.Model):
     orderid = models.AutoField(primary_key=True)   
     profile = models.ForeignKey(Profile, models.DO_NOTHING, db_column='Profile_UserID')   
@@ -69,14 +66,17 @@ class Room(models.Model):
 class Movieshowing(models.Model):
     room = models.ForeignKey(Room, models.DO_NOTHING, related_name="room_of")   
     #room_theater_theaterid = models.ForeignKey(Room, models.DO_NOTHING, db_column='Room_Theater_TheaterID', related_name="theater_of")   
-    movie = models.ForeignKey(Movie, models.DO_NOTHING)   
+    movie = models.ForeignKey(Movie, models.DO_NOTHING)
+    time = models.DateTimeField()
+       
 
     #class Meta:
         #unique_together = (('room_roomnumber', 'room_theater_theaterid', 'movie_idmovie'),)
 
 
 class Seatsbought(models.Model):
-    seatnumber = models.CharField(max_length=10)   
+    seatrow = models.CharField(max_length=10)  
+    seatcol = models.CharField(max_length=10) 
     showing = models.ForeignKey(Movieshowing, models.DO_NOTHING, related_name="showing_of")   
     order = models.ForeignKey(Order, models.DO_NOTHING, related_name="order_of")
     #movieshowing_room_theater_theaterid = models.ForeignKey(Movieshowing, models.DO_NOTHING, db_column='MovieShowing_Room_Theater_TheaterID', related_name="theater_of")   

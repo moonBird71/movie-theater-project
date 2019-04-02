@@ -64,6 +64,9 @@ class AddShowingForm(ModelForm):
         class Meta:
             model=Movieshowing
             fields=['room','movie','time']
+            labels={
+                'time':'Date and time (mm/dd/yyyy hh:mm)'
+            }
             #widgets={'time':forms.}
 class TheaterForm(ModelForm):
     class Meta:

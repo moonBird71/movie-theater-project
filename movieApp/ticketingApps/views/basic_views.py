@@ -27,7 +27,27 @@ class ShowingsList(ListView):
     model = Movieshowing
     fields = '__all__'
     template_name = "ticketingApps/showings_list.html"
-	
+
+class ShowingsSearchResults(ListView):
+    model = Movieshowing
+    template_name="ticketingApps/showings_list.html"
+    def get_queryset(self):
+        objs = Movieshowing.objects
+        tName = self.request.GET["name"]
+        tCity = self.request.GET["tCity"]
+        tState = self.request.GET["tState"]
+        mName = self.request.GET['mName']
+        objs=objs.all()
+        if(tName!=""):
+            objs=objs.filter(room__theater__theatername__icontains=tName)
+        if(tCity!=""):
+            objs=objs.filter(room__theater__theatercity__icontains=tCity)
+        if(tState!=""):
+            objs=objs.filter(room__theater__theaterstate__icontains=tState)
+        if(mName!=""):
+            objs=objs.filter(movie__movietitle__icontains=mName)
+        return objs.all()
+
 #Print ticket page
 class PrintTicket(TemplateView):
     model = Ticket

@@ -1,3 +1,5 @@
+{% load static %}
+
 {# Load the tag library #}
 {% load bootstrap4 %}
 
@@ -9,6 +11,7 @@
 {% bootstrap_messages %}
 <h1> Movie Ticketing </h1>
 <h3> Showings List </h3>
+<link rel="stylesheet" href="{% static 'css/movieApp.css' %}">
 <table>
 	{% for movieshowing in movieshowing_list %}<!--add href for layout-->
 	<tr><!--pass roomnumber to linked page-->

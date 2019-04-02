@@ -38,7 +38,7 @@
                 <template v-for="i in numberCols">
                     <td>
                         <template v-for="j in numberRows">
-                            <table v-on:click="seatClick([[i]],[[j]])" width="100%" cellpadding="10 px" cellspacing="5 px" >
+                            <table v-on:click="seatClick(i,j)" width="100%" cellpadding="10 px" cellspacing="5 px" >
                                 <tr>
                                     <td :bgcolor="[[picked[ j ][ i ] ]]">
                                     </td>
@@ -49,10 +49,11 @@
                 </template>
             </tr>
         </table>
-            <form ref="buyForm" action="{% url 'ticketingApps:order' %}">
-                <input type="hidden" name="toBuy" v-model="this.toBuy">
-                <input type="hidden" name="showingId" v-model="this.showingId">
-                <button type="submit">Buy Tickets</a>
+            <form ref="buyForm" action="{% url 'ticketingApps:order' %}" method="get">
+                {% csrf_token %}
+                <input type="hidden" name="toBuy" id="toBuy" :value="JSON.stringify(toBuy)">
+                <input type="hidden" name="showingId" id="showingId" :value="showing">
+                <button type="submit">Buy Tickets</button>
             </form>
         </div>
     <!-- Our View App goes at the end of the document -->
@@ -88,11 +89,6 @@
                 //submitForm(){
                   //  this.$refs.buyForm.$el.submit()
                 //}
-            },
-            computed: {
-                url: function(){
-
-                }
             }
         });
     </script>

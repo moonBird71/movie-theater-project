@@ -1,0 +1,28 @@
+{# Load the tag library #}
+{% load bootstrap4 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+{% if valid %}
+<h2> Confirm Your Order </h2>
+You are buying {{numberTix}} of tickets to {{showingP.movie.movietitle}}.
+The cost will be ${{cost}}.
+Your seats will be reserved for you for 8 minutes.
+<form action="{% url 'ticketingApps:charge' %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="cost100" id="cost100" value="{{cost100}}">
+    <input type="hidden" name="orderId" id="orderId" value="{{order.orderid}}">
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+        data-key="{{ key }}"
+        data-description="A Movie Ticket Charge"
+        data-amount="{{cost100}}"
+        data-locale="auto">
+    </script>
+</form>
+{% else %}
+Those seats are no longer available.
+{% endif %}

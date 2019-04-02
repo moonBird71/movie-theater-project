@@ -128,3 +128,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 LOGIN_REDIRECT_URL = '/login_success/'
+
+STRIPE_SECRET_KEY = 'sk_test_vFnaAuz7bW3kb0JzCvzafYVq00wIcgUDtE'
+STRIPE_PUBLISHABLE_KEY = 'pk_test_ZvqQ8Y3GUM1tgBekrmid3Ysk00ZDtWgoYO'

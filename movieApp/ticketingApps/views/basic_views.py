@@ -52,10 +52,11 @@ class ShowingsSearchResults(ListView):
 class PrintTicket(TemplateView):
     template_name = "ticketingApps/print_ticket.html"
     def get_context_data(self, *args, **kwargs):
+        reverse('print-ticket', kwargs=kwargs)
         context=super(PrintTicket, self).get_context_data(*args,**kwargs)
         #Movieshowing.objects.get(id=kwargs['showing'])
         # below we build context
-        order = Order.objects.get(orderid=kwargs[''])
+        order = Order.objects.get(orderid=kwargs['order_file_charge'])
         # add seats
         seats = Seatsbought.objects.filter(order=order)
         context['seats'] = seats

@@ -1,3 +1,5 @@
+{% load static %}
+
 {# Load the tag library #}
 {% load bootstrap4 %}
 
@@ -7,12 +9,22 @@
 
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
-<h1> Movie Reservations </h1>
-<h2> Home Page </h2>
-<ul><!--add hrefs later -->
-    {% buttons %}
-    <a class="btn btn-login btn-block" href="accounts/login/" role="button"> Login </a><!--link to Login page-->
-    <a class="btn btn-block" href="{% url 'ticketingApps:sign-up' %}" role="button"> Create Account </a><!--link to Add User form-->
-	<a class="btn btn-list btn-block" href="showings/list/" role="button"> Movie List </a><!--link to Showings List page-->
-	{% endbuttons %}
-</ul>
+<html>
+	<head>
+		<br>
+		<h1> Movie Reservations </h1>
+		<br>
+		<h2> Home Page </h2>
+		<link rel="stylesheet" href="{% static 'css/movieApp.css' %}">
+	</head>
+	<body>
+		<br>
+		<ul>
+			{% buttons %}
+				<a class="btn btn-login btn-block" href="accounts/login/" role="button"> Login </a><!--link to Login page-->
+				<a class="btn btn-block" href="{% url 'ticketingApps:sign-up' %}" role="button"> Create Account </a><!--link to Add User form-->
+				<a class="btn btn-list btn-block" href="showings/list/" role="button"> Movie List </a><!--link to Showings List page-->
+			{% endbuttons %}
+		</ul>
+	</body>
+</html>

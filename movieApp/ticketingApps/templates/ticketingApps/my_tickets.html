@@ -1,0 +1,28 @@
+{# Load the tag library #}
+{% load bootstrap4 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+{% load qr_tags %}
+{% for order2 in object_list %}
+    {% if valid %}
+    {% with order2.order_of.all|first as seat %}
+    <h4>Tickets</h4>
+    <ul>
+    <li> Theater: {{seat.showing.room.theater.theatername}} </li>
+    <li> Movie: {{seat.showing.movie.movietitle}} </li>
+    <li> Room Number: {{seat.showing.room.roomnumber}} </li>
+    <li> Time: {{seat.showing.time}} </li>
+    <li> Confirmation Number: {{order.orderid}} </li>
+    {% endwith %}
+    {% for seat in order2.order_of.all %}
+    <li> Seat: Row:{{seat.seatrow}} | Seat:{{seat.seatcol}} </li>
+    {% endfor %}
+    </ul>
+    {% qr_from_text order.qrcodetext 'l' %}
+    {% endif %}
+{% endfor %}

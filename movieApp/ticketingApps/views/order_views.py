@@ -112,14 +112,17 @@ def charge(request):
         except stripe.error.APIConnectionError as e:
         # Network communication with Stripe failed
             error=True
+            print("api error")
             pass
         except stripe.error.StripeError as e:
         # Display a very generic error to the user, and maybe send
         # yourself an email
             error=True
+            print("stripe error")
             pass
         except Exception as e:
         # Something else happened, completely unrelated to Stripe
+            print("other exception")
             print(e)
             error=True
             pass

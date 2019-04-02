@@ -9,6 +9,8 @@ from datetime import datetime
 from django.contrib.auth.models import User
 import qrcode
 from django.conf import settings 
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+
 #index/home page
 class IndexPage(TemplateView):
     template_name = "ticketingApps/index.html"
@@ -77,4 +79,18 @@ class PrintTicket(TemplateView):
         # add theatre name
         theater = room.theater
         context['theatername'] = theater.theatername
+        return context
+class UserTicketsListing(LoginRequiredMixin,ListView):
+    Model=Order
+    template_name="ticketingApps/my_tickets.html"
+    def get_queryset(self):
+        objs = Order.objects
+        objs = objs.filter(profile__user=self.request.user)
+        return objs.all()
+    def get_context_data(self, *args,**kwargs):
+        context=super(UserTicketsListing, self).get_context_data(*args,**kwargs)
+        if(self.object_list.first()):
+            context['valid']=True
+        else:
+            context['valid']=False
         return context

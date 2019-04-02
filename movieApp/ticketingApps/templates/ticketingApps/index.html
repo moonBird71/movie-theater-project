@@ -21,8 +21,12 @@
 		<br>
 		<ul>
 			{% buttons %}
+				{% if not request.user.is_authenticated %}
 				<a class="btn btn-login btn-block" href="accounts/login/" role="button"> Login </a><!--link to Login page-->
 				<a class="btn btn-block" href="{% url 'ticketingApps:sign-up' %}" role="button"> Create Account </a><!--link to Add User form-->
+				{% else %}
+				<a class="btn btn-block" href="{% url 'ticketingApps:ticket-list'%}" role="button">My Tickets</a>
+				{% endif %}
 				<a class="btn btn-list btn-block" href="showings/list/" role="button"> Find a Movie </a><!--link to Showings List page-->
 			{% endbuttons %}
 		</ul>

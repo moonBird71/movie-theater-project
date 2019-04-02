@@ -22,5 +22,6 @@ urlpatterns = [
     re_path(r'^showings/(?P<showing>\d+)/order/$', views.SeatSelectionPage.as_view(), name='seat-selection'),
     re_path(r'^showings/order/payment/$', views.SimpleOrderPage.as_view(), name='order'),
     re_path(r'^showings/order/charge/$', views.charge, name="charge"),
-    re_path(r'^showings/search/$', views.ShowingsSearchResults.as_view(), name='showing-search'),    
+    re_path(r'^showings/search/$', views.ShowingsSearchResults.as_view(), name='showing-search'),
+    re_path(r'^mytickets/$', views.UserTicketsListing.as_view(), name='ticket-list'),    
 ]

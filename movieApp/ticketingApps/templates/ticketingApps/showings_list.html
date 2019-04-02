@@ -19,13 +19,14 @@ You can use as many or few fields as desired
 	Theater City: <input id="tCity" type="text" name="tCity">
 	Theater State: <input id="tState" type="text" name="tState">
 	Movie Name: <input id="mName" type="text" name="mName">
+	Date: <input id="day" type="date" name="day">
 	<button id="theater_search_submit" type="submit">Search</button><br>
 </form>
 <link rel="stylesheet" href="{% static 'css/movieApp.css' %}">
 <table>
 	{% for movieshowing in movieshowing_list %}<!--add href for layout-->
 	<tr><!--pass roomnumber to linked page-->
-		<td><a class="btn-link" href="">{{movieshowing.room.theater.theatername}}: {{movieshowing.movie.movietitle}} in at {{movieshowing.time}} </a></td>
+		<td>{{movieshowing.room.theater.theatername}}: {{movieshowing.movie.movietitle}} in at {{movieshowing.time}}</td>
 		<td>  </td>
 		<td><a href="{% url 'ticketingApps:seat-selection' showing=movieshowing.id %}">Look at Seats</a></td>
 	</tr>

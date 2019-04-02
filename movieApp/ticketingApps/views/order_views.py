@@ -57,7 +57,7 @@ class SimpleOrderPage(TemplateView):
             else:
                 orderObj=Order.objects.create()
             for key in toBuyArray:
-                Seatsbought.objects.create(seatrow=toBuyArray[key][0], seatcol=toBuyArray[key][1], showing=showingP,order=orderObj)
+                Seatsbought.objects.create(seatrow=toBuyArray[key][0], seatcol=toBuyArray[key][1], showing=showingP,order=orderObj,expirationTime=timezone.now()+timedelta(minutes=10))
         context['valid']=validSeats
         context['order']=orderObj
         context['numberTix']=len(toBuyArray)
@@ -72,16 +72,16 @@ def charge(request):
         errorMessage =""
         orderIdH = request.POST['orderId']
         seatsBoughtNow = Seatsbought.objects.filter(order=request.POST['orderId'])
-        #if(seatsBoughtNow[0].expirationTime<timezone.now()):
-        #    for seat in seatsBoughtNow:
-        #        seat.delete()
-        #    print("Seats are no longer valid")
-        #    try:
-        #        ord1 =Order.objects.get(orderid=orderIdH)
-        #        ord1.delete()
-        #    except Exception as e:
-        #        pass
-        #    return render(request,"ticketingApps/chargeError.html")
+        if(seatsBoughtNow[0].expirationTime<timezone.now()):
+            for seat in seatsBoughtNow:
+                seat.delete()
+            print("Seats are no longer valid")
+            try:
+                ord1 =Order.objects.get(orderid=orderIdH)
+                ord1.delete()
+            except Exception as e:
+                pass
+            return render(request,"ticketingApps/chargeError.html")
         try:
             charge = stripe.Charge.create(
                 amount=int(float(request.POST['cost100'])),

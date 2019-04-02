@@ -40,6 +40,7 @@ class ShowingsSearchResults(ListView):
         tCity = self.request.GET["tCity"]
         tState = self.request.GET["tState"]
         mName = self.request.GET['mName']
+        day = self.request.GET['day']
         objs=objs.all()
         if(tName!=""):
             objs=objs.filter(room__theater__theatername__icontains=tName)
@@ -49,6 +50,8 @@ class ShowingsSearchResults(ListView):
             objs=objs.filter(room__theater__theaterstate__icontains=tState)
         if(mName!=""):
             objs=objs.filter(movie__movietitle__icontains=mName)
+        if(day!=""):
+            objs=objs.filter(time__range=(datetime.strptime(day,"%Y-%m-%d"),datetime.strptime(day,"%Y-%m-%d")+timedelta(days=1)))
         return objs.all()
 
 #Print ticket page

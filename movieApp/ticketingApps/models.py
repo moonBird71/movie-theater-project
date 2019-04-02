@@ -63,6 +63,7 @@ class Order(models.Model):
     qrcodetext = models.CharField(max_length=150, blank=True, null=True)
     
     def save(self, *args, **kwargs):
+        #this generate the qrcode text based upon the seats bought
         allSeats =Seatsbought.objects.filter(order=self)
         string = []
         seat1 = allSeats.first()
@@ -84,18 +85,6 @@ class Order(models.Model):
                 string.append(seat.seatcol)
             stringReal=''.join(string)
             self.qrcodetext=stringReal
-            # qr = qrcode.QRCode(
-            #     version=1,
-            #     error_correction=qrcode.constants.ERROR_CORRECT_L,
-            #     box_size=6,
-            #     border=0,
-            # )
-            # qr.add_data(stringReal)
-            # qr.make(fit=True)
-            # filename = 'orders-%s.png' % (self.orderid)
-            # img = qr.make_image()
-            # #img.save(settings.STATIC_ROOT+"/qrcodes/"+filename)
-            # #self.qrcode=filename
         super(Order, self).save(*args, **kwargs)
 
 class Room(models.Model):

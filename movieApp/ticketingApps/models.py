@@ -60,29 +60,30 @@ class Order(models.Model):
     orderid = models.AutoField(primary_key=True)   
     profile = models.ForeignKey(Profile, models.DO_NOTHING, db_column='Profile_UserID', null=True)   
     creditcard = models.ForeignKey(Creditcard, models.DO_NOTHING, db_column='CreditCard_CreditCardID', null=True)   
-    qrcode = models.ImageField(upload_to='qrcode', blank=True, null=True)
+    qrcodetext = models.CharField(max_length=150, blank=True, null=True)
     
     def save(self, *args, **kwargs):
-        #allSeats =Seatsbought.objects.filter(order=self)
-        #string = []
-        #seat1 = allSeats.first()
-        #if seat1 is not None:
-            # string.append("Theater: ")
-            # string.append(seat1.showing.room.theater.theatername)
-            # string.append("  Room: ")
-            # string.append(str(seat1.showing.room.roomnumber))
-            # string.append(" Time: ")
-            # string.append(seat1.showing.time.strftime("%b %d %Y %H:%M:%S"))
-            # string.append(" Movie: ")
-            # string.append(seat1.showing.movie.movietitle)
-            # string.append(" Seats: ")
+        allSeats =Seatsbought.objects.filter(order=self)
+        string = []
+        seat1 = allSeats.first()
+        if seat1 is not None:
+            string.append("Theater: ")
+            string.append(seat1.showing.room.theater.theatername)
+            string.append("  Room: ")
+            string.append(str(seat1.showing.room.roomnumber))
+            string.append(" Time: ")
+            string.append(seat1.showing.time.strftime("%b %d %Y %H:%M:%S"))
+            string.append(" Movie: ")
+            string.append(seat1.showing.movie.movietitle)
+            string.append(" Seats: ")
 
-            # for seat in allSeats:
-            #     string.append(" Row:")
-            #     string.append(seat.seatrow)
-            #     string.append(" Seat: ")
-            #     string.append(seat.seatcol)
-            # stringReal=''.join(string)
+            for seat in allSeats:
+                string.append(" Row:")
+                string.append(seat.seatrow)
+                string.append(" Seat: ")
+                string.append(seat.seatcol)
+            stringReal=''.join(string)
+            self.qrcodetext=stringReal
             # qr = qrcode.QRCode(
             #     version=1,
             #     error_correction=qrcode.constants.ERROR_CORRECT_L,

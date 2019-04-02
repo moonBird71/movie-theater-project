@@ -7,7 +7,7 @@
 
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
-{% load static %}
+{% load qr_tags %}
 <h4>Tickets</h4>
 <ul>
 <li> Theater: {{theatername}} </li>
@@ -19,6 +19,7 @@
 <li> Seat: Row:{{seat.seatrow}} | Seat:{{seat.seatcol}} </li>
 {% endfor %}
 </ul>
+{% qr_from_text order.qrcodetext 'l' %}
 
 {% buttons %}
 <input type="button" value="Print" onclick="window.print()">

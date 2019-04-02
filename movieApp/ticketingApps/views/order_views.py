@@ -72,11 +72,16 @@ def charge(request):
         errorMessage =""
         orderIdH = request.POST['orderId']
         seatsBoughtNow = Seatsbought.objects.filter(order=request.POST['orderId'])
-        if(seatsBoughtNow[0].expirationTime<timezone.now()):
-            for seat in seatsBoughtNow:
-                seat.delete()
-            print("Seats are no longer valid")
-            return render(request,"ticketingApps/chargeError.html")
+        #if(seatsBoughtNow[0].expirationTime<timezone.now()):
+        #    for seat in seatsBoughtNow:
+        #        seat.delete()
+        #    print("Seats are no longer valid")
+        #    try:
+        #        ord1 =Order.objects.get(orderid=orderIdH)
+        #        ord1.delete()
+        #    except Exception as e:
+        #        pass
+        #    return render(request,"ticketingApps/chargeError.html")
         try:
             charge = stripe.Charge.create(
                 amount=int(float(request.POST['cost100'])),
@@ -130,5 +135,7 @@ def charge(request):
         if error:
             for seat in seatsBoughtNow:
                 seat.delete()
+            ord1 =Order.objects.get(orderid=orderIdH)
+            ord1.delete()
             return render(request,"ticketingApps/chargeError.html")
         return render(request, 'ticketingApps/charge.html', {'orderIdH':orderIdH})

@@ -7,11 +7,19 @@
 
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
-<h1> Movie Ticketing </h1>
-<h3> Print Ticket </h3>
-<form method="post">{% csrf_token %}
-    {% bootstrap_form form %}
-    {% buttons %}
-    <input type="button" value="Print" onclick="window.print()">
-    {% endbuttons %}
-</form>
+{% for seat in seats %}
+<h4>Ticket</h4>
+<ul>
+	<li> Theatre: {{theatername}} </li>
+	<li> Movie: {{moviename}} </li>
+	<li> Room number: {{roomnumber}} </li>
+	<li> Time: {{showingtime}} </li>
+	<li> Seat: R:{{seat.seatrow}}| C:{{seat.seatcol}} </li>
+	<li> OrderId: {{orderid}} </li>
+</ul>
+<p>----------------------------</p>
+<!-- QR CODE TO ADD -->
+{% endfor %}
+{% buttons %}
+<input type="button" value="Print" onclick="window.print()">
+{% endbuttons %}

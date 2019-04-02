@@ -50,10 +50,30 @@ class ShowingsSearchResults(ListView):
 
 #Print ticket page
 class PrintTicket(TemplateView):
-    model = Ticket
-    fields = '__all__'
     template_name = "ticketingApps/print_ticket.html"
-    def ticketprint(request):
-        if request.method == 'GET':#if directed here by another page's GET
-            return render(request, "ticketingApps/print_ticket.html", request.GET)#use input from calling page
-
+    def get_context_data(self, *args, **kwargs):
+        context=super(PrintTicket, self).get_context_data(*args,**kwargs)
+        #Movieshowing.objects.get(id=kwargs['showing'])
+        # below we build context
+        order = Order.objects.get(orderid=kwargs[''])
+        # add seats
+        seats = Seatsbought.objects.filter(order=order)
+        context['seats'] = seats
+        # add orderid
+        context['orderid'] = order.orderid
+        # add movieshowing time
+        if seats:
+            movieshowing = seats[0].showing
+        else:
+            print("error")
+        context['showingtime'] = movieshowing.time
+        # add room number
+        room = movieshowing.room
+        context['roomnumber'] = room.roomnumber
+        # add movie
+        movie = movieshowing.movie
+        context['moviename'] = movie.movietitle
+        # add theatre name
+        theater = room.theater
+        context['theatername'] = theater.theatername
+        return context

@@ -4,7 +4,8 @@ from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-from datetime import datetime
+from datetime import datetime, timedelta
+from django.utils import timezone
 class SimpleOrder(ModelForm):
     class Meta:
         model=Creditcard
@@ -26,7 +27,7 @@ class SimpleOrder(ModelForm):
                 Order.objects.create(credit)
             Order.objects.create()
             for key in toBuyArray:
-                Seatsbought.objects.create(seatrow=toBuyArray[key][0], seatcol=toBuyArray[key][1], showing=showingP,)
+                Seatsbought.objects.create(seatrow=toBuyArray[key][0], seatcol=toBuyArray[key][1], showing=showingP,expirationTime=timezone.now()+timedelta(minutes=10))
             
 
         context['ticketList']=ticketsList

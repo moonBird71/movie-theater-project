@@ -8,6 +8,7 @@
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
 {% load qr_tags %}
+
 {% for order2 in object_list %}
     {% if valid %}
     {% with order2.order_of.all|first as seat %}

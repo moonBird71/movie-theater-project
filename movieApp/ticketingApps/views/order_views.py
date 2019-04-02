@@ -75,6 +75,7 @@ def charge(request):
         if(seatsBoughtNow[0].expirationTime<timezone.now()):
             for seat in seatsBoughtNow:
                 seat.delete()
+            print("Seats are no longer valid")
             return render(request,"ticketingApps/chargeError.html")
         try:
             charge = stripe.Charge.create(

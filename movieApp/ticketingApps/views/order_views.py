@@ -51,7 +51,7 @@ class SimpleOrderPage(TemplateView):
             if(Seatsbought.objects.filter(showing=showingP,seatrow=toBuyArray[key][0], seatcol=toBuyArray[key][1]).count()>0):
                 validSeats = False
         if validSeats:
-            if self.request.user:
+            if self.request.user.is_authenticated:
                 profileU = Profile.objects.get(user=self.request.user)
                 orderObj=Order.objects.create(profile=profileU)
             else:

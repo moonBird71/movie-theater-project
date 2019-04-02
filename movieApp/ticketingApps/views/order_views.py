@@ -128,4 +128,4 @@ def charge(request):
             for seat in seatsBoughtNow:
                 seat.delete()
             return render(request,"ticketingApps/chargeError.html")
-        return render(request, 'ticketingApps/charge.html')
+        return render(request, 'ticketingApps/charge.html', {'orderId':request.POST['orderId']})

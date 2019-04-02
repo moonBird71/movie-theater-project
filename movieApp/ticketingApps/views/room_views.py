@@ -11,3 +11,4 @@ class AddRoom(CreateView):
     model = Room
     fields = '__all__'
     template_name = "ticketingApps/room_form.html"
+    success_url="/manager/theaters/"

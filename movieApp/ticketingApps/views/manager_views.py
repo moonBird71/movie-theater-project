@@ -30,6 +30,7 @@ class AddTheater(LoginRequiredMixin,UserPassesTestMixin,CreateView):
     model = Theater
     form_class=TheaterForm
     template_name = "ticketingApps/theater_form.html"
+    success_url="/manager/theaters/"
     def test_func(self):
         return getattr(self.request.user.profile, "isemployee")
     def form_valid(self,form):

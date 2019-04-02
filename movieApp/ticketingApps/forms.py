@@ -71,13 +71,14 @@ class AddShowingForm(ModelForm):
 class TheaterForm(ModelForm):
     class Meta:
          model=Theater
-         fields=['theatername','theaterstreet','theatercity','theaterstate','theaterzip']
+         fields=['theatername','theaterstreet','theatercity','theaterstate','theaterzip','price']
          labels={
              'theaterstreet':'Street',
              'theatername':'Name',
              'theatercity':'City',
              'theaterstate':"State",
              "theaterzip":"Zip code",
+             'price':"Price per Ticket"
          }
 class SignupForm(UserCreationForm):
     isemployee=forms.BooleanField(required=False,label="I am registering as a theater employee")

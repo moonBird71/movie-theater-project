@@ -7,7 +7,7 @@ urlpatterns = [
     re_path(r'^theater/list/$', views.TheaterListView.as_view(), name="theater-list"),
     re_path(r'^theater/entry/$', views.AddTheater.as_view(), name="add-theater"),
     re_path(r'^showings/list/$', views.ShowingsList.as_view(), name="showings-list"),
-    re_path(r'^ticket/print/$', views.PrintTicket.as_view(), name="print-ticket"),
+    re_path(r'^ticket/print/(?P<orderId>\d+)/$', views.PrintTicket.as_view(), name="print-ticket"),
     re_path(r'^theater/search/$',views.TheaterSearchResults.as_view(), name="search-theater"),
     re_path(r'^room/entry/$', views.AddRoom.as_view(), name ="add-room"),
     path('accounts/', include('django.contrib.auth.urls')),
@@ -22,6 +22,5 @@ urlpatterns = [
     re_path(r'^showings/(?P<showing>\d+)/order/$', views.SeatSelectionPage.as_view(), name='seat-selection'),
     re_path(r'^showings/order/payment/$', views.SimpleOrderPage.as_view(), name='order'),
     re_path(r'^showings/order/charge/$', views.charge, name="charge"),
-    re_path(r'^showings/search/$', views.ShowingsSearchResults.as_view(), name='showing-search')    
-
+    re_path(r'^showings/search/$', views.ShowingsSearchResults.as_view(), name='showing-search'),    
 ]

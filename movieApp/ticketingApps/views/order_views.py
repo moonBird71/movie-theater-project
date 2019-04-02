@@ -70,9 +70,9 @@ def charge(request):
     if request.method =='POST':
         error=False
         errorMessage =""
+        orderIdH = request.POST['orderId']
         seatsBoughtNow = Seatsbought.objects.filter(order=request.POST['orderId'])
         if(seatsBoughtNow[0].expirationTime<timezone.now()):
-            print("here")
             for seat in seatsBoughtNow:
                 seat.delete()
             return render(request,"ticketingApps/chargeError.html")
@@ -82,11 +82,10 @@ def charge(request):
                 currency = 'usd',
                 description = 'A movie ticket purchase',
                 source=request.POST['stripeToken']
-            )
-            print("overhere")
-            
+            )            
             for seat in seatsBoughtNow:
                 seat.final = True
+            Order.objects.get(orderid=orderIdH).save()
         except stripe.error.CardError as e:
             # Since it's a decline, stripe.error.CardError will be caught
             body = e.json_body
@@ -128,4 +127,4 @@ def charge(request):
             for seat in seatsBoughtNow:
                 seat.delete()
             return render(request,"ticketingApps/chargeError.html")
-        return render(request, 'ticketingApps/charge.html', {'orderId':request.POST['orderId']})
+        return render(request, 'ticketingApps/charge.html', {'orderIdH':orderIdH})

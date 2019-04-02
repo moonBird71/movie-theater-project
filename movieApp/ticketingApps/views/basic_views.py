@@ -7,7 +7,8 @@ from ticketingApps.models import *
 from ticketingApps.forms import *
 from datetime import datetime
 from django.contrib.auth.models import User
-
+import qrcode
+from django.conf import settings 
 #index/home page
 class IndexPage(TemplateView):
     template_name = "ticketingApps/index.html"
@@ -55,12 +56,12 @@ class PrintTicket(TemplateView):
         context=super(PrintTicket, self).get_context_data(*args,**kwargs)
         #Movieshowing.objects.get(id=kwargs['showing'])
         # below we build context
-        order = Order.objects.get(orderid=kwargs[''])
+        order = Order.objects.get(orderid=kwargs['orderId'])
         # add seats
         seats = Seatsbought.objects.filter(order=order)
         context['seats'] = seats
         # add orderid
-        context['orderid'] = order.orderid
+        context['order'] = order
         # add movieshowing time
         if seats:
             movieshowing = seats[0].showing

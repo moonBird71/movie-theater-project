@@ -4,6 +4,10 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from datetime import datetime, timedelta
 from django.utils import timezone
+import qrcode
+from io import BytesIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.conf import settings 
 class Theater(models.Model):
     theaterid = models.AutoField(db_column='TheaterID', primary_key=True)   
     theatername = models.CharField(db_column='TheaterName', max_length=45, blank=True, null=True)   
@@ -56,8 +60,42 @@ class Order(models.Model):
     orderid = models.AutoField(primary_key=True)   
     profile = models.ForeignKey(Profile, models.DO_NOTHING, db_column='Profile_UserID', null=True)   
     creditcard = models.ForeignKey(Creditcard, models.DO_NOTHING, db_column='CreditCard_CreditCardID', null=True)   
- 
+    qrcode = models.ImageField(upload_to='qrcode', blank=True, null=True)
+    
+    def save(self, *args, **kwargs):
+        #allSeats =Seatsbought.objects.filter(order=self)
+        #string = []
+        #seat1 = allSeats.first()
+        #if seat1 is not None:
+            # string.append("Theater: ")
+            # string.append(seat1.showing.room.theater.theatername)
+            # string.append("  Room: ")
+            # string.append(str(seat1.showing.room.roomnumber))
+            # string.append(" Time: ")
+            # string.append(seat1.showing.time.strftime("%b %d %Y %H:%M:%S"))
+            # string.append(" Movie: ")
+            # string.append(seat1.showing.movie.movietitle)
+            # string.append(" Seats: ")
 
+            # for seat in allSeats:
+            #     string.append(" Row:")
+            #     string.append(seat.seatrow)
+            #     string.append(" Seat: ")
+            #     string.append(seat.seatcol)
+            # stringReal=''.join(string)
+            # qr = qrcode.QRCode(
+            #     version=1,
+            #     error_correction=qrcode.constants.ERROR_CORRECT_L,
+            #     box_size=6,
+            #     border=0,
+            # )
+            # qr.add_data(stringReal)
+            # qr.make(fit=True)
+            # filename = 'orders-%s.png' % (self.orderid)
+            # img = qr.make_image()
+            # #img.save(settings.STATIC_ROOT+"/qrcodes/"+filename)
+            # #self.qrcode=filename
+        super(Order, self).save(*args, **kwargs)
 
 class Room(models.Model):
     roomnumber = models.IntegerField()   

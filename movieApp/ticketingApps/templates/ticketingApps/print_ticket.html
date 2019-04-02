@@ -7,19 +7,19 @@
 
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
-{% for seat in seats %}
-<h4>Ticket</h4>
+{% load static %}
+<h4>Tickets</h4>
 <ul>
-	<li> Theatre: {{theatername}} </li>
-	<li> Movie: {{moviename}} </li>
-	<li> Room number: {{roomnumber}} </li>
-	<li> Time: {{showingtime}} </li>
-	<li> Seat: R:{{seat.seatrow}}| C:{{seat.seatcol}} </li>
-	<li> OrderId: {{orderid}} </li>
-</ul>
-<p>----------------------------</p>
-<!-- QR CODE TO ADD -->
+<li> Theater: {{theatername}} </li>
+<li> Movie: {{moviename}} </li>
+<li> Room Number: {{roomnumber}} </li>
+<li> Time: {{showingtime}} </li>
+<li> Confirmation Number: {{order.orderid}} </li>
+{% for seat in seats %}
+<li> Seat: Row:{{seat.seatrow}} | Seat:{{seat.seatcol}} </li>
 {% endfor %}
+</ul>
+
 {% buttons %}
 <input type="button" value="Print" onclick="window.print()">
 {% endbuttons %}

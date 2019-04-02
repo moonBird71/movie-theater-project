@@ -9,4 +9,5 @@
 {% bootstrap_messages %}
 <h1> Ticket Order </h1>
 Thank you! Your order has been successful.
-To print out tickets, click the link below.
+To print out tickets: 
+<a href="{% url 'ticketingApps:print-ticket' orderId=orderIdH %}">Print Tickets</a>

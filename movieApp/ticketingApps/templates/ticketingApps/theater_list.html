@@ -22,11 +22,9 @@ You can use as many or few fields as desired
 <table>
 	{% for theater in theater_list %}
 		<tr>
-			<th> <b>{{theater.theatername}}</b> located at {{theater.theaterstreet}} {{theater.theatercity}}, {{theater.theaterstate}}</th>
+			<th> <a href="{% url 'ticketingApps:theater-detail' pk=theater.theaterid %}"><b>{{theater.theatername}}</b></a> located at {{theater.theaterstreet}} {{theater.theatercity}}, {{theater.theaterstate}}</th>
 			<th></th>
 			<th><a href="{%url 'ticketingApps:add-showing' theaterId=theater.theaterid%}">Add Showing</a></th>
-			<th></th>
-			<th><a href="{% url 'ticketingApps:add-room' theaterId=theater.theaterid%}">Add Room</a></th>
         </tr>
 	{% empty %}
 		<li> No theaters yet. </li>

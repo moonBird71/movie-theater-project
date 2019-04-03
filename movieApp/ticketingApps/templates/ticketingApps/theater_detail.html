@@ -1,0 +1,18 @@
+{# Load the tag library #}
+{% load bootstrap4 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+<h3>Theater Detail</h3>
+Theater: {{object.theatername}}<br>
+Rooms: <ul>{% for room in object.room_set.all %}
+    <li>{{room.roomnumber}}: {{room.rows}}x{{room.columns}}  <a href="{% url 'ticketingApps:delete-room' pk=room.id %}">Delete Room</a></li>
+    {% endfor %}
+    </ul>
+Add Room: <a href="{% url 'ticketingApps:add-room' theaterId=object.theaterid%}">Add Room</a><br>
+Add Showing: <a href="{%url 'ticketingApps:add-showing' theaterId=object.theaterid%}">Add Showing</a><br>
+Delete: <a href="{% url 'ticketingApps:delete-theater' pk=object.theaterid %}" >Delete Theater</a>

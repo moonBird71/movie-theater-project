@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from django.views.generic import TemplateView
+from django.views.generic.detail import DetailView
 from django.urls import reverse_lazy, reverse
 from ticketingApps.models import *
 from ticketingApps.forms import *
@@ -68,5 +69,47 @@ class AddMovie(LoginRequiredMixin,UserPassesTestMixin,CreateView):
     success_url='/manager/theaters/'
     def get_initial(self):
         return {'moviereleasedate':datetime.now()}
+    def test_func(self):
+        return getattr(self.request.user.profile, "isemployee")
+
+class DeleteTheater(LoginRequiredMixin, UserPassesTestMixin,DeleteView):
+    model = Theater
+    success_url='/manager/theaters/'
+    template_name='ticketingApps/theater_delete_confirm.html'
+    def test_func(self):
+        return getattr(self.request.user.profile, "isemployee")
+    def get_object(self, queryset=None):
+        """ Hook to ensure object is owned by request.user. """
+        obj = super(DeleteTheater, self).get_object()
+        if obj not in self.request.user.profile.theaters.all():
+            raise Http404
+        return obj
+class DeleteRoom(LoginRequiredMixin, UserPassesTestMixin,DeleteView):
+    model = Room
+    success_url='/manager/theaters/'
+    template_name='ticketingApps/room_delete_confirm.html'
+    def test_func(self):
+        return getattr(self.request.user.profile, "isemployee")
+    def get_object(self, queryset=None):
+        """ Hook to ensure object is owned by request.user. """
+        obj = super(DeleteRoom, self).get_object()
+        if obj not in Room.objects.filter(theater__profile__user=self.request.user):
+            raise Http404
+        return obj
+class DeleteShowing(LoginRequiredMixin, UserPassesTestMixin,DeleteView):
+    model = Movieshowing
+    success_url='/manager/theaters/'
+    template_name='ticketingApps/showing_delete_confirm.html'
+    def test_func(self):
+        return getattr(self.request.user.profile, "isemployee")
+    def get_object(self, queryset=None):
+        """ Hook to ensure object is owned by request.user. """
+        obj = super(DeleteRoom, self).get_object()
+        if obj not in Movieshowing.objects.filter(room__theater__profile__user=self.request.user):
+            raise Http404
+        return obj
+class TheaterDetail(LoginRequiredMixin,UserPassesTestMixin,DetailView):
+    model = Theater
+    template_name="ticketingApps/theater_detail.html"
     def test_func(self):
         return getattr(self.request.user.profile, "isemployee")

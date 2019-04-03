@@ -7,7 +7,6 @@ from ticketingApps.models import *
 from ticketingApps.forms import *
 from datetime import datetime
 from django.contrib.auth.models import User
-import qrcode
 from django.conf import settings 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 

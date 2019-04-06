@@ -1,12 +1,6 @@
-{# Load the tag library #}
+{% extends 'base.html' %}
 {% load bootstrap4 %}
-
-{# Load CSS and JavaScript #}
-{% bootstrap_css %}
-{% bootstrap_javascript jquery='full' %}
-
-{# Display django.contrib.messages as Bootstrap alerts #}
-{% bootstrap_messages %}
+{% block content %}
 {% load qr_tags %}
 
 {% for order2 in object_list %}
@@ -27,3 +21,4 @@
     {% qr_from_text order.qrcodetext 'l' %}
     {% endif %}
 {% endfor %}
+{% endblock %}

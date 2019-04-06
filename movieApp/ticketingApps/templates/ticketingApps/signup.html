@@ -1,17 +1,11 @@
-{# Load the tag library #}
+{% extends 'base.html' %}
 {% load bootstrap4 %}
-
-{# Load CSS and JavaScript #}
-{% bootstrap_css %}
-{% bootstrap_javascript jquery='full' %}
-
-{# Display django.contrib.messages as Bootstrap alerts #}
-{% bootstrap_messages %}
-<h1> Movie Ticketing </h1>
-<h3> Signup New User </h3>
-<form method="post">{% csrf_token %}
-    {% bootstrap_form form %}
-    {% buttons %}
-    <input type="submit" value="Save">
-    {% endbuttons %}
-</form>
+{% block content %}
+<div class="signup_container">
+	<h3> Signup New User </h3>
+	<form method="post">{% csrf_token %}
+	    {% bootstrap_form form %}
+	    <input type="submit" value="Signup">
+	</form>
+</div>
+{% endblock %}

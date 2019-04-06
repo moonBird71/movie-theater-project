@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+
+{% if showing %}
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <script src="//unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
+    <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+    <script type='text/javascript'>
+        //this is fine even though it complains. IDE doesn't understand js/Django/Vue combo
+        var seatsBoughtJ = {{ seatsBought|safe }};
+        var seatsPickedJ = {{seatsPicked|safe}};
+        var rowsJ = {{numberRows}};
+        var colsJ = {{numberCols}};
+        var title = "{{showing.movie.movietitle}}";
+        var mTime = "{{showing.time}}";
+        var showingId = {{showing.id}}
+    </script>
+    <div id="vapp">
+    <head>
+      <meta charset='utf-8' />
+      <link
+      type="text/css"
+      rel="stylesheet"
+      href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css"
+          />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"
+    /> 
+    </style>
+    </head>
+    
+    <body>
+      <h1>Seat Preview and Selection</h1>
+      <h3>Seats for [[movieTitle]]</h3>
+      <div class="seat_selection_container">
+        <h4>screen here</h4>
+          <table :width="String(15*numberCols)" cellpadding="10 px" cellspacing="5 px">
+            <tr>
+                <template v-for="i in numberCols">
+                    <td>
+                        <template v-for="j in numberRows">
+                            <table v-on:click="seatClick(i,j)" width="100%" cellpadding="10 px" cellspacing="5 px" >
+                                <tr>
+                                    <td :bgcolor="[[picked[ j ][ i ] ]]">
+                                    </td>
+                                </tr>
+                            </table>
+                        </template>
+                    </td>
+                </template>
+            </tr>
+        </table>
+    </div>
+            <form ref="buyForm" action="{% url 'ticketingApps:order' %}" method="get">
+                {% csrf_token %}
+                <input type="hidden" name="toBuy" id="toBuy" :value="JSON.stringify(toBuy)">
+                <input type="hidden" name="showingId" id="showingId" :value="showing">
+                <button type="submit">Buy Tickets</button>
+            </form>
+        </div>
+    <!-- Our View App goes at the end of the document -->
+    
+    
+    <script>
+    
+    var vapp=new Vue({
+            el: '#vapp',
+            delimiters: ['[[', ']]'],
+            data: { 
+                movieTitle: title,
+                time: mTime,
+                numberRows: rowsJ,
+                numberCols: colsJ,
+                seatsBought: seatsBoughtJ,
+                picked: seatsPickedJ,
+                toBuy: {},
+                showing: showingId,
+            },
+            methods: {
+                seatClick(i,j){
+                    if(this.picked[String(j)][String(i)]=="#666666"){
+                        //this seat is already bought
+                    }else if(this.picked[j][i]=="#0544F0"){
+                        this.picked[j][i]="#00F133"
+                        this.toBuy[j*this.numberCols+i]=[j,i]
+                    }else{
+                        this.picked[j][i]="#0544F0"
+                        delete this.toBuy[j*this.numberCols+i]
+                    }
+                },
+                //submitForm(){
+                  //  this.$refs.buyForm.$el.submit()
+                //}
+            }
+        });
+    </script>
+    </body>
+{% endif %}
+{% endblock %}

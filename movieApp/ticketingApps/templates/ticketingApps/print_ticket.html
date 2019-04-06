@@ -1,13 +1,7 @@
-{# Load the tag library #}
+{% extends 'base.html' %}
 {% load bootstrap4 %}
-
-{# Load CSS and JavaScript #}
-{% bootstrap_css %}
-{% bootstrap_javascript jquery='full' %}
-
-{# Display django.contrib.messages as Bootstrap alerts #}
-{% bootstrap_messages %}
 {% load qr_tags %}
+{% block content %}
 <h4>Tickets</h4>
 <ul>
 <li> Theater: {{theatername}} </li>
@@ -24,3 +18,4 @@
 {% buttons %}
 <input type="button" value="Print" onclick="window.print()">
 {% endbuttons %}
+{% endblock %}

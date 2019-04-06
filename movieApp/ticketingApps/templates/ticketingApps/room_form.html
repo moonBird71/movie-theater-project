@@ -1,11 +1,6 @@
-{# Load the tag library #}
+{% extends 'base.html' %}
 {% load bootstrap4 %}
-
-{# Load CSS and JavaScript #}
-{% bootstrap_css %}
-{% bootstrap_javascript jquery='full' %}
-
-{# Display django.contrib.messages as Bootstrap alerts #}
+{% block content %}
 {% bootstrap_messages %}
 <h1> Add Rooms in Theater </h1>
 <h3> Add New Room </h3>
@@ -15,4 +10,5 @@
     <input type="submit" value="Save">
     {% endbuttons %}
 </form>
+{% endblock %}
 

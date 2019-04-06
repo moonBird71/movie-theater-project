@@ -1,12 +1,6 @@
-{# Load the tag library #}
+{% extends 'base.html' %}
 {% load bootstrap4 %}
-
-{# Load CSS and JavaScript #}
-{% bootstrap_css %}
-{% bootstrap_javascript jquery='full' %}
-
-{# Display django.contrib.messages as Bootstrap alerts #}
-{% bootstrap_messages %}
+{% block content %}
 <h1> Movie Ticketing </h1>
 <h3> Search </h3>
 Search:
@@ -30,3 +24,4 @@ You can use as many or few fields as desired
 		<li> No theaters yet. </li>
 	{% endfor %}
 </table>
+{% endblock %}

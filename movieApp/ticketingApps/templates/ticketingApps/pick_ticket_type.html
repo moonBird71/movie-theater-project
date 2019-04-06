@@ -7,12 +7,17 @@
 
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
-<h1> Login </h1>
+<h1> Movie Ticketing </h1>
+<h3> Pick Ticket Types </h3>
 <form method="post">{% csrf_token %}
     {% bootstrap_form form %}
     {% buttons %}
-    <input type="submit" value="Login">
+    <input type="submit" value="Save">
     {% endbuttons %}
 </form>
-<br>
-<a href="{% url 'ticketingApps:sign-up' %}">Create an Account</a>
+<h5>Pricing:</h5>
+<table>
+{% for price in pGroup %}
+<tr><td>{% price.name %}:</td><td>{% price.price %}</td></tr>
+{% endfor %}
+</table>

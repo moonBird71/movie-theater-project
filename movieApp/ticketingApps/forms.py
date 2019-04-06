@@ -18,7 +18,9 @@ class AddMovieForm(ModelForm):
             'moviegenre':"Genre",
             'moviedescription':"Description"
         }
-        widgets = {'moviereleasedate':forms.SelectDateWidget()}
+        yearNow = datetime.now().year
+        yearsT = (str(yearNow), str(yearNow+1),str(yearNow+2))+(tuple(map(str, range(1900,yearNow))))
+        widgets = {'moviereleasedate':forms.SelectDateWidget(years=yearsT)}
 class AddRoomForm(ModelForm):
     class Meta:
         model=Room
@@ -36,14 +38,22 @@ class MovieForShowingField(forms.ModelChoiceField):
         return obj.movietitle
 class AddShowingForm(ModelForm):
         room = RoomForShowingField(queryset=Room.objects.none())
-        movie = MovieForShowingField(queryset=Movie.objects.all())
+        movie = MovieForShowingField(queryset=Movie.objects.order_by('-moviereleasedate'))
         class Meta:
             model=Movieshowing
             fields=['room','movie','time']
             labels={
                 'time':'Date and time (mm/dd/yyyy hh:mm)'
             }
-            #widgets={'time':forms.}
+class GroupForPriceField(forms.ModelChoiceField):
+    def label_from_instance(self,obj):
+        return obj.name
+class AddPricePointForm(ModelForm):
+        group = GroupForPriceField(queryset=PricingGroup.objects.none())
+        class Meta:
+            model=PricePoint
+            fields='__all__'
+
 class TheaterForm(ModelForm):
     class Meta:
          model=Theater
@@ -76,13 +86,17 @@ class SignupForm(UserCreationForm):
         if not commit:
             raise NotImplementedError("Can't create User and UserProfile without database save")
         user = super(SignupForm, self).save(commit=True)
-        #User.objects.create_user(username=self.cleaned_data['username'], password=self.cleaned_data['password1'], email=self.cleaned_data['email'],first_name=self.cleaned_data['first_name'],last_name=self.cleaned_data['last_name'])
-        #profile = Profile(user=user, isemployee=self.cleaned_data['isemployee'], 
-        #    userphone=self.cleaned_data['userphone'])
         profile = user.profile
         profile.isemployee=self.cleaned_data['isemployee']
         profile.userphone=self.cleaned_data['userphone']
         user.save()
         profile.save()
         return user, profile
+class TicketTypeForm(forms.Form):
+    def __init__(self, round_list, *args, **kwargs):
+        super(TicketTypeForm, self).__init__(*args, **kwargs)
+        pList = kwargs["pricingList"]
+        for price in pList:
+            keyF = price.name
+            self.fields[keyF] = forms.ChoiceField(choices=(0,1,2,3,4,5,6,7,8,9,10))
 

@@ -14,6 +14,17 @@ from django.conf import settings
 from django.utils import timezone
 import stripe
 stripe.api_key = settings.STRIPE_SECRET_KEY 
+class TicketTypeSelectionPage(FormView):
+    form_class=TicketTypeForm
+    template_name='ticketingApps/pick_ticket_type.html' 
+    def get_success_url(self):
+        return reverse('seat-selection',args=(self.kwargs['showing']))
+    def get_form_kwargs(self):
+        kwargs=super(TicketTypeSelectionPage,self).get_form_kwargs()
+        showingGroup = self.kwargs['showing'].pricing
+        kwargs['pricingList']=PricePoint.objects.filter(group=showingGroup)
+        return kwargs
+    
 class SeatSelectionPage(TemplateView):
     template_name='ticketingApps/seat_selection.html'
 

@@ -47,8 +47,8 @@ class Creditcard(models.Model):
 class Movie(models.Model):
     movieid = models.AutoField(db_column='MovieID', primary_key=True)   
     movietitle = models.CharField(db_column='MovieTitle', max_length=45, blank=True, null=True)   
-    movieruntime = models.IntegerField(db_column='MovieRuntime', blank=True, null=True)   
-    movierating = models.CharField(db_column='MovieRating', max_length=4, blank=True, null=True)   
+    movieruntime = models.PositiveIntegerField(db_column='MovieRuntime', blank=True, null=True)   
+    movierating = models.CharField(db_column='MovieRating', max_length=5, blank=True, null=True)   
     moviereleasedate = models.DateField(db_column='MovieReleaseDate', blank=True, null=True)   
     moviegenre = models.CharField(db_column='MovieGenre', max_length=45, blank=True, null=True)   
     moviedescription = models.CharField(db_column='MovieDescription', max_length=500, blank=True, null=True)   
@@ -91,10 +91,20 @@ class Room(models.Model):
     rows = models.IntegerField(blank=True, null=True)   
     columns = models.IntegerField(blank=True, null=True)   
 
+class PricingGroup(models.Model):
+    name = models.CharField(max_length=45)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
+class PricePoint(models.Model):
+    name = models.CharField(max_length=45)
+    price =  models.DecimalField(default=10, max_digits=10, decimal_places=2)
+    group = models.ForeignKey(PricingGroup, on_delete=models.CASCADE)
+
 class Movieshowing(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="room_of")   
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     time = models.DateTimeField()
+    pricing = models.ForeignKey(PricingGroup,models.SET_NULL,blank=True,null=True,)
 
 
 class Seatsbought(models.Model):
@@ -107,4 +117,5 @@ class Seatsbought(models.Model):
 
 class Ticket(models.Model):
     ticketid = models.AutoField(primary_key=True)   
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)   
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)  
+

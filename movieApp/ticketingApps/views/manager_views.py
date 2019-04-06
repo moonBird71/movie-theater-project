@@ -25,6 +25,37 @@ class ManagedTheaters(LoginRequiredMixin,UserPassesTestMixin,ListView):
     def get_queryset(self):
         objs = self.request.user.profile.theaters
         return objs.all()
+class ManagedShowings(LoginRequiredMixin,UserPassesTestMixin,ListView):
+    model = Movieshowing
+    template_name="ticketingApps/managed_showings_list.html"
+    def get_queryset(self):
+        objs = Movieshowing.objects.filter(room__theater__profile__user=self.request.user)
+        return objs
+    def test_func(self):
+        return getattr(self.request.user.profile, "isemployee")
+class ManagedShowingsSearchResults(ListView):
+    model = Movieshowing
+    template_name="ticketingApps/managed_showings_list.html"
+    def get_queryset(self):
+        objs = Movieshowing.objects.filter(room__theater__profile__user=self.request.user)
+        tName = self.request.GET["name"]
+        tCity = self.request.GET["tCity"]
+        tState = self.request.GET["tState"]
+        mName = self.request.GET['mName']
+        day = self.request.GET['day']
+        if(tName!=""):
+            objs=objs.filter(room__theater__theatername__icontains=tName)
+        if(tCity!=""):
+            objs=objs.filter(room__theater__theatercity__icontains=tCity)
+        if(tState!=""):
+            objs=objs.filter(room__theater__theaterstate__icontains=tState)
+        if(mName!=""):
+            objs=objs.filter(movie__movietitle__icontains=mName)
+        if(day!=""):
+            objs=objs.filter(time__range=(datetime.strptime(day,"%Y-%m-%d"),datetime.strptime(day,"%Y-%m-%d")+timedelta(days=1)))
+        return objs 
+    def test_func(self):
+        return getattr(self.request.user.profile, "isemployee")      
 #Add Theater
 
 class AddTheater(LoginRequiredMixin,UserPassesTestMixin,CreateView):
@@ -44,7 +75,7 @@ class AddShowing(LoginRequiredMixin,UserPassesTestMixin,CreateView):
     model=Movieshowing
     form_class=AddShowingForm
     template_name = "ticketingApps/add_showing.html"
-    success_url='/manager/theaters/'
+    success_url='/manager/'
     def get_form(self,form_class=AddShowingForm):
         form = super(AddShowing, self).get_form(AddShowingForm)
         theaterPicked = Theater.objects.get(theaterid=self.kwargs["theaterId"])
@@ -66,7 +97,7 @@ class AddRoom(LoginRequiredMixin,UserPassesTestMixin,CreateView):
 class AddMovie(LoginRequiredMixin,UserPassesTestMixin,CreateView):
     model=Movie
     form_class=AddMovieForm
-    success_url='/manager/theaters/'
+    success_url='/manager/'
     def get_initial(self):
         return {'moviereleasedate':datetime.now()}
     def test_func(self):
@@ -98,13 +129,13 @@ class DeleteRoom(LoginRequiredMixin, UserPassesTestMixin,DeleteView):
         return obj
 class DeleteShowing(LoginRequiredMixin, UserPassesTestMixin,DeleteView):
     model = Movieshowing
-    success_url='/manager/theaters/'
+    success_url='/manager/'
     template_name='ticketingApps/showing_delete_confirm.html'
     def test_func(self):
         return getattr(self.request.user.profile, "isemployee")
     def get_object(self, queryset=None):
         """ Hook to ensure object is owned by request.user. """
-        obj = super(DeleteRoom, self).get_object()
+        obj = super(DeleteShowing, self).get_object()
         if obj not in Movieshowing.objects.filter(room__theater__profile__user=self.request.user):
             raise Http404
         return obj
@@ -113,3 +144,31 @@ class TheaterDetail(LoginRequiredMixin,UserPassesTestMixin,DetailView):
     template_name="ticketingApps/theater_detail.html"
     def test_func(self):
         return getattr(self.request.user.profile, "isemployee")
+class ShowingAnalytics(LoginRequiredMixin,UserPassesTestMixin, DetailView):
+    model = Movieshowing
+    template_name="ticketingApps/showing_stats.html"
+    def test_func(self):
+        return getattr(self.request.user.profile, "isemployee")
+class CreatePricingGroup(LoginRequiredMixin,UserPassesTestMixin, CreateView):
+    model = PricingGroup
+    template_name="ticketingApps/create_pricing_group.html"
+    fields = ['name']
+    success_url='/manager/'
+    def test_func(self):
+        return getattr(self.request.user.profile, "isemployee")
+    def form_valid(self,form):
+        pricingGroup=form.save(commit=False)
+        pricingGroup(profile=self.request.user.profile)
+        pricingGroup.save()
+        return super(CreatePricingGroup,self).form_valid(form)
+class CreatePricePoint(LoginRequiredMixin,UserPassesTestMixin, CreateView):
+    model = PricePoint
+    template_name="ticketingApps/create_price_point.html"
+    form_class = AddPricePointForm
+    success_url='/manager/'
+    def get_form(self,form_class=AddPricePointForm):
+        form = super(CreatePricePoint, self).get_form(AddPricePointForm)
+        form.fields['group'].queryset=PricingGroup.objects.filter(profile=self.request.user.profile)
+        return form
+    def test_func(self):
+        return getattr(self.request.user.profile,"isemployee")

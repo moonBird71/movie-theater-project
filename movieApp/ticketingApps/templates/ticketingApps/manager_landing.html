@@ -1,12 +1,6 @@
-{# Load the tag library #}
+{% extends 'base.html' %}
 {% load bootstrap4 %}
-
-{# Load CSS and JavaScript #}
-{% bootstrap_css %}
-{% bootstrap_javascript jquery='full' %}
-
-{# Display django.contrib.messages as Bootstrap alerts #}
-{% bootstrap_messages %}
+{% block content %}
 <h1> Movie Reservations </h1>
 <h2> Employee Home Page </h2>
 <ul><!--add hrefs later -->
@@ -19,3 +13,4 @@
     <a class="btn btn-block" href="{% url 'ticketingApps:price-point-select' %}" role="button">Add Price Point</a>
     {% endbuttons %}
 </ul>
+{% endblock %}

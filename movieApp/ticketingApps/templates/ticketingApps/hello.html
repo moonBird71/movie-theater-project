@@ -1,13 +1,7 @@
-{# Load the tag library #}
-{% load bootstrap4 %}
-
-{# Load CSS and JavaScript #}
-{% bootstrap_css %}
-{% bootstrap_javascript jquery='full' %}
-
-{# Display django.contrib.messages as Bootstrap alerts #}
-{% bootstrap_messages %}
+{% extends 'base.html' %}
+{% block content %}
 <h1> Hello </h1>
 <p>Welcome, {{ user.username }}. Thanks for logging in.</p>
 <p>From here, pleace go to the showings list an select a movie</p>
 <a class="btn btn-block" href="{% url 'ticketingApps:showings-list' %}" role="button"> Showings List </a>
+{% endblock %}

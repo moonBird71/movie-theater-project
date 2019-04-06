@@ -1,34 +1,17 @@
-{% load static %}
+{% extends 'base.html' %}
 
-{# Load the tag library #}
-{% load bootstrap4 %}
-
-{# Load CSS and JavaScript #}
-{% bootstrap_css %}
-{% bootstrap_javascript jquery='full' %}
-
-{# Display django.contrib.messages as Bootstrap alerts #}
-{% bootstrap_messages %}
-<html>
-	<head>
-		<br>
-		<h1> Movie Reservations </h1>
-		<br>
-		<h2> Home Page </h2>
-		<link rel="stylesheet" href="{% static 'css/movieApp.css' %}">
-	</head>
-	<body>
-		<br>
-		<ul>
-			{% buttons %}
-				{% if not request.user.is_authenticated %}
-				<a class="btn btn-login btn-block" href="accounts/login/" role="button"> Login </a><!--link to Login page-->
-				<a class="btn btn-block" href="{% url 'ticketingApps:sign-up' %}" role="button"> Create Account </a><!--link to Add User form-->
-				{% else %}
-				<a class="btn btn-block" href="{% url 'ticketingApps:ticket-list'%}" role="button">My Tickets</a>
-				{% endif %}
-				<a class="btn btn-list btn-block" href="showings/list/" role="button"> Find a Movie </a><!--link to Showings List page-->
-			{% endbuttons %}
-		</ul>
-	</body>
-</html>
+{% block content %}
+<h1> Movie Reservations </h1>
+<br>
+<h2> Home Page </h2>
+<br>
+<ul>
+		{% if not request.user.is_authenticated %}
+		<a class="btn btn-login btn-block" href="accounts/login/" role="button"> Login </a><!--link to Login page-->
+		<a class="btn btn-block" href="{% url 'ticketingApps:sign-up' %}" role="button"> Create Account </a><!--link to Add User form-->
+		{% else %}
+		<a class="btn btn-block" href="{% url 'ticketingApps:ticket-list'%}" role="button">My Tickets</a>
+		{% endif %}
+		<a class="btn btn-list btn-block" href="showings/list/" role="button"> Find a Movie </a><!--link to Showings List page-->
+</ul>
+{% endblock %}

@@ -6,8 +6,12 @@
 <form method="post">{% csrf_token %}
     {% bootstrap_form form %}
     <input type="submit" value="Login">
+<<<<<<< HEAD
+    {% endbuttons %}
 </form>
 <br>
 <a href="{% url 'ticketingApps:sign-up' %}">Create an Account</a>
+=======
+</form>
 {% endblock %}
-
+>>>>>>> 7c479b40230bc3613bc791adb32a382a85026793

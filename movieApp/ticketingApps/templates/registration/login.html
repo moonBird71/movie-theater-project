@@ -1,16 +1,10 @@
-{# Load the tag library #}
+{% extends 'base.html' %}
 {% load bootstrap4 %}
-
-{# Load CSS and JavaScript #}
-{% bootstrap_css %}
-{% bootstrap_javascript jquery='full' %}
-
-{# Display django.contrib.messages as Bootstrap alerts #}
-{% bootstrap_messages %}
+{% block content %}
 <h1> Login </h1>
+<h2>Welcome Back!</h2>
 <form method="post">{% csrf_token %}
     {% bootstrap_form form %}
-    {% buttons %}
     <input type="submit" value="Login">
-    {% endbuttons %}
 </form>
+{% endblock %}

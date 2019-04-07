@@ -1,18 +1,22 @@
+
 <!DOCTYPE html>
+{% block scripts %}{% endblock %}
 <html>
 <head>
 	{% load static %}
 	<title>Movie Website</title>
-	<link rel="stylesheet" href="{% static 'css/movieApp.css' %}">
-	<link rel="stylesheet" href="{% static 'css/table.css' %}">
-</head>
-<body>
 	{# Load the tag library #}
 	{% load bootstrap4 %}
 
 	{# Load CSS and JavaScript #}
 	{% bootstrap_css %}
 	{% bootstrap_javascript jquery='full' %}
+	{% block styles %}{% endblock %}
+	<link rel="stylesheet" href="{% static 'css/movieApp.css' %}">
+	<link rel="stylesheet" href="{% static 'css/table.css' %}">
+</head>
+<body>
+	
 
 	{# Display django.contrib.messages as Bootstrap alerts #}
 	{% bootstrap_messages %}
@@ -22,6 +26,7 @@
 		<p>OR file not saved</p>
 		remove this text later
 	{% endblock %}
+	{% block endscripts %}{% endblock %}
 
 </body>
 </html>

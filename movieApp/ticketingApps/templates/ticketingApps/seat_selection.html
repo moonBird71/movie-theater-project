@@ -1,5 +1,6 @@
 
-{% if showing %}
+{% extends 'base.html' %}
+{% block scripts %}
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
     <script src="//unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
     <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
@@ -14,7 +15,8 @@
         var showingId = {{showing.id}}
     </script>
     <div id="vapp">
-    <head>
+    {% endblock %}
+    {% block styles %}
       <meta charset='utf-8' />
       <link
       type="text/css"
@@ -26,10 +28,12 @@
       rel="stylesheet"
       href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"
     /> 
-    <link type="text/css" rel="stylesheet" href="/static/css/table.css"></style>
-    </head>
+    <!--<link type="text/css" rel="stylesheet" href="/static/css/table.css"></style>-->
+    {% endblock %}
     
     <body>
+        {% block content %}
+        {% if showing %}
       <h1>Seat Preview and Selection</h1>
       <h3>Seats for [[movieTitle]]</h3>
         The screen is located here
@@ -64,10 +68,13 @@
                 <tr><td>{{price.name }}:</td><td>${{ price.price }}</td></tr>
                 {% endfor %}
             </table>
+            {% endif %}
+            
         </div>
+        {% endblock %}
     <!-- Our View App goes at the end of the document -->
     
-    
+    {% block endscripts %}
     <script>
     
     var vapp=new Vue({
@@ -104,5 +111,6 @@
             }
         });
     </script>
+    {% endblock %}
     </body>
-{% endif %}
+

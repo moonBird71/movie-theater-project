@@ -156,8 +156,6 @@ class ShowingAnalytics(LoginRequiredMixin,UserPassesTestMixin, DetailView):
         showingP=context['object']
         totalSeats = int(showingP.room.rows)*int(showingP.room.columns)
         seatsSold = Seatsbought.objects.filter(showing=showingP, final=True)
-        print(seatsSold)
-        print(totalSeats)
         context['percentSold']='%.2f'%(100*seatsSold.count()/totalSeats)
         revenue = 0
         orders = Order.objects.filter(order_of__showing=showingP).distinct()

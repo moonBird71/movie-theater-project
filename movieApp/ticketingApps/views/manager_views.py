@@ -33,6 +33,7 @@ class ManagedShowings(LoginRequiredMixin,UserPassesTestMixin,ListView):
         return objs
     def test_func(self):
         return getattr(self.request.user.profile, "isemployee")
+
 class ManagedShowingsSearchResults(ListView):
     model = Movieshowing
     template_name="ticketingApps/managed_showings_list.html"
@@ -80,6 +81,7 @@ class AddShowing(LoginRequiredMixin,UserPassesTestMixin,CreateView):
         form = super(AddShowing, self).get_form(AddShowingForm)
         theaterPicked = Theater.objects.get(theaterid=self.kwargs["theaterId"])
         form.fields['room'].queryset=Room.objects.filter(theater=theaterPicked)
+        form.fields['pricing'].queryset=PricingGroup.objects.filter(profile=self.request.user.profile)
         return form
     def test_func(self):
         return getattr(self.request.user.profile, "isemployee")
@@ -149,6 +151,20 @@ class ShowingAnalytics(LoginRequiredMixin,UserPassesTestMixin, DetailView):
     template_name="ticketingApps/showing_stats.html"
     def test_func(self):
         return getattr(self.request.user.profile, "isemployee")
+    def get_context_data(self,*args,**kwargs):
+        context=super(ShowingAnalytics, self).get_context_data(*args,**kwargs)
+        showingP=context['object']
+        totalSeats = int(showingP.room.rows)*int(showingP.room.columns)
+        seatsSold = Seatsbought.objects.filter(showing=showingP, final=True)
+        print(seatsSold)
+        print(totalSeats)
+        context['percentSold']='%.2f'%(100*seatsSold.count()/totalSeats)
+        revenue = 0
+        orders = Order.objects.filter(order_of__showing=showingP).distinct()
+        for order in orders:
+            revenue = revenue + order.cost
+        context['revenue']=revenue
+        return context
 class CreatePricingGroup(LoginRequiredMixin,UserPassesTestMixin, CreateView):
     model = PricingGroup
     template_name="ticketingApps/create_pricing_group.html"
@@ -158,7 +174,7 @@ class CreatePricingGroup(LoginRequiredMixin,UserPassesTestMixin, CreateView):
         return getattr(self.request.user.profile, "isemployee")
     def form_valid(self,form):
         pricingGroup=form.save(commit=False)
-        pricingGroup(profile=self.request.user.profile)
+        pricingGroup.profile=self.request.user.profile
         pricingGroup.save()
         return super(CreatePricingGroup,self).form_valid(form)
 class CreatePricePoint(LoginRequiredMixin,UserPassesTestMixin, CreateView):
@@ -172,3 +188,55 @@ class CreatePricePoint(LoginRequiredMixin,UserPassesTestMixin, CreateView):
         return form
     def test_func(self):
         return getattr(self.request.user.profile,"isemployee")
+class CreatePromoCode(LoginRequiredMixin,UserPassesTestMixin, CreateView):
+    model=Promocode
+    template_name="ticketingApps/create_promo_code.html"
+    form_class = CreatePromoCodeForm
+    success_url='/manager/'
+    def get_form(self,form_class=AddPricePointForm):
+        form = super(CreatePromoCode, self).get_form(CreatePromoCodeForm)
+        form.fields['theater'].queryset=Theater.objects.filter(profile=self.request.user.profile)
+        return form
+    def test_func(self):
+        return getattr(self.request.user.profile,"isemployee")
+class ListPricingGroup(LoginRequiredMixin,UserPassesTestMixin,ListView):
+    model = PricingGroup
+    template_name="ticketingApps/pricing_group_list.html"
+    def get_queryset(self):
+        objs = PricingGroup.objects.filter(profile__user=self.request.user)
+        return objs
+    def test_func(self):
+        return getattr(self.request.user.profile, "isemployee")
+class ListPromoCodes(LoginRequiredMixin,UserPassesTestMixin,ListView):
+    model = Promocode
+    template_name="ticketingApps/promo_code_list.html"
+    def get_queryset(self):
+        objs = Promocode.objects.filter(theater__profile__user=self.request.user)
+        return objs
+    def test_func(self):
+        return getattr(self.request.user.profile, "isemployee")
+class DeletePromoCodes(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
+    model = Promocode
+    success_url='/manager/'
+    template_name='ticketingApps/promo_delete_confirm.html'
+    def test_func(self):
+        return getattr(self.request.user.profile, "isemployee")
+    def get_object(self, queryset=None):
+        """ Hook to ensure object is owned by request.user. """
+        obj = super(DeletePromoCodes, self).get_object()
+        if obj not in Promocode.objects.filter(theater__profile__user=self.request.user):
+            raise Http404
+        return obj
+class AssociateEmployee(LoginRequiredMixin,UserPassesTestMixin,FormView):
+    template_name='ticketingApps/add_employee.html'
+    success_url='/manager/'
+    form_class=AssociateEmployeeForm
+    def test_func(self):
+        return getattr(self.request.user.profile, "isemployee")
+    def form_valid(self, form):
+        uname=form.cleaned_data['username']
+        profileEntered = Profile.objects.filter(user__username=uname)
+        theaterPicked = Theater.objects.get(theaterid=self.kwargs['pk'])
+        profileEntered.first().theaters.add(theaterPicked)
+        profileEntered.first().save()
+        return super(AssociateEmployee,self).form_valid(form)

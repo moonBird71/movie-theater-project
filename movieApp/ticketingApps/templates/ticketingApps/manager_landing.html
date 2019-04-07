@@ -9,8 +9,11 @@
     <a class="btn btn-block" href="{% url 'ticketingApps:add-theater' %}" role="button"> Create New Theater </a>
     <a class="btn btn-block" href="{% url 'ticketingApps:add-movie' %}" role="button">Add a Movie</a>
     <a class="btn btn-block" href="{% url 'ticketingApps:managed-showings-list' %}" role="button">Your Showings</a>
+    <a class="btn btn-block" href="{% url 'ticketingApps:price-group-list' %}" role="button">Your Pricing Groups</a>
     <a class="btn btn-block" href="{% url 'ticketingApps:price-group-create' %}" role="button">Add a Pricing Group</a>
-    <a class="btn btn-block" href="{% url 'ticketingApps:price-point-select' %}" role="button">Add Price Point</a>
+    <a class="btn btn-block" href="{% url 'ticketingApps:price-point-create' %}" role="button">Add Price Point</a>
+    <a class="btn btn-block" href="{% url 'ticketingApps:promo-code-list' %}" role="button">Your Promo Codes</a>
+    <a class="btn btn-block" href="{% url 'ticketingApps:promo-code-create' %}" role="button">Add Promo Code</a>
     {% endbuttons %}
 </ul>
 {% endblock %}

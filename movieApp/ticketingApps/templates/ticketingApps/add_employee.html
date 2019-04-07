@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+<h1> Movie Ticketing </h1>
+<h3> Add Employee </h3>
+<form method="post">{% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+    <input type="submit" value="Save">
+    {% endbuttons %}
+</form>
+{% endblock %}

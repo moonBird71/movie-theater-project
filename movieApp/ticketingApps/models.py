@@ -6,9 +6,10 @@ from datetime import datetime, timedelta
 from django.utils import timezone
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.conf import settings 
+from django.core.validators import MaxValueValidator, MinValueValidator
 class Theater(models.Model):
     theaterid = models.AutoField(db_column='TheaterID', primary_key=True)   
-    theatername = models.CharField(db_column='TheaterName', max_length=45, blank=True, null=True)   
+    theatername = models.CharField(db_column='TheaterName', max_length=45)   
     theaterstreet = models.CharField(db_column='TheaterStreet', max_length=45, blank=True, null=True)   
     theatercity = models.CharField(db_column='TheaterCity', max_length=45, blank=True, null=True)   
     theaterstate = models.CharField(db_column='TheaterState', max_length=45, blank=True, null=True)   
@@ -46,7 +47,7 @@ class Creditcard(models.Model):
 
 class Movie(models.Model):
     movieid = models.AutoField(db_column='MovieID', primary_key=True)   
-    movietitle = models.CharField(db_column='MovieTitle', max_length=45, blank=True, null=True)   
+    movietitle = models.CharField(db_column='MovieTitle', max_length=45)   
     movieruntime = models.PositiveIntegerField(db_column='MovieRuntime', blank=True, null=True)   
     movierating = models.CharField(db_column='MovieRating', max_length=5, blank=True, null=True)   
     moviereleasedate = models.DateField(db_column='MovieReleaseDate', blank=True, null=True)   
@@ -59,6 +60,7 @@ class Order(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, db_column='Profile_UserID', null=True)   
     creditcard = models.ForeignKey(Creditcard, models.DO_NOTHING, db_column='CreditCard_CreditCardID', null=True)   
     qrcodetext = models.CharField(max_length=150, blank=True, null=True)
+    cost = models.DecimalField(default=0, max_digits=15, decimal_places=2)
     
     def save(self, *args, **kwargs):
         #this generate the qrcode text based upon the seats bought
@@ -105,7 +107,10 @@ class Movieshowing(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     time = models.DateTimeField()
     pricing = models.ForeignKey(PricingGroup,models.SET_NULL,blank=True,null=True,)
-
+class Promocode(models.Model):
+    percent = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(1)])
+    theater = models.ForeignKey(Theater, on_delete=models.CASCADE)
+    code = models.CharField(max_length=20)
 
 class Seatsbought(models.Model):
     seatrow = models.CharField(max_length=10)  

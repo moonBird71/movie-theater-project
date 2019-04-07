@@ -9,6 +9,7 @@ from datetime import datetime
 from django.contrib.auth.models import User
 from django.conf import settings 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.utils import timezone
 
 #index/home page
 class IndexPage(TemplateView):
@@ -29,6 +30,11 @@ class ShowingsList(ListView):
     model = Movieshowing
     fields = '__all__'
     template_name = "ticketingApps/showings_list.html"
+    def get_queryset(self):
+        objs = Movieshowing.objects
+        objs=objs.filter(time__gte=timezone.now())
+        objs=objs.order_by('time')
+        return objs
 
 class ShowingsSearchResults(ListView):
     model = Movieshowing

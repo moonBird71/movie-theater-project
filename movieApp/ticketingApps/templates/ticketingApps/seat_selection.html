@@ -49,12 +49,14 @@
                 </template>
             </tr>
         </table>
-            <form ref="buyForm" action="{% url 'ticketingApps:order' %}" method="get">
-                {% csrf_token %}
-                <input type="hidden" name="toBuy" id="toBuy" :value="JSON.stringify(toBuy)">
-                <input type="hidden" name="showingId" id="showingId" :value="showing">
-                <button type="submit">Buy Tickets</button>
-            </form>
+            <template v-if="numberTickets>0">
+                <form ref="buyForm" action="{% url 'ticketingApps:ticket-type' %}" method="get">
+                    {% csrf_token %}
+                    <input type="hidden" name="toBuy" id="toBuy" :value="JSON.stringify(toBuy)">
+                    <input type="hidden" name="showingId" id="showingId" :value="showing">
+                    <button type="submit">Buy Tickets</button>
+                </form>
+            </template>
         </div>
     <!-- Our View App goes at the end of the document -->
     
@@ -73,6 +75,7 @@
                 picked: seatsPickedJ,
                 toBuy: {},
                 showing: showingId,
+                numberTickets: 0
             },
             methods: {
                 seatClick(i,j){
@@ -81,9 +84,11 @@
                     }else if(this.picked[j][i]=="#0544F0"){
                         this.picked[j][i]="#00F133"
                         this.toBuy[j*this.numberCols+i]=[j,i]
+                        this.numberTickets++
                     }else{
                         this.picked[j][i]="#0544F0"
                         delete this.toBuy[j*this.numberCols+i]
+                        this.numberTickets--
                     }
                 },
                 //submitForm(){

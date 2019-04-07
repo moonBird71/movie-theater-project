@@ -18,16 +18,69 @@ class TicketTypeSelectionPage(FormView):
     form_class=TicketTypeForm
     template_name='ticketingApps/pick_ticket_type.html' 
     def get_success_url(self):
-        return reverse('seat-selection',args=(self.kwargs['showing']))
+        return reverse('ticketingApps:order', kwargs={"numberTix":self.numberTix,"orderId":self.orderId})
+    def calculate_price(self, form, showing):
+        priceGroup = showing.pricing
+        priceList = PricePoint.objects.filter(group=priceGroup)
+        totalCost = 0
+        for price in priceList:
+            number=int(form.cleaned_data[price.name])
+            totalCost = totalCost+number*int(price.price)
+        promo=Promocode.objects.filter(code=form.cleaned_data['promocode'], theater=showing.room.theater).first()
+        if promo is None:
+            percentoff=0
+        else:
+            percentoff=promo.percent
+        return totalCost*(1-percentoff/100)
     def get_form_kwargs(self):
         kwargs=super(TicketTypeSelectionPage,self).get_form_kwargs()
-        showingGroup = self.kwargs['showing'].pricing
+        showing = Movieshowing.objects.get(id=self.request.GET['showingId'])
+        showingGroup = showing.pricing
         kwargs['pricingList']=PricePoint.objects.filter(group=showingGroup)
+        toBuyArray = json.loads(self.request.GET['toBuy'])
+        kwargs['numberTix']=len(toBuyArray)
         return kwargs
-    
+    def get_context_data(self, *args, **kwargs):
+        context = super(TicketTypeSelectionPage, self).get_context_data(*args,**kwargs)
+        toBuyArray = json.loads(self.request.GET['toBuy'])
+        showing = Movieshowing.objects.get(id=self.request.GET['showingId'])
+        showingGroup = showing.pricing
+        context['pGroup']=PricePoint.objects.filter(group=showingGroup)
+        context['numberTix']=len(toBuyArray)
+        context['toBuy']=self.request.GET['toBuy']
+        context['showingId']=self.request.GET['showingId']
+        return context
+    def form_valid(self,form):
+        validSeats = True
+        print(self.request.POST)
+        showingP = Movieshowing.objects.get(id=self.request.GET['showingId'])
+        toBuyArray = json.loads(self.request.GET['toBuy'])
+        ticketsList = []
+        orderObj = None
+        for key in toBuyArray:
+            if(Seatsbought.objects.filter(showing=showingP,seatrow=toBuyArray[key][0], seatcol=toBuyArray[key][1]).count()>0):
+                validSeats = False
+        if validSeats:
+            if self.request.user.is_authenticated:
+                profileU = Profile.objects.get(user=self.request.user)
+                orderObj=Order.objects.create(profile=profileU)
+            else:
+                orderObj=Order.objects.create()
+            for key in toBuyArray:
+                Seatsbought.objects.create(seatrow=toBuyArray[key][0], seatcol=toBuyArray[key][1], showing=showingP,order=orderObj,expirationTime=timezone.now()+timedelta(minutes=10))
+            orderObj.cost = float(self.calculate_price(form,showingP))
+            orderObj.save()
+            numberTix=len(toBuyArray)
+            orderId=orderObj.orderid
+        else:
+            numberTix = 0
+            orderId = -1
+        self.numberTix=numberTix
+        self.orderId=orderId
+        return super(TicketTypeSelectionPage,self).form_valid(form)
+
 class SeatSelectionPage(TemplateView):
     template_name='ticketingApps/seat_selection.html'
-
     def get_context_data(self, *args, **kwargs):
         context=super(SeatSelectionPage, self).get_context_data(*args,**kwargs)
         showingP = Movieshowing.objects.get(id=kwargs['showing'])
@@ -51,30 +104,20 @@ class SimpleOrderPage(TemplateView):
     template_name='ticketingApps/order.html'
     def get_context_data(self,*args,**kwargs):
         context=super(SimpleOrderPage, self).get_context_data(*args,**kwargs)
-        validSeats = True
-        showingP = Movieshowing.objects.get(id=self.request.GET['showingId'])
-        context['showingP']= showingP
-        toBuyArray = json.loads(self.request.GET['toBuy'])
-        context['toBuy']=toBuyArray
-        ticketsList = []
-        orderObj = None
-        for key in toBuyArray:
-            if(Seatsbought.objects.filter(showing=showingP,seatrow=toBuyArray[key][0], seatcol=toBuyArray[key][1]).count()>0):
-                validSeats = False
-        if validSeats:
-            if self.request.user.is_authenticated:
-                profileU = Profile.objects.get(user=self.request.user)
-                orderObj=Order.objects.create(profile=profileU)
-            else:
-                orderObj=Order.objects.create()
-            for key in toBuyArray:
-                Seatsbought.objects.create(seatrow=toBuyArray[key][0], seatcol=toBuyArray[key][1], showing=showingP,order=orderObj,expirationTime=timezone.now()+timedelta(minutes=10))
+        validSeats=False
+        if int(self.kwargs["numberTix"])>0:
+            validSeats=True
         context['valid']=validSeats
-        context['order']=orderObj
-        context['numberTix']=len(toBuyArray)
-        context['key']=settings.STRIPE_PUBLISHABLE_KEY
-        context['cost']=len(toBuyArray)*showingP.room.theater.price
-        context['cost100']=context['cost']*100
+        if validSeats:
+            orderId=int(self.kwargs['orderId'])
+            orderObj = Order.objects.get(orderid=orderId)
+            context['showingP'] = Seatsbought.objects.filter(order=orderObj).first().showing
+            context['order'] = orderObj
+            allSeats=Seatsbought.objects.filter(order=orderObj)
+            context['numberTix']=allSeats.count()
+            context['key']=settings.STRIPE_PUBLISHABLE_KEY
+            context['cost']=orderObj.cost
+            context['cost100']=orderObj.cost*100
         return context
 
 def charge(request):
@@ -102,6 +145,7 @@ def charge(request):
             )            
             for seat in seatsBoughtNow:
                 seat.final = True
+                seat.save()
             Order.objects.get(orderid=orderIdH).save()
         except stripe.error.CardError as e:
             # Since it's a decline, stripe.error.CardError will be caught

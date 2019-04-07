@@ -36,12 +36,16 @@ class RoomForShowingField(forms.ModelChoiceField):
 class MovieForShowingField(forms.ModelChoiceField):
     def label_from_instance(self,obj):
         return obj.movietitle
+class PricingForShowingField(forms.ModelChoiceField):
+    def label_from_instance(self,obj):
+        return obj.name
 class AddShowingForm(ModelForm):
         room = RoomForShowingField(queryset=Room.objects.none())
         movie = MovieForShowingField(queryset=Movie.objects.order_by('-moviereleasedate'))
+        pricing = PricingForShowingField(queryset=PricingGroup.objects.none())
         class Meta:
             model=Movieshowing
-            fields=['room','movie','time']
+            fields=['room','movie','time','pricing']
             labels={
                 'time':'Date and time (mm/dd/yyyy hh:mm)'
             }
@@ -53,11 +57,19 @@ class AddPricePointForm(ModelForm):
         class Meta:
             model=PricePoint
             fields='__all__'
+class TheaterForPromoField(forms.ModelChoiceField):
+    def label_from_instance(self,obj):
+        return obj.theatername
+class CreatePromoCodeForm(ModelForm):
+        theater = TheaterForPromoField(queryset=Theater.objects.none())
+        class Meta:
+            model=Promocode
+            fields='__all__'
 
 class TheaterForm(ModelForm):
     class Meta:
          model=Theater
-         fields=['theatername','theaterstreet','theatercity','theaterstate','theaterzip','price']
+         fields=['theatername','theaterstreet','theatercity','theaterstate','theaterzip']
          labels={
              'theaterstreet':'Street',
              'theatername':'Name',
@@ -93,10 +105,34 @@ class SignupForm(UserCreationForm):
         profile.save()
         return user, profile
 class TicketTypeForm(forms.Form):
-    def __init__(self, round_list, *args, **kwargs):
+    promocode = forms.CharField(label="Promo Code", required=False)
+    def __init__(self,pricingList,numberTix,*args,**kwargs):
         super(TicketTypeForm, self).__init__(*args, **kwargs)
-        pList = kwargs["pricingList"]
-        for price in pList:
+        self.pList = pricingList
+        self.numTix=numberTix
+        for price in self.pList:
             keyF = price.name
-            self.fields[keyF] = forms.ChoiceField(choices=(0,1,2,3,4,5,6,7,8,9,10))
+            print(keyF)
+            self.fields[keyF] = forms.ChoiceField(choices=((0,0),(1,1),(2,2),(3,3),(4,4),(5,5),(6,6),(7,7),(8,8),(9,9),(10,10)))
+    def clean(self):
+        cleaned_data = super().clean()
+        numTix =0
+        for price in self.pList:
+            numTix=numTix+int(cleaned_data.get(price.name))
+        if numTix is not self.numTix:
+            print("error in forM")
+            raise forms.ValidationError(
+                "Did not select as many tickets as seats chosen."
+            )
+        return cleaned_data
 
+class AssociateEmployeeForm(forms.Form):
+    username = forms.CharField(label="Username of New Employee")
+    def clean(self):
+        cleaned_data = super().clean()
+        matching = Profile.objects.filter(user__username=cleaned_data.get('username'))
+        if matching.count() is not 1:
+            raise forms.ValidationError("No matching user was found.")
+        if not matching.first().isemployee:
+            raise forms.ValidationError("The matching user is not an employee")
+        return cleaned_data

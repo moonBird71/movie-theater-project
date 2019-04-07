@@ -7,6 +7,7 @@ Rooms: <ul>{% for room in object.room_set.all %}
     <li>{{room.roomnumber}}: {{room.rows}}x{{room.columns}}  <a href="{% url 'ticketingApps:delete-room' pk=room.id %}">Delete Room</a></li>
     {% endfor %}
     </ul>
+Add Employee to this Theater: <a href="{% url 'ticketingApps:add-employee' pk=object.theaterid %}">Add Employee</a><br>
 Add Room: <a href="{% url 'ticketingApps:add-room' theaterId=object.theaterid%}">Add Room</a><br>
 Add Showing: <a href="{%url 'ticketingApps:add-showing' theaterId=object.theaterid%}">Add Showing</a><br>
 Delete: <a href="{% url 'ticketingApps:delete-theater' pk=object.theaterid %}" >Delete Theater</a>

@@ -8,3 +8,9 @@
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
 <h3>Showing Detail</h3>
+Movie: {{object.movie.movietitle}}<br>
+Time: {{object.time}}<br>
+Theater: {{object.room.theater.theatername}}<br>
+Room: {{object.room.roomnumber}}<br>
+Seats Sold: {{percentSold}}%<br>
+Revenue: {{revenue}}<br>

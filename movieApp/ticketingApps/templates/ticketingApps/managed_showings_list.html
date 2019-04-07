@@ -30,7 +30,7 @@ You can use as many or few fields as desired
 		<td>  </td>
 		<td><a href="{% url 'ticketingApps:delete-showing' pk=movieshowing.id %}">Delete Showing</a></td>
 		<td>  </td>
-		<td><a href="{% url 'ticketingApps:delete-showing' pk=movieshowing.id %}">See Analytics</a></td>
+		<td><a href="{% url 'ticketingApps:showing-stats' pk=movieshowing.id %}">See Analytics</a></td>
 	</tr>
 	{% empty %}
 		<tr> No showings yet. </tr>

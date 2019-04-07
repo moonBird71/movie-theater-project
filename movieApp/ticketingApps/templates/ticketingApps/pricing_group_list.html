@@ -3,15 +3,16 @@
 {% block content %}
 <h1> Movie Ticketing </h1>
 <h3> Pricings List </h3>
-	{% for group in pricinggroup_list %}<!--add href for layout-->
+	{% for group in pricinggroup_list %}
     <h5>{{group.name}}:</h5>
     <table>
-    {% for price in group.group__set %}
-    <tr><!--pass roomnumber to linked page-->
+    {% for price in group.pricepoint_set.all %}
+    <tr>
 		<td>{{price.name}}: ${{price.price}}</td>
     </tr>
     {% endfor %}
     </table>
+    <br>
 
 	{% empty %}
 		<tr> No showings yet. </tr>

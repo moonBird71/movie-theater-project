@@ -84,6 +84,8 @@ class SeatSelectionPage(TemplateView):
     def get_context_data(self, *args, **kwargs):
         context=super(SeatSelectionPage, self).get_context_data(*args,**kwargs)
         showingP = Movieshowing.objects.get(id=kwargs['showing'])
+        showingGroup = showingP.pricing
+        context['pGroup']=PricePoint.objects.filter(group=showingGroup)
         context['showing']= showingP
         context['numberRows']= showingP.room.rows
         context['numberCols']= showingP.room.columns

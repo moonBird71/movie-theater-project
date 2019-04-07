@@ -57,6 +57,13 @@
                     <button type="submit">Buy Tickets</button>
                 </form>
             </template>
+            <br>
+            <h3>Pricing</h3>
+            <table>
+                {% for price in pGroup %}
+                <tr><td>{{price.name }}:</td><td>${{ price.price }}</td></tr>
+                {% endfor %}
+            </table>
         </div>
     <!-- Our View App goes at the end of the document -->
     

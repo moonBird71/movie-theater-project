@@ -23,5 +23,5 @@ def login_success(request):
     if request.user.profile.isemployee:
         return redirect('/manager/')
     else:
-        return redirect('ticketingApps:welcome')
+        return redirect('ticketingApps:index')
        

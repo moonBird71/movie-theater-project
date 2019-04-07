@@ -36,23 +36,38 @@
         {% if showing %}
       <h1>Seat Preview and Selection</h1>
       <h3>Seats for [[movieTitle]]</h3>
-        The screen is located here
-          <table :width="String(15*numberCols)" cellpadding="1 px" cellspacing="5 px">
+      <h3>Guide:</h3>
+    <!-- guide box -->
+    <ul style="width:600px;" class="flex-container">
+        Available:
+        <li style="background:#0544f0;" class="flex-item">1,1</li>
+        Selected:
+        <li style="background:#00f133;" class="flex-item">1,1</li>
+        Unavailable:
+        <li style="background:#666666;" class="flex-item">1,1</li>
+        <h3>Pricing:</h3>
+        <table>
+            {% for price in pGroup %}
+            <tr><td>{{price.name }}:</td><td>${{ price.price }}</td></tr>
+            {% endfor %}
+        </table>
+    </ul>
+      <div class="grid">
+        <h3>[SCREEN]</h3>
+          <table class="flex-container">
             <tr>
                 <template v-for="i in numberCols">
                     <td>
                         <template v-for="j in numberRows">
-                            <table v-on:click="seatClick(i,j)" width="100%" cellpadding="10 px" cellspacing="5 px" >
-                                <tr>
-                                    <td :bgcolor="[[picked[ j ][ i ] ]]">
-                                    </td>
-                                </tr>
+                            <table v-on:click="seatClick(i,j)" class='itemj-i flex-item' :bgcolor="[[picked[ j ][ i ] ]]">
+                                
                             </table>
                         </template>
                     </td>
                 </template>
             </tr>
         </table>
+    </div>
             <template v-if="numberTickets>0">
                 <form ref="buyForm" action="{% url 'ticketingApps:ticket-type' %}" method="get">
                     {% csrf_token %}
@@ -62,12 +77,6 @@
                 </form>
             </template>
             <br>
-            <h3>Pricing</h3>
-            <table>
-                {% for price in pGroup %}
-                <tr><td>{{price.name }}:</td><td>${{ price.price }}</td></tr>
-                {% endfor %}
-            </table>
             {% endif %}
             
         </div>

@@ -14,7 +14,7 @@ class Theater(models.Model):
     theatercity = models.CharField(db_column='TheaterCity', max_length=45, blank=True, null=True)   
     theaterstate = models.CharField(db_column='TheaterState', max_length=45, blank=True, null=True)   
     theaterzip = models.CharField(db_column='TheaterZip', max_length=45, blank=True, null=True)   
-    price = models.DecimalField(default=10, max_digits=10, decimal_places=2)
+    #price = models.DecimalField(default=10, max_digits=10, decimal_places=2)
 	#def __str__(self):	#returns theatername as a string. Placeholder
 		#return self.theatername
 		

@@ -38,13 +38,6 @@ def update_user_profile(sender, instance, created, **kwargs):
         Profile.objects.create(user=instance)
     instance.profile.save()
 
-class Creditcard(models.Model):
-    name = models.CharField(max_length=45)
-    cardnumber = models.CharField(db_column='cardNumber', max_length=45, blank=True, null=True)   
-    verificationcode = models.CharField(db_column='verificationCode', max_length=45, blank=True, null=True)   
-    expiration = models.DateField(db_column='Expiration', blank=True, null=True)   
-    creditcardid = models.AutoField(db_column='CreditCardID', primary_key=True)   
-
 class Movie(models.Model):
     movieid = models.AutoField(db_column='MovieID', primary_key=True)   
     movietitle = models.CharField(db_column='MovieTitle', max_length=45)   
@@ -58,7 +51,6 @@ class Movie(models.Model):
 class Order(models.Model):
     orderid = models.AutoField(primary_key=True)   
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, db_column='Profile_UserID', null=True)   
-    creditcard = models.ForeignKey(Creditcard, models.DO_NOTHING, db_column='CreditCard_CreditCardID', null=True)   
     qrcodetext = models.CharField(max_length=150, blank=True, null=True)
     cost = models.DecimalField(default=0, max_digits=15, decimal_places=2)
     
@@ -119,8 +111,4 @@ class Seatsbought(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="order_of")
     final = models.BooleanField(default=False)
     expirationTime = models.DateTimeField(default=timezone.now()+timedelta(minutes=10))
-
-class Ticket(models.Model):
-    ticketid = models.AutoField(primary_key=True)   
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)  
 

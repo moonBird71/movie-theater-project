@@ -33,54 +33,83 @@
     
     <body>
         {% block content %}
+        {% load static %}
         {% if showing %}
       <h1>Seat Preview and Selection</h1>
-      <h3>Seats for [[movieTitle]]</h3>
-      <h3>Guide:</h3>
-    <!-- guide box -->
-    <ul style="width:600px;" class="flex-container">
-        Available:
-        <li style="background:#0544f0;" class="flex-item">1,1</li>
-        Selected:
-        <li style="background:#00f133;" class="flex-item">1,1</li>
-        Unavailable:
-        <li style="background:#666666;" class="flex-item">1,1</li>
-        <h3>Pricing:</h3>
-        <table>
-            {% for price in pGroup %}
-            <tr><td>{{price.name }}:</td><td>${{ price.price }}</td></tr>
-            {% endfor %}
-        </table>
-    </ul>
-      <div class="grid">
-        <h3>[SCREEN]</h3>
-          <table class="flex-container">
+      <h3>Seats for [[movieTitle]] on {{showing.time}}</h3>
+        <br>
+      <table class="flex-container">
+        <tr>
+            <td>
+                    <h3>Guide:</h3>
+                    <!-- guide box -->
+                    <ul style="width:600px;" class="flex-container">
+                        Available:
+                        <li style="background:#0544f0;" class="flex-item"></li>
+                        Selected:
+                        <li style="background:#00f133;" class="flex-item"></li>
+                        Unavailable:
+                        <li style="background:#666666;" class="flex-item"></li>
+                        
+                    </ul>
+                    <br>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="grid">
+                    
+                    <table>
+                        <tr ><img :style="imgStyle" class="in-table"  src="{% static 'images/vague_screen.png' %}" alt="screen"></tr>
+                        <tr>
+                        <table class="flex-container">
+                            <tr>
+                            <template v-for="i in numberCols">
+                                <td>
+                                    <template v-for="j in numberRows">
+                                        <table v-on:click="seatClick(i,j)" :class="[['item'+j.toString()+'-'+i.toString()+' flex-item']]" :bgcolor="[[picked[ j ][ i ] ]]">
+                                        </table>
+                                    </template>
+                                </td>
+                            </template>
+                            </tr>
+                        </table>
+                </div>
+            </td>
+        <td>
+            <table>
             <tr>
-                <template v-for="i in numberCols">
-                    <td>
-                        <template v-for="j in numberRows">
-                            <table v-on:click="seatClick(i,j)" class='itemj-i flex-item' :bgcolor="[[picked[ j ][ i ] ]]">
-                                
-                            </table>
-                        </template>
-                    </td>
-                </template>
+                <td>
+                    <h3>Pricing:</h3>
+                    <table>
+                        {% for price in pGroup %}
+                        <tr><td>{{price.name }}:</td><td>${{ price.price }}</td></tr>
+                        {% endfor %}
+                    </table>
+                </td>
             </tr>
-        </table>
-    </div>
-            <template v-if="numberTickets>0">
-                <form ref="buyForm" action="{% url 'ticketingApps:ticket-type' %}" method="get">
-                    {% csrf_token %}
-                    <input type="hidden" name="toBuy" id="toBuy" :value="JSON.stringify(toBuy)">
-                    <input type="hidden" name="showingId" id="showingId" :value="showing">
-                    <button type="submit">Buy Tickets</button>
-                </form>
-            </template>
-            <br>
-            {% endif %}
+            <tr>
+                <td>
+                <template v-if="numberTickets>0">
+                        <form ref="buyForm" action="{% url 'ticketingApps:ticket-type' %}" method="get">
+                            {% csrf_token %}
+                            <input type="hidden" name="toBuy" id="toBuy" :value="JSON.stringify(toBuy)">
+                            <input type="hidden" name="showingId" id="showingId" :value="showing">
+                            <button type="submit">Buy Tickets</button>
+                        </form>
+                    </template>
+                </td>
+            </tr>
+            </table>
+        </td>
+    </tr>
+    </table>
             
-        </div>
-        {% endblock %}
+    <br>
+    {% endif %}
+    
+</div>
+{% endblock %}
     <!-- Our View App goes at the end of the document -->
     
     {% block endscripts %}
@@ -100,6 +129,11 @@
                 showing: showingId,
                 numberTickets: 0
             },
+            computed: {
+                imgStyle: function(){
+                    return {width: (this.numberCols*44+10)+'px'}
+                }
+            },
             methods: {
                 seatClick(i,j){
                     if(this.picked[String(j)][String(i)]=="#666666"){
@@ -114,13 +148,10 @@
                         this.numberTickets--
                     }
                 },
-                //submitForm(){
-                  //  this.$refs.buyForm.$el.submit()
-                //}
             }
         });
     </script>
     {% endblock %}
     </body>
 
-<\!-- test -->
+<!-- test -->

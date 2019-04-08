@@ -112,7 +112,6 @@ class TicketTypeForm(forms.Form):
         self.numTix=numberTix
         for price in self.pList:
             keyF = price.name
-            print(keyF)
             self.fields[keyF] = forms.ChoiceField(choices=((0,0),(1,1),(2,2),(3,3),(4,4),(5,5),(6,6),(7,7),(8,8),(9,9),(10,10)))
     def clean(self):
         cleaned_data = super().clean()
@@ -120,7 +119,6 @@ class TicketTypeForm(forms.Form):
         for price in self.pList:
             numTix=numTix+int(cleaned_data.get(price.name))
         if numTix is not self.numTix:
-            print("error in forM")
             raise forms.ValidationError(
                 "Did not select as many tickets as seats chosen."
             )

@@ -72,9 +72,11 @@ class Order(models.Model):
             string.append(" Movie: ")
             string.append(seat1.showing.movie.movietitle)
             for priceBundle in pricePointBundles:
-                string.append(priceBundle.pricepoint.name)
-                string.append(": ")
-                string.append(str(priceBundle.quantity))
+                if priceBundle.quantity is not 0:
+                    string.append("  ")
+                    string.append(priceBundle.pricepoint.name)
+                    string.append(": ")
+                    string.append(str(priceBundle.quantity))
             string.append(" Seats: ")
 
             for seat in allSeats:

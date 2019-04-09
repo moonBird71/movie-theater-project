@@ -26,7 +26,7 @@ You can use as many or few fields as desired
 <table>
 	{% for movieshowing in movieshowing_list %}<!--add href for layout-->
 	<tr><!--pass roomnumber to linked page-->
-		<td>{{movieshowing.room.theater.theatername}}: {{movieshowing.movie.movietitle}} in at {{movieshowing.time}}</td>
+		<td>{{movieshowing.room.theater.theatername}}: {{movieshowing.movie.movietitle}} in {{movieshowing.room.roomnumber}} on {{movieshowing.time}}</td>
 		<td>  </td>
 		<td><a href="{% url 'ticketingApps:delete-showing' pk=movieshowing.id %}">Delete Showing</a></td>
 		<td>  </td>

@@ -95,7 +95,7 @@ class UserTicketsListing(LoginRequiredMixin,ListView):
     def get_queryset(self):
         objs = Order.objects
         objs = objs.filter(profile__user=self.request.user)
-        return objs.all()
+        return objs.order_by('-order_of__showing__time')
     def get_context_data(self, *args,**kwargs):
         context=super(UserTicketsListing, self).get_context_data(*args,**kwargs)
         if(self.object_list.first()):

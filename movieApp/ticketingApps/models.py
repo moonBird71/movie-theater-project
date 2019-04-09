@@ -48,32 +48,11 @@ class Movie(models.Model):
     moviedescription = models.CharField(db_column='MovieDescription', max_length=500, blank=True, null=True)   
 
 
-
-class Room(models.Model):
-    roomnumber = models.IntegerField()   
-    theater = models.ForeignKey('Theater', on_delete=models.CASCADE)   
-    rows = models.IntegerField(blank=True, null=True)   
-    columns = models.IntegerField(blank=True, null=True)   
-
-class PricingGroup(models.Model):
-    name = models.CharField(max_length=45)
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
-
-class PricePoint(models.Model):
-    name = models.CharField(max_length=45)
-    price =  models.DecimalField(default=10, max_digits=10, decimal_places=2)
-    group = models.ForeignKey(PricingGroup, on_delete=models.CASCADE)
-
-class PricePointBundle(models.Model):
-    pricepoint = models.ForeignKey(PricePoint, on_delete=models.CASCADE)
-    quantity = models.IntegerField()
-
 class Order(models.Model):
     orderid = models.AutoField(primary_key=True)   
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, db_column='Profile_UserID', null=True)   
     qrcodetext = models.CharField(max_length=3700, blank=True, null=True)
     cost = models.DecimalField(default=0, max_digits=15, decimal_places=2)
-    priceBundles = models.ManyToManyField(PricePointBundle)
     
     def save(self, *args, **kwargs):
         #this generate the qrcode text based upon the seats bought
@@ -99,6 +78,27 @@ class Order(models.Model):
             stringReal=''.join(string)
             self.qrcodetext=stringReal
         super(Order, self).save(*args, **kwargs)
+
+
+class Room(models.Model):
+    roomnumber = models.IntegerField()   
+    theater = models.ForeignKey('Theater', on_delete=models.CASCADE)   
+    rows = models.IntegerField(blank=True, null=True)   
+    columns = models.IntegerField(blank=True, null=True)   
+
+class PricingGroup(models.Model):
+    name = models.CharField(max_length=45)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
+class PricePoint(models.Model):
+    name = models.CharField(max_length=45)
+    price =  models.DecimalField(default=10, max_digits=10, decimal_places=2)
+    group = models.ForeignKey(PricingGroup, on_delete=models.CASCADE)
+
+class PricePointBundle(models.Model):
+    pricepoint = models.ForeignKey(PricePoint, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
 
 class Movieshowing(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="room_of")   

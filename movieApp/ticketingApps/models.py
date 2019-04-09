@@ -51,7 +51,7 @@ class Movie(models.Model):
 class Order(models.Model):
     orderid = models.AutoField(primary_key=True)   
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, db_column='Profile_UserID', null=True)   
-    qrcodetext = models.CharField(max_length=8000, blank=True, null=True)
+    qrcodetext = models.CharField(max_length=3700, blank=True, null=True)
     cost = models.DecimalField(default=0, max_digits=15, decimal_places=2)
     
     def save(self, *args, **kwargs):

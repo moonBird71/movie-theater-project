@@ -77,6 +77,7 @@ class PrintTicket(TemplateView):
             movieshowing = seats[0].showing
         else:
             print("error")
+        context['showing']=movieshowing
         context['showingtime'] = movieshowing.time
         # add room number
         room = movieshowing.room

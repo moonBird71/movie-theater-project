@@ -1,9 +1,0 @@
-<h1> Movie Ticketing </h1>
-<h3> User List </h3>
-<ul>
-	{% for user in user_list %}
-		<li> {{ user.userfirstname}} {{user.userlastname}}</li>
-	{% empty %}
-		<li> No users yet. </li>
-	{% endfor %}
-</ul>

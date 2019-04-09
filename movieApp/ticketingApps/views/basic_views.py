@@ -94,7 +94,7 @@ class UserTicketsListing(LoginRequiredMixin,ListView):
     template_name="ticketingApps/my_tickets.html"
     def get_queryset(self):
         objs = Order.objects
-        objs = objs.filter(profile__user=self.request.user)
+        objs = objs.filter(profile__user=self.request.user, order_of__final=1).distinct()
         return objs.order_by('-order_of__showing__time')
     def get_context_data(self, *args,**kwargs):
         context=super(UserTicketsListing, self).get_context_data(*args,**kwargs)

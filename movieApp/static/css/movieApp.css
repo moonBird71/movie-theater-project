@@ -1,10 +1,13 @@
+* body{
+  background: #f4f4f4/* #dce0d9; */
+}
 h1, h2, h3 {
 	text-align: center;
 }
 [role=button]{
-	background-color: #008CBA;
+	background-color: #590004;/* #008CBA; */
 	border: none;
-	color: white;
+	color: #f4f4f4;
 	text-align: center;
 }
 .signup_container {
@@ -13,7 +16,7 @@ h1, h2, h3 {
 	width:35%;
 	margin-left:auto;
 	margin-right:auto;
-	box-shadow: 0px 0px 10px grey;
+	box-shadow: 0px 0px 10px #a2999e;
 }
 .signup_container h3 {
 	text-shadow: 2px 4px 3px rgba(0,0,0,0.3);

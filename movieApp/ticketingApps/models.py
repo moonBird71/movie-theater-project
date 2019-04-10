@@ -14,19 +14,11 @@ class Theater(models.Model):
     theatercity = models.CharField(db_column='TheaterCity', max_length=45, blank=True, null=True)   
     theaterstate = models.CharField(db_column='TheaterState', max_length=45, blank=True, null=True)   
     theaterzip = models.CharField(db_column='TheaterZip', max_length=45, blank=True, null=True)   
-    #price = models.DecimalField(default=10, max_digits=10, decimal_places=2)
-	#def __str__(self):	#returns theatername as a string. Placeholder
-		#return self.theatername
-		
-	#def get_absolute_url(self): #returns url to individual theater; need to include in urls.py
-		#return reverse('orderIn:add-theater')#correct format? 
+
 
 class Profile(models.Model):
-    userid = models.AutoField(db_column='UserID', primary_key=True)   
     #first name, last name and email are included in the built-in User class. Access them through the user field
-    #userfirstname = models.CharField(db_column='UserFirstName', max_length=45, blank=True, null=True, verbose_name="first name")   
-    #userlastname = models.CharField(db_column='UserLastName', max_length=45, blank=True, null=True, verbose_name="last name")   
-    #useremail = models.CharField(db_column='UserEmail', max_length=45, blank=True, null=True, verbose_name="email")   
+    userid = models.AutoField(db_column='UserID', primary_key=True)   
     userphone = models.CharField(db_column='UserPhone', max_length=45, blank=True, null=True, verbose_name="phone")   
     isemployee = models.BooleanField(db_column='isEmployee', blank=True, null=True, verbose_name="employee?")
     theaters = models.ManyToManyField(Theater)

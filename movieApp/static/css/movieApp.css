@@ -18,3 +18,37 @@ h1, h2, h3 {
 .signup_container h3 {
 	text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
 }
+
+
+body{
+color:#DCE0D9;
+background-color:#590004;
+background-image:url('../images/theater.jpg');
+background-position:center;
+background-size:cover;
+background-repeat:no-repeat;
+}
+
+}
+#main-nav-bar{
+background-color:#4a4648;
+color:#fff;
+}
+
+#main-nav-bar ul{
+padding:0;
+list-style:none;
+}
+
+#main-nav-bar li{
+display:inline;
+}
+
+#main-nav-bar a{
+color:#fff;
+text-decoration:none;
+font-size:20px;
+padding-right:20px;
+}
+
+

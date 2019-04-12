@@ -57,12 +57,9 @@
         </tr>
         <tr>
             <td>
-                <div class="grid">
-                    
-                    <table>
-                        <tr ><img :style="imgStyle" class="in-table"  src="{% static 'images/vague_screen.png' %}" alt="screen"></tr>
-                        <tr>
-                        <table class="flex-container">
+                <div class="grid align-items-center">
+                    <img :style="imgStyle" class="in-table mx-auto d-block"  src="{% static 'images/vague_screen.png' %}" alt="screen">
+                        <table class="flex-container align-items-center">
                             <tr>
                             <template v-for="i in numberCols">
                                 <td>
@@ -73,7 +70,7 @@
                                 </td>
                             </template>
                             </tr>
-                        </table>
+                        </table>  
                 </div>
             </td>
         <td>
@@ -130,7 +127,7 @@
             },
             computed: {
                 imgStyle: function(){
-                    return {width: (this.numberCols*44+10)+'px'}
+                    return {width: (this.numberCols*48+5)+'px', 'min-height': "25px"}
                 }
             },
             methods: {

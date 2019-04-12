@@ -1,16 +1,32 @@
-{# Load the tag library #}
+{% extends 'base.html' %}
 {% load bootstrap4 %}
-
-{# Load CSS and JavaScript #}
-{% bootstrap_css %}
-{% bootstrap_javascript jquery='full' %}
-
-{# Display django.contrib.messages as Bootstrap alerts #}
-{% bootstrap_messages %}
+{% block content %}
 <h3>Showing Detail</h3>
 Movie: {{object.movie.movietitle}}<br>
 Time: {{object.time}}<br>
 Theater: {{object.room.theater.theatername}}<br>
 Room: {{object.room.roomnumber}}<br>
 Seats Sold: {{percentSold}}%<br>
-Revenue: {{revenue}}<br>
+Revenue: ${{revenue}}<br>
+<br><br>
+<h4>All Orders</h4>
+{% for order in orders %}
+<h5>Order {{order.orderid}}</h5>
+<ul>
+    {% if order.profile %}
+    <li>Customer: {{order.profile.user.first_name}} {{order.profile.user.last_name}}</li> 
+    {% endif %}
+    <li> Total: ${{order.cost}}</li>
+    <br>
+    {% for priceBundle in order.pricepointbundle_set.all %}
+        {% if priceBundle.quantity is not 0 %}
+        <li>{{priceBundle.pricepoint.name}}: {{priceBundle.quantity}}</li>
+        {% endif %}
+    {% endfor %}
+    <br>
+    {% for seat in order.order_of.all %}
+    <li> Seat: Row:{{seat.seatrow}} | Seat:{{seat.seatcol}} </li>
+    {% endfor %}
+</ul>
+{% endfor %}
+{% endblock %}

@@ -57,10 +57,13 @@ class Order(models.Model):
     def save(self, *args, **kwargs):
         #this generate the qrcode text based upon the seats bought
         allSeats =Seatsbought.objects.filter(order=self)
+        pricePointBundles = PricePointBundle.objects.filter(order=self)
         string = []
         seat1 = allSeats.first()
         if seat1 is not None:
-            string.append("Theater: ")
+            string.append("ID: ")
+            string.append(str(self.orderid))
+            string.append("  Theater: ")
             string.append(seat1.showing.room.theater.theatername)
             string.append("  Room: ")
             string.append(str(seat1.showing.room.roomnumber))
@@ -68,6 +71,12 @@ class Order(models.Model):
             string.append(seat1.showing.time.strftime("%b %d %Y %H:%M:%S"))
             string.append(" Movie: ")
             string.append(seat1.showing.movie.movietitle)
+            for priceBundle in pricePointBundles:
+                if priceBundle.quantity is not 0:
+                    string.append("  ")
+                    string.append(priceBundle.pricepoint.name)
+                    string.append(": ")
+                    string.append(str(priceBundle.quantity))
             string.append(" Seats: ")
 
             for seat in allSeats:

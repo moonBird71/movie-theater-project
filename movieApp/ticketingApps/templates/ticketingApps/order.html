@@ -3,8 +3,8 @@
 {% block content %}
 {% if valid %}
 <h2> Confirm Your Order </h2>
-You are buying {{numberTix}} of tickets to {{showingP.movie.movietitle}}.
-The cost will be ${{cost}}.
+You are buying {{numberTix}} of tickets to {{showingP.movie.movietitle}}.<br>
+The cost will be ${{cost}}.<br>
 Your seats will be reserved for you for 8 minutes.
 <form action="{% url 'ticketingApps:charge' %}" method="post">
     {% csrf_token %}

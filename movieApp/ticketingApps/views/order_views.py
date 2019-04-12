@@ -19,12 +19,14 @@ class TicketTypeSelectionPage(FormView):
     template_name='ticketingApps/pick_ticket_type.html' 
     def get_success_url(self):
         return reverse('ticketingApps:order', kwargs={"numberTix":self.numberTix,"orderId":self.orderId})
-    def calculate_price(self, form, showing):
+    def calculate_price(self, form, showing, order):
         priceGroup = showing.pricing
         priceList = PricePoint.objects.filter(group=priceGroup)
         totalCost = 0
         for price in priceList:
             number=int(form.cleaned_data[price.name])
+            ppb=PricePointBundle.objects.create(order=order, pricepoint=price, quantity=number)
+            ppb.save()
             totalCost = totalCost+number*int(price.price)
         promo=Promocode.objects.filter(code=form.cleaned_data['promocode'], theater=showing.room.theater).first()
         if promo is None:
@@ -68,7 +70,7 @@ class TicketTypeSelectionPage(FormView):
                 orderObj=Order.objects.create()
             for key in toBuyArray:
                 Seatsbought.objects.create(seatrow=toBuyArray[key][0], seatcol=toBuyArray[key][1], showing=showingP,order=orderObj,expirationTime=timezone.now()+timedelta(minutes=10))
-            orderObj.cost = float(self.calculate_price(form,showingP))
+            orderObj.cost = float(self.calculate_price(form,showingP, orderObj))
             orderObj.save()
             numberTix=len(toBuyArray)
             orderId=orderObj.orderid

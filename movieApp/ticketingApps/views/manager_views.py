@@ -17,14 +17,7 @@ class ManagerLanding(LoginRequiredMixin,UserPassesTestMixin,TemplateView):
     def test_func(self):
         return getattr(self.request.user.profile, "isemployee")
     template_name = 'ticketingApps/manager_landing.html'
-class ManagedTheaters(LoginRequiredMixin,UserPassesTestMixin,ListView):
-    model = Theater
-    context_object_name = "theater_list"
-    def test_func(self):
-        return getattr(self.request.user.profile, "isemployee")
-    def get_queryset(self):
-        objs = self.request.user.profile.theaters
-        return objs.all()
+
 class ManagedShowings(LoginRequiredMixin,UserPassesTestMixin,ListView):
     model = Movieshowing
     template_name="ticketingApps/managed_showings_list.html"
@@ -57,20 +50,6 @@ class ManagedShowingsSearchResults(ListView):
         return objs 
     def test_func(self):
         return getattr(self.request.user.profile, "isemployee")      
-#Add Theater
-
-class AddTheater(LoginRequiredMixin,UserPassesTestMixin,CreateView):
-    model = Theater
-    form_class=TheaterForm
-    template_name = "ticketingApps/theater_form.html"
-    success_url="/manager/theaters/"
-    def test_func(self):
-        return getattr(self.request.user.profile, "isemployee")
-    def form_valid(self,form):
-        theater=form.save(commit=False)
-        theater.save()
-        self.request.user.profile.theaters.add(theater)
-        return super(AddTheater,self).form_valid(form)
 
 class AddShowing(LoginRequiredMixin,UserPassesTestMixin,CreateView):
     model=Movieshowing
@@ -86,15 +65,6 @@ class AddShowing(LoginRequiredMixin,UserPassesTestMixin,CreateView):
     def test_func(self):
         return getattr(self.request.user.profile, "isemployee")
 
-class AddRoom(LoginRequiredMixin,UserPassesTestMixin,CreateView):
-    model=Room
-    form_class=AddRoomForm
-    success_url='/manager/theaters/'
-    def form_valid(self,form):
-        form.instance.theater = Theater.objects.get(theaterid=self.kwargs["theaterId"])
-        return super(AddRoom, self).form_valid(form)
-    def test_func(self):
-        return getattr(self.request.user.profile, "isemployee")
 
 class AddMovie(LoginRequiredMixin,UserPassesTestMixin,CreateView):
     model=Movie
@@ -105,30 +75,7 @@ class AddMovie(LoginRequiredMixin,UserPassesTestMixin,CreateView):
     def test_func(self):
         return getattr(self.request.user.profile, "isemployee")
 
-class DeleteTheater(LoginRequiredMixin, UserPassesTestMixin,DeleteView):
-    model = Theater
-    success_url='/manager/theaters/'
-    template_name='ticketingApps/theater_delete_confirm.html'
-    def test_func(self):
-        return getattr(self.request.user.profile, "isemployee")
-    def get_object(self, queryset=None):
-        """ Hook to ensure object is owned by request.user. """
-        obj = super(DeleteTheater, self).get_object()
-        if obj not in self.request.user.profile.theaters.all():
-            raise Http404
-        return obj
-class DeleteRoom(LoginRequiredMixin, UserPassesTestMixin,DeleteView):
-    model = Room
-    success_url='/manager/theaters/'
-    template_name='ticketingApps/room_delete_confirm.html'
-    def test_func(self):
-        return getattr(self.request.user.profile, "isemployee")
-    def get_object(self, queryset=None):
-        """ Hook to ensure object is owned by request.user. """
-        obj = super(DeleteRoom, self).get_object()
-        if obj not in Room.objects.filter(theater__profile__user=self.request.user):
-            raise Http404
-        return obj
+
 class DeleteShowing(LoginRequiredMixin, UserPassesTestMixin,DeleteView):
     model = Movieshowing
     success_url='/manager/'
@@ -141,11 +88,7 @@ class DeleteShowing(LoginRequiredMixin, UserPassesTestMixin,DeleteView):
         if obj not in Movieshowing.objects.filter(room__theater__profile__user=self.request.user):
             raise Http404
         return obj
-class TheaterDetail(LoginRequiredMixin,UserPassesTestMixin,DetailView):
-    model = Theater
-    template_name="ticketingApps/theater_detail.html"
-    def test_func(self):
-        return getattr(self.request.user.profile, "isemployee")
+
 class ShowingAnalytics(LoginRequiredMixin,UserPassesTestMixin, DetailView):
     model = Movieshowing
     template_name="ticketingApps/showing_stats.html"
@@ -159,6 +102,7 @@ class ShowingAnalytics(LoginRequiredMixin,UserPassesTestMixin, DetailView):
         context['percentSold']='%.2f'%(100*seatsSold.count()/totalSeats)
         revenue = 0
         orders = Order.objects.filter(order_of__showing=showingP).distinct()
+        context['orders']=orders
         for order in orders:
             revenue = revenue + order.cost
         context['revenue']=revenue

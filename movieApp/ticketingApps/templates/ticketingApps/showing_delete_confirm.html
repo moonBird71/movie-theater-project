@@ -2,7 +2,7 @@
 {% load bootstrap4 %}
 {% block content %}
 <form method="post">{% csrf_token %}
-        <p>Are you sure you want to delete the showing of {{ object.movie.movietitle }} at {{object.time}}?</p>
+        <p>Are you sure you want to delete the showing of {{ object.movie.movietitle }} on {{object.time}}?</p>
         <input type="submit" value="Confirm">
     </form>
     {% endblock %}

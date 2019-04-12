@@ -9,6 +9,11 @@
 <li> Room Number: {{roomnumber}} </li>
 <li> Time: {{showingtime}} </li>
 <li> Confirmation Number: {{order.orderid}} </li>
+{% for priceBundle in order.pricepointbundle_set.all %}
+{% if priceBundle.quantity is not 0 %}
+<li>{{priceBundle.pricepoint.name}}: {{priceBundle.quantity}}</li>
+{% endif %}
+{% endfor %}
 {% for seat in seats %}
 <li> Seat: Row:{{seat.seatrow}} | Seat:{{seat.seatcol}} </li>
 {% endfor %}

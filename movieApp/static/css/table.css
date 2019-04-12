@@ -14,9 +14,9 @@ table {
     text-align: center;
 }
 .grid {
-  background: #b3cafc;
+  background: #dce0d9;/* #b3cafc; */
   border-radius:15px;
-  box-shadow: 0px 0px 10px #7f00ff;
+  box-shadow: 0px 0px 10px #a2999e;/* #590004; *//* #7f00ff; */
   padding: 10px;
   padding-top: 3px;
 

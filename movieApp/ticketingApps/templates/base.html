@@ -17,7 +17,11 @@
 	<link rel="stylesheet" href="{% static 'css/table.css' %}">
 </head>
 <body>
-	
+	<header id="main-header">
+		<div class ="container">
+			<h1>C3 Movie Reservations</h1>
+		</div>	
+	</header>
 
 	{# Display django.contrib.messages as Bootstrap alerts #}
 	{% bootstrap_messages %}
@@ -28,6 +32,10 @@
 		remove this text later
 	{% endblock %}
 	{% block endscripts %}{% endblock %}
+	
+	<footer id="main-footer">
+		<p>Copyright &copy; 2019 Computer Coding Connosieurs</p>
+	</footer>
 
 </body>
 </html>

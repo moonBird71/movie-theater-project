@@ -1,20 +1,82 @@
+* body{
+  background: #f4f4f4/* #dce0d9; */
+}
 h1, h2, h3 {
 	text-align: center;
 }
 [role=button]{
-	background-color: #008CBA;
+	background-color: #840006 	;/* #008CBA; */
 	border: none;
-	color: white;
+	color: #f4f4f4;
 	text-align: center;
+	width: 25%;
+	margin-left:37.5%;
+	margin-right:37.5%;
 }
 .signup_container {
+	background-color:#A2999E;
 	border-radius:10px;
 	padding:1rem;
 	width:35%;
 	margin-left:auto;
 	margin-right:auto;
-	box-shadow: 0px 0px 10px grey;
+	box-shadow: 0px 0px 10px #a2999e;
 }
 .signup_container h3 {
 	text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
 }
+
+#main-header{
+background-color:#EDD76A;
+color:#fff;
+}
+
+body{
+color:#DCE0D9;
+background-color:#590004;
+background-image:url('../images/theater.jpg');
+background-position:center;
+background-size:cover;
+background-repeat:no-repeat;
+}
+
+#main-nav-bar{
+background-color:#333;
+color:#fff;
+}
+
+#main-nav-bar ul{
+padding:0;
+list-style:none;
+}
+
+#main-nav-bar li{
+display:inline;
+}
+
+#main-nav-bar a{
+color:#fff;
+text-decoration:none;
+font-size:18px;
+padding-right:20px;
+}
+
+
+#main-footer{
+color:#fff;
+background-color:gray;
+position:fixed;
+left:0;
+bottom:0;
+
+}
+
+form{
+width:33%;
+margin-left:33%;
+margin-right:33%;
+}
+
+
+
+

@@ -20,7 +20,7 @@ You can use as many or few fields as desired
 	<tr><!--pass roomnumber to linked page-->
 		<td style="text-align:left">{{movieshowing.room.theater.theatername}}: {{movieshowing.movie.movietitle}} in on {{movieshowing.time}}</td>
 		<td>  </td>
-		<td><a href="{% url 'ticketingApps:seat-selection' showing=movieshowing.id %}">Look at Seats</a></td>
+		<td><a href="{% url 'ticketingApps:seat-selection' showing=movieshowing.id %}"><button>Look at Seats</button></a></td>
 	</tr>
 	{% empty %}
 		<tr> No showings yet. </tr>

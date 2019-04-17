@@ -1,22 +1,16 @@
-<header class="navbar">
-	<nav id="main-nav-bar">
-		
-		<div class="navbar-list">
-			<ul>
-				<li><a href="/">Home</a></li>
-				{% if user.profile.isemployee %}
-				<li><a href="/manager">Manager-Home</a></li>
-				<li><a href="/manager/theaters">My Theaters</a></li>				
-				<li><a href="/accounts/logout">Log Out</a></li>
-
-				{% elif user.profile %}
-				<li><a href="/showings/list">Showings</a></li>
-				<li><a href="/accounts/logout">Log Out</a></li>
-				{% else%}
-				<li><a href="/showings/list">Showings</a></li>
-				<li><a href="/accounts/login">Login</a></li>
-				{% endif%}
-			</ul>
-		</div>
-	</nav>
-</header>
+<nav id="main-nav-bar">
+		<ul>
+			<li><a href="/">Home</a></li>
+			{% if user.profile.isemployee %}
+			<li><a href="/manager">Manager-Home</a></li>
+			<li><a href="/manager/theaters">My Theaters</a></li>				
+			<li><a href="/accounts/logout">Log Out</a></li>
+			{% elif user.profile %}
+			<li><a href="/showings/list">Showings</a></li>
+			<li><a href="/accounts/logout">Log Out</a></li>
+			{% else%}
+			<li><a href="/showings/list">Showings</a></li>
+			<li><a href="/accounts/login">Login</a></li>
+			{% endif%}
+		</ul>
+</nav>

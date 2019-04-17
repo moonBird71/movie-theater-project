@@ -12,6 +12,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django import forms
+from django.http import Http404
 
 class ManagerLanding(LoginRequiredMixin,UserPassesTestMixin,TemplateView):
     def test_func(self):
@@ -107,6 +108,12 @@ class ShowingAnalytics(LoginRequiredMixin,UserPassesTestMixin, DetailView):
             revenue = revenue + order.cost
         context['revenue']=revenue
         return context
+    def get_object(self, queryset=None):
+        """ Hook to ensure object is owned by request.user. """
+        obj = super(ShowingAnalytics, self).get_object()
+        if obj not in Movieshowing.objects.filter(room__theater__profile__user=self.request.user):
+            raise Http404
+        return obj
 class CreatePricingGroup(LoginRequiredMixin,UserPassesTestMixin, CreateView):
     model = PricingGroup
     template_name="ticketingApps/create_pricing_group.html"
@@ -174,6 +181,8 @@ class AssociateEmployee(LoginRequiredMixin,UserPassesTestMixin,FormView):
     success_url='/manager/'
     form_class=AssociateEmployeeForm
     def test_func(self):
+        if Theater.objects.get(theaterid=self.kwargs['pk']).profile.user is not self.request.user:
+            return false
         return getattr(self.request.user.profile, "isemployee")
     def form_valid(self, form):
         uname=form.cleaned_data['username']

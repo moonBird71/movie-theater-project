@@ -12,6 +12,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django import forms
+from django.http import Http404
 
 class AddTheater(LoginRequiredMixin,UserPassesTestMixin,CreateView):
     model = Theater
@@ -39,7 +40,7 @@ class TheaterSearchResults(ListView):
     model = Theater
     context_object_name = "theater_list"
     def get_queryset(self):
-        objs = Theater.objects
+        objs = Theater.objects.filter(profile__user=self.request.user)
         tName = self.request.GET["name"]
         tCity = self.request.GET["tCity"]
         tState = self.request.GET["tState"]
@@ -80,6 +81,12 @@ class TheaterDetail(LoginRequiredMixin,UserPassesTestMixin,DetailView):
     template_name="ticketingApps/theater_detail.html"
     def test_func(self):
         return getattr(self.request.user.profile, "isemployee")
+    def get_object(self, queryset=None):
+        """ Hook to ensure object is owned by request.user. """
+        obj = super(TheaterDetail, self).get_object()
+        if obj not in Theater.objects.filter(profile__user=self.request.user):
+            raise Http404("Theater not found.")
+        return obj
 class ManagedTheaters(LoginRequiredMixin,UserPassesTestMixin,ListView):
     model = Theater
     context_object_name = "theater_list"

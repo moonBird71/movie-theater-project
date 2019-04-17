@@ -1,6 +1,8 @@
 from django.urls import include, path, re_path
+from django.conf.urls import url
 from django.contrib import admin
 from ticketingApps import views
+from django.contrib.auth import views as auth_views
 app_name = "ticketingApps"
 urlpatterns = [
     re_path(r'^$', views.IndexPage.as_view(), name="index"),
@@ -9,7 +11,9 @@ urlpatterns = [
     re_path(r'^showings/list/$', views.ShowingsList.as_view(), name="showings-list"),
     re_path(r'^ticket/print/(?P<orderId>\d+)/$', views.PrintTicket.as_view(), name="print-ticket"),
     re_path(r'^theater/search/$',views.TheaterSearchResults.as_view(), name="search-theater"),
-    path('accounts/', include('django.contrib.auth.urls')),
+    #path('accounts/', include('django.contrib.auth.urls')),
+    re_path(r'^accounts/login/$', auth_views.LoginView.as_view(), name='login'),
+    re_path(r'^accounts/logout/$', auth_views.LogoutView.as_view(next_page="/"), name='logout'),
     re_path(r'^signup/$', views.Signup.as_view(), name='sign-up'),
     re_path(r'^hello/$',views.Welcome.as_view(), name='welcome'),
     re_path(r'^login_success/$',views.login_success,name='login_success'),

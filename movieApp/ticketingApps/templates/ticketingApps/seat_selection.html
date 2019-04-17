@@ -55,6 +55,7 @@
                     <br>
             </td>
         </tr>
+
         <tr>
             <td>
                 <div class="grid align-items-center">
@@ -74,16 +75,23 @@
                 </div>
             </td>
         <td>
+            <div style="column-width: 300px;">
             <table>
             <tr>
                 <td>
                     <h3>Pricing:</h3>
-                    <table>
+                    <table class="center">
                         {% for price in pGroup %}
                         <tr><td>{{price.name }}:</td><td>${{ price.price }}</td></tr>
                         {% endfor %}
                     </table>
                 </td>
+            </tr>
+            <tr>
+                <td> </td>
+            </tr>
+            <tr>
+                <td v-if="numberTickets>0">Number of Tickets Selected: [[numberTickets]] <template v-if="numberTickets==10"><br>(Maximum of 10 tickets per order)</template></td>
             </tr>
             <tr>
                 <td>
@@ -92,12 +100,16 @@
                             {% csrf_token %}
                             <input type="hidden" name="toBuy" id="toBuy" :value="JSON.stringify(toBuy)">
                             <input type="hidden" name="showingId" id="showingId" :value="showing">
-                            <button type="submit">Buy Tickets</button>
+                            <button type="submit" style="width: 105px;">Buy Tickets</button>
                         </form>
+                    </template>
+                    <template v-else>
+                        <form></form>
                     </template>
                 </td>
             </tr>
             </table>
+        </div>
         </td>
     </tr>
     </table>            
@@ -132,7 +144,7 @@
             },
             methods: {
                 seatClick(i,j){
-                    if(this.picked[String(j)][String(i)]=="#666666"){
+                    if(this.picked[String(j)][String(i)]=="#666666" || (this.numberTickets==10 && this.picked[j][i]=="#0544F0")){
                         //this seat is already bought
                     }else if(this.picked[j][i]=="#0544F0"){
                         this.picked[j][i]="#00F133"

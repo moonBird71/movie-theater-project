@@ -3,16 +3,26 @@
 {% block content %}
 <h1> Movie Ticketing </h1>
 <h3> Pick Ticket Types </h3>
-
-<form method="post">{% csrf_token %}
-    {% bootstrap_form form %}
-    <input type="submit" value="Submit">
-</form>
-<br>
-<h5>Pricing:</h5>
-<table>
-{% for price in pGroup %}
-<tr><td>{{price.name }}:</td><td>${{ price.price }}</td></tr>
-{% endfor %}
+<table class="center">
+    <tr>
+        <td style="width: 75%">
+            <form method="post">{% csrf_token %}
+                {% bootstrap_form form %}
+                <input type="submit" value="Submit">
+            </form>
+        </td>
+        <td>
+            Number of Seats Selected: {{numberTix}} 
+            <br><br><br>
+            <h5>Pricing:</h5>
+                <table class="center">
+                {% for price in pGroup %}
+                <tr><td>{{price.name }}:</td><td>${{ price.price }}</td></tr>
+                {% endfor %}
+            </table>
+        </td>
+    </tr>
 </table>
+
+
 {% endblock %}

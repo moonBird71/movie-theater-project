@@ -2,7 +2,7 @@
 {% load bootstrap4 %}
 {% block content %}
 {% load qr_tags %}
-
+<h3>All Tickets</h3>
 {% for order2 in object_list %}
     {% if valid %}
     {% with order2.order_of.all|first as seat %}
@@ -30,5 +30,7 @@
     <br>
     <a href="{% url 'ticketingApps:print-ticket' orderId=order2.orderid %}">Print the Tickets Above</a>
     <br><br>
+    {% empty %}
+     No tickets yet.
 {% endfor %}
 {% endblock %}

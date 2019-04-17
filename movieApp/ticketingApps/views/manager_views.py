@@ -181,8 +181,8 @@ class AssociateEmployee(LoginRequiredMixin,UserPassesTestMixin,FormView):
     success_url='/manager/'
     form_class=AssociateEmployeeForm
     def test_func(self):
-        if Theater.objects.get(theaterid=self.kwargs['pk']).profile.user is not self.request.user:
-            return false
+        if self.request.user.profile not in Theater.objects.get(theaterid=self.kwargs['pk']).profile_set.all():
+            return False
         return getattr(self.request.user.profile, "isemployee")
     def form_valid(self, form):
         uname=form.cleaned_data['username']

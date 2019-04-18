@@ -114,6 +114,7 @@ html, body
 		margin: 0px auto;
 		width: 1200px;
 	}
+
 	.signup_container {
 	background-color:#A2999E;
 	border-radius:10px;
@@ -473,6 +474,11 @@ html, body
 		background: #F3F3F3;
 		padding: 1em 2em;
 		margin 0em 2em;
+		-ms-overflow-style: none; 
+		scrollbar-width: none; 
+	}
+	#wrapper2::-webkit-scrollbar { 
+		display: none;  
 	}
 
 	#wrapper3

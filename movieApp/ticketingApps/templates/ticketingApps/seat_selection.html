@@ -74,44 +74,30 @@
                         </table>  
                 </div>
             </td>
-        <td style="display: inline-block;vertical-align: top;">
-            <div style="column-width: 300px;">
-            <table>
-            <tr>
-                <td>
-                    <h3>Pricing:</h3>
-                    <table class="center">
-                        {% for price in pGroup %}
-                        <tr><td>{{price.name }}:</td><td>${{ price.price }}</td></tr>
-                        {% endfor %}
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td> </td>
-            </tr>
-            <tr>
-                <td v-if="numberTickets>0">Number of Tickets Selected: [[numberTickets]] <template v-if="numberTickets==10"><br>(Maximum of 10 tickets per order)</template></td>
-            </tr>
-            <tr>
-                <td>
-                <template v-if="numberTickets>0">
-                        <form ref="buyForm" action="{% url 'ticketingApps:ticket-type' %}" method="get">
-                            {% csrf_token %}
-                            <input type="hidden" name="toBuy" id="toBuy" :value="JSON.stringify(toBuy)">
-                            <input type="hidden" name="showingId" id="showingId" :value="showing">
-                            <button type="submit" style="width: 105px;" class="button button-small">Buy Tickets</button>
-                        </form>
-                    </template>
-                    <template v-else>
-                        <form></form>
-                    </template>
-                </td>
-            </tr>
-            </table>
-        </div>
-        </td>
-    </tr>
+            <td style="display: inline-block;vertical-align: top;">
+                <div style="column-width: 300px;justify-content:center">
+                        <h3>Pricing:</h3>
+                        <table class="center">
+                            {% for price in pGroup %}
+                            <tr><td>{{price.name }}:</td><td>${{ price.price }}</td></tr>
+                            {% endfor %}
+                        </table>
+                        <br>
+                        <template v-if="numberTickets>0">Number of Tickets Selected: [[numberTickets]] <template v-if="numberTickets==10"><br>(Maximum of 10 tickets per order)</template></template>
+                        <template v-if="numberTickets>0">
+                            <form ref="buyForm" action="{% url 'ticketingApps:ticket-type' %}" method="get" style="width:105px">
+                                {% csrf_token %}
+                                <input type="hidden" name="toBuy" id="toBuy" :value="JSON.stringify(toBuy)">
+                                <input type="hidden" name="showingId" id="showingId" :value="showing">
+                                <button type="submit" style="width: 105px;" class="button button-small">Buy Tickets</button>
+                            </form>
+                        </template>
+                        <template v-else>
+                                <form style="width:105px"></form>
+                        </template>
+                </div>
+            </td>
+        </tr>
     </table>            
     <br>
     {% endif %}

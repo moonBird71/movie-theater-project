@@ -3,6 +3,6 @@
 {% block content %}
 <form method="post">{% csrf_token %}
         <p>Are you sure you want to delete the showing of {{ object.movie.movietitle }} on {{object.time}}?</p>
-        <input type="submit" value="Confirm">
+        <input type="submit" value="Confirm" class="button button-small">
     </form>
     {% endblock %}

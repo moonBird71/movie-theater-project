@@ -11,7 +11,7 @@ Revenue: ${{revenue}}<br>
 <br><br>
 <h4>All Orders</h4>
 {% for order in orders %}
-<h5>Order {{order.orderid}}</h5>
+<h5><b>Order {{order.orderid}}</b></h5>
 <ul>
     {% if order.profile %}
     <li>Customer: {{order.profile.user.first_name}} {{order.profile.user.last_name}}</li> 
@@ -27,6 +27,9 @@ Revenue: ${{revenue}}<br>
     {% for seat in order.order_of.all %}
     <li> Seat: Row:{{seat.seatrow}} | Seat:{{seat.seatcol}} </li>
     {% endfor %}
+    <br><br>
 </ul>
+{%empty%}
+No orders yet.
 {% endfor %}
 {% endblock %}

@@ -24,6 +24,7 @@ class ManagedShowings(LoginRequiredMixin,UserPassesTestMixin,ListView):
     template_name="ticketingApps/managed_showings_list.html"
     def get_queryset(self):
         objs = Movieshowing.objects.filter(room__theater__profile__user=self.request.user)
+        objs=objs.order_by('-time')
         return objs
     def test_func(self):
         return getattr(self.request.user.profile, "isemployee")
@@ -48,6 +49,7 @@ class ManagedShowingsSearchResults(ListView):
             objs=objs.filter(movie__movietitle__icontains=mName)
         if(day!=""):
             objs=objs.filter(time__range=(datetime.strptime(day,"%Y-%m-%d"),datetime.strptime(day,"%Y-%m-%d")+timedelta(days=1)))
+        objs=objs.order_by('-time')
         return objs 
     def test_func(self):
         return getattr(self.request.user.profile, "isemployee")      

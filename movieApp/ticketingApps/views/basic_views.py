@@ -57,6 +57,8 @@ class ShowingsSearchResults(ListView):
             objs=objs.filter(movie__movietitle__icontains=mName)
         if(day!=""):
             objs=objs.filter(time__range=(datetime.strptime(day,"%Y-%m-%d"),datetime.strptime(day,"%Y-%m-%d")+timedelta(days=1)))
+        objs=objs.filter(time__gte=timezone.now())
+        objs=objs.order_by('time')
         return objs.all()
 
 #Print ticket page

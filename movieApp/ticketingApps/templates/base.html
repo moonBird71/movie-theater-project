@@ -5,7 +5,7 @@
 <head>
 	{% block scripts %}{% endblock %}
 	{% load static %}
-	<title>Movie Website</title>
+	<title>C3 Movie Reservations</title>
 	{# Load the tag library #}
 	{% load bootstrap4 %}
 
@@ -15,27 +15,44 @@
 	{% block styles %}{% endblock %}
 	<link rel="stylesheet" href="{% static 'css/movieApp.css' %}">
 	<link rel="stylesheet" href="{% static 'css/table.css' %}">
+	<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
+	<link href="{% static 'css/default.css' %}" rel="stylesheet" type="text/css" media="all" />
+	<link href="{% static 'css/fonts.css' %}" rel="stylesheet" type="text/css" media="all" />
 </head>
 <body>
-	<header id="main-header">
-		<div class ="container">
-			<h1>C3 Movie Reservations</h1>
-		</div>	
-	</header>
+	<div id="header-wrapper">
+		<header id="main-header">
+			<div id="header" class ="container">
+				<div id="logo">
+				<h1 style="color: #F3F3F3">C3 Movie Reservations</h1>
+				</div>
+			</div>	
+		</header>
+		<div id="menu-wrapper">
+			<div id="menu" class="container">
+				{% include 'navbar.html' %}
+			</div>
+		</div>
+	</div>
+	<div id="banner">
+	<div id="wrapper2">
 
 	{# Display django.contrib.messages as Bootstrap alerts #}
 	{% bootstrap_messages %}
-	{% include 'navbar.html' %}
+	<!--{% include 'navbar.html' %}-->
 	{% block content %}
 		<p>ERROR block content not included</p>
 		<p>OR file not saved</p>
 		remove this text later
 	{% endblock %}
 	{% block endscripts %}{% endblock %}
-	
+	</div>
+	</div>
+	<div id="copyright" class="container">
 	<footer id="main-footer">
 		<p>Copyright &copy; 2019 Computer Coding Connosieurs</p>
 	</footer>
+	</div>
 
 </body>
 </html>

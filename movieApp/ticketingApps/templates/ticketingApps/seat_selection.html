@@ -37,6 +37,7 @@
         {% if showing %}
       <h1>Seat Preview and Selection</h1>
       <h3>Seats for [[movieTitle]] on {{showing.time}}</h3>
+      <h3>at {{showing.room.theater.theatername}} in Theater {{showing.room.roomnumber}} </h3>
         <br>
       <table class="flex-container">
         <tr>
@@ -44,13 +45,7 @@
                     <h3>Guide:</h3>
                     <!-- guide box -->
                     <ul style="width:600px;" class="flex-container">
-                        Available:
-                        <li style="background:#0544f0;" class="flex-item"></li>
-                        Selected:
-                        <li style="background:#00f133;" class="flex-item"></li>
-                        Unavailable:
-                        <li style="background:#666666;" class="flex-item"></li>
-                        
+                        <li style="margin-top:15px;">Available:</li><li style="background:#0544f0;margin-left:0px" class="flex-item"></li><li style="margin-top:15px;">Selected:</li><li style="background:#00f133;" class="flex-item"></li><li style="margin-top:15px;">Unavailable:</li><li style="background:#666666;" class="flex-item"></li>
                     </ul>
                     <br>
             </td>
@@ -74,7 +69,7 @@
                         </table>  
                 </div>
             </td>
-        <td>
+        <td style="display: inline-block;vertical-align: top;">
             <div style="column-width: 300px;">
             <table>
             <tr>
@@ -100,7 +95,7 @@
                             {% csrf_token %}
                             <input type="hidden" name="toBuy" id="toBuy" :value="JSON.stringify(toBuy)">
                             <input type="hidden" name="showingId" id="showingId" :value="showing">
-                            <button type="submit" style="width: 105px;">Buy Tickets</button>
+                            <button type="submit" style="width: 105px;" class="button button-small">Buy Tickets</button>
                         </form>
                     </template>
                     <template v-else>

@@ -1,27 +1,26 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 {% block content %}
-<h1> Movie Ticketing </h1>
 <h3> Showings List </h3>
-<h5>Search:</h5>
-You can use as many or few fields as desired
-<form action="{% url 'ticketingApps:showing-search' %}" type="get">
-	Theater Name: <input id="name" type="text" name="name"> <br>
-	Theater City: <input id="tCity" type="text" name="tCity"><br>
-	Theater State: <input id="tState" type="text" name="tState"><br><br>
-	Movie Name: <input id="mName" type="text" name="mName"><br><br>
-	Date: <input id="day" type="date" name="day"></br>
-	<button id="theater_search_submit" type="submit">Search</button><br>
+<div id="form">
+<form style="width:90%" action="{% url 'ticketingApps:showing-search' %}" type="get">
+	<h5>Search:</h5>
+	<label style="display:inline; padding-left:0.5em;">Theater Name: </label><input id="name" type="text" name="name" style="margin-top:1em"><br>
+	<label style="display:inline; padding-left:0.5em;">Theater City: </label><input id="tCity" type="text" name="tCity" style="margin-top:2em">
+	<label style="display:inline; padding-left:0.5em;">Theater State: </label> <input id="tState" type="text" name="tState" style="margin-top:1em"><br>
+	<label style="display:inline; padding-left:0.5em;">Movie Name: </label><input id="mName" type="text" name="mName" style="margin-top:1em">
+	<label style="display:inline; padding-left:0.5em;">Date: </label><input id="day" type="date" name="day" style="margin-top:1em">
+	<button id="theater_search_submit" type="submit" class="button button-small" style="margin-left:2em">Search</button><br>
 </form>
+</div>
 <br><br>
-<h5>Showings</h5>
-<table style="margin:15px;">
+<table class="center">
 	{% for movieshowing in movieshowing_list %}<!--add href for layout-->
-	<tr><!--pass roomnumber to linked page-->
-		<td style="text-align:left">{{movieshowing.room.theater.theatername}}: {{movieshowing.movie.movietitle}} in on {{movieshowing.time}}</td>
-		<td>  </td>
-		<td><a href="{% url 'ticketingApps:seat-selection' showing=movieshowing.id %}"><button>Look at Seats</button></a></td>
-	</tr>
+	<tr><td style="text-align: left"><!--pass roomnumber to linked page-->
+		<h3> {{movieshowing.movie.movietitle}}</h3> 
+	</td></tr>
+	<tr><td>{{movieshowing.room.theater.theatername}} on {{movieshowing.time}} <a href="{% url 'ticketingApps:seat-selection' showing=movieshowing.id %}"><button class="button button-small float-right" style="margin-top:.1em; margin-bottom:2em; margin-left:2em">Look at Seats</button></a>
+	</td></tr>
 	{% empty %}
 		<tr> No showings yet. </tr>
 	{% endfor %}

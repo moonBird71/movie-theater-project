@@ -1,11 +1,10 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 {% block content %}
-<h1> Movie Ticketing </h1>
 <h3> Promo Code List </h3>
     {% for promo in promocode_list %}<!--add href for layout-->
-    For {{promo.theater.theatername}}: {{promo.code}} gives {{promo.percent}}% off. <div> </div> <a href="{% url 'ticketingApps:promo-code-delete' pk=promo.id %}">Delete Code</a><br>
-    {% empty %}
+    For {{promo.theater.theatername}}: <b>{{promo.code}}</b> gives {{promo.percent}}% off. <div> </div> <a href="{% url 'ticketingApps:promo-code-delete' pk=promo.id %}" class="button button-small" style="display:inline">Delete Code</a><br>
+    {% empty %}>
 		<tr> No showings yet. </tr>
 	{% endfor %}
 {% endblock %}

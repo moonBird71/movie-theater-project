@@ -6,7 +6,7 @@
 {% for order2 in object_list %}
     {% if valid %}
     {% with order2.order_of.all|first as seat %}
-    <h4>Tickets</h4>
+    <h4>Order {{order2.orderid}}</h4>
     <ul>
     <li> Theater: {{seat.showing.room.theater.theatername}} </li>
     <li> Movie: {{seat.showing.movie.movietitle}} </li>
@@ -28,7 +28,7 @@
     {% qr_from_text order2.qrcodetext 'l' %}
     {% endif %}
     <br>
-    <a href="{% url 'ticketingApps:print-ticket' orderId=order2.orderid %}">Print the Tickets Above</a>
+    <a href="{% url 'ticketingApps:print-ticket' orderId=order2.orderid %}" class="button button-small">Print the Tickets for the Order Above</a>
     <br><br>
     {% empty %}
      No tickets yet.

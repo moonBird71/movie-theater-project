@@ -22,6 +22,7 @@ class ManagerLanding(LoginRequiredMixin,UserPassesTestMixin,TemplateView):
 class ManagedShowings(LoginRequiredMixin,UserPassesTestMixin,ListView):
     model = Movieshowing
     template_name="ticketingApps/managed_showings_list.html"
+    paginate_by=25
     def get_queryset(self):
         objs = Movieshowing.objects.filter(room__theater__profile__user=self.request.user)
         objs=objs.order_by('-time')
@@ -32,6 +33,7 @@ class ManagedShowings(LoginRequiredMixin,UserPassesTestMixin,ListView):
 class ManagedShowingsSearchResults(ListView):
     model = Movieshowing
     template_name="ticketingApps/managed_showings_list.html"
+    paginate_by=25
     def get_queryset(self):
         objs = Movieshowing.objects.filter(room__theater__profile__user=self.request.user)
         tName = self.request.GET["name"]
@@ -153,6 +155,7 @@ class CreatePromoCode(LoginRequiredMixin,UserPassesTestMixin, CreateView):
 class ListPricingGroup(LoginRequiredMixin,UserPassesTestMixin,ListView):
     model = PricingGroup
     template_name="ticketingApps/pricing_group_list.html"
+    paginate_by=25
     def get_queryset(self):
         objs = PricingGroup.objects.filter(profile__user=self.request.user)
         return objs
@@ -161,6 +164,7 @@ class ListPricingGroup(LoginRequiredMixin,UserPassesTestMixin,ListView):
 class ListPromoCodes(LoginRequiredMixin,UserPassesTestMixin,ListView):
     model = Promocode
     template_name="ticketingApps/promo_code_list.html"
+    paginate_by=25
     def get_queryset(self):
         objs = Promocode.objects.filter(theater__profile__user=self.request.user)
         return objs

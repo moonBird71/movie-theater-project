@@ -30,6 +30,7 @@ class ShowingsList(ListView):
     model = Movieshowing
     fields = '__all__'
     template_name = "ticketingApps/showings_list.html"
+    paginate_by = 25 
     def get_queryset(self):
         objs = Movieshowing.objects
         objs=objs.filter(time__gte=timezone.now())
@@ -39,6 +40,7 @@ class ShowingsList(ListView):
 class ShowingsSearchResults(ListView):
     model = Movieshowing
     template_name="ticketingApps/showings_list.html"
+    paginate_by = 25  
     def get_queryset(self):
         objs = Movieshowing.objects
         tName = self.request.GET["name"]
@@ -94,6 +96,7 @@ class PrintTicket(TemplateView):
 class UserTicketsListing(LoginRequiredMixin,ListView):
     Model=Order
     template_name="ticketingApps/my_tickets.html"
+    paginate_by=25
     def get_queryset(self):
         objs = Order.objects
         objs = objs.filter(profile__user=self.request.user, order_of__final=1).distinct()

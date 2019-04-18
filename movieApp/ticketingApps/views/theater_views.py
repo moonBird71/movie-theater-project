@@ -39,6 +39,7 @@ class AddRoom(LoginRequiredMixin,UserPassesTestMixin,CreateView):
 class TheaterSearchResults(ListView):
     model = Theater
     context_object_name = "theater_list"
+    paginate_by = 25
     def get_queryset(self):
         objs = Theater.objects.filter(profile__user=self.request.user)
         tName = self.request.GET["name"]
@@ -90,6 +91,7 @@ class TheaterDetail(LoginRequiredMixin,UserPassesTestMixin,DetailView):
 class ManagedTheaters(LoginRequiredMixin,UserPassesTestMixin,ListView):
     model = Theater
     context_object_name = "theater_list"
+    paginate_by = 25
     def test_func(self):
         return getattr(self.request.user.profile, "isemployee")
     def get_queryset(self):

@@ -3,9 +3,11 @@
 {% block content %}
 {% if valid %}
 <h2> Confirm Your Order </h2>
+<div class="whitespace">
 You are buying {{numberTix}} of tickets to {{showingP.movie.movietitle}}.<br>
 The cost will be ${{cost}}.<br>
 Your seats will be reserved for you for 8 minutes.
+</div>
 <form action="{% url 'ticketingApps:charge' %}" method="post">
     {% csrf_token %}
     <input type="hidden" name="cost100" id="cost100" value="{{cost100}}">
@@ -17,6 +19,7 @@ Your seats will be reserved for you for 8 minutes.
         data-locale="auto">
     </script>
 </form>
+
 {% else %}
 Those seats are no longer available.
 {% endif %}

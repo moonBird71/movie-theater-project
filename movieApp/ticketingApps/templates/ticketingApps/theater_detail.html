@@ -2,13 +2,15 @@
 {% load bootstrap4 %}
 {% block content %}
 <h3>Theater Detail</h3>
+<div class="whitespace">
 Theater: {{object.theatername}}<br>
 Rooms: <ul>{% for room in object.room_set.all %}
-    <li>{{room.roomnumber}}: {{room.rows}}x{{room.columns}}  <a href="{% url 'ticketingApps:delete-room' pk=room.id %}">Delete Room</a></li>
+    <li>{{room.roomnumber}}: {{room.rows}}x{{room.columns}}  <a href="{% url 'ticketingApps:delete-room' pk=room.id %}"><button>Delete Room</button></a></li>
     {% endfor %}
     </ul>
-Add Employee to this Theater: <a href="{% url 'ticketingApps:add-employee' pk=object.theaterid %}">Add Employee</a><br>
-Add Room: <a href="{% url 'ticketingApps:add-room' theaterId=object.theaterid%}">Add Room</a><br>
-Add Showing: <a href="{%url 'ticketingApps:add-showing' theaterId=object.theaterid%}">Add Showing</a><br>
-Delete: <a href="{% url 'ticketingApps:delete-theater' pk=object.theaterid %}" >Delete Theater</a>
+Add Employee to this Theater: <a href="{% url 'ticketingApps:add-employee' pk=object.theaterid %}"><button>Add Employee</button></a><br>
+Add Room: <a href="{% url 'ticketingApps:add-room' theaterId=object.theaterid%}"><button>Add Room</button></a><br>
+Add Showing: <a href="{%url 'ticketingApps:add-showing' theaterId=object.theaterid%}"><button>Add Showing</button></a><br>
+Delete: <a href="{% url 'ticketingApps:delete-theater' pk=object.theaterid %}" ><button>Delete Theater</button></a>
+</div>
 {% endblock %}

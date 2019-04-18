@@ -3,6 +3,7 @@
 {% block content %}
 {% load qr_tags %}
 <h3>All Tickets</h3>
+<div class="whitespace">
 {% for order2 in object_list %}
     {% if valid %}
     {% with order2.order_of.all|first as seat %}
@@ -28,9 +29,10 @@
     {% qr_from_text order2.qrcodetext 'l' %}
     {% endif %}
     <br>
-    <a href="{% url 'ticketingApps:print-ticket' orderId=order2.orderid %}">Print the Tickets Above</a>
+    <a href="{% url 'ticketingApps:print-ticket' orderId=order2.orderid %}"><button>Print the Tickets Above</button></a>
     <br><br>
     {% empty %}
      No tickets yet.
 {% endfor %}
+</div>
 {% endblock %}

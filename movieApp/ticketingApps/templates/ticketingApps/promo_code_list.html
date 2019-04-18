@@ -3,9 +3,11 @@
 {% block content %}
 <h1> Movie Ticketing </h1>
 <h3> Promo Code List </h3>
+<div class="whitespace">
     {% for promo in promocode_list %}<!--add href for layout-->
-    For {{promo.theater.theatername}}: {{promo.code}} gives {{promo.percent}}% off. <div> </div> <a href="{% url 'ticketingApps:promo-code-delete' pk=promo.id %}">Delete Code</a><br>
+    For {{promo.theater.theatername}}: {{promo.code}} gives {{promo.percent}}% off. <div> </div> <a href="{% url 'ticketingApps:promo-code-delete' pk=promo.id %}"><button>Delete Code</button></a><br>
     {% empty %}
 		<tr> No showings yet. </tr>
 	{% endfor %}
+</div>
 {% endblock %}

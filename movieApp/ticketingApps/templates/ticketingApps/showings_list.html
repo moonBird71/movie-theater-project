@@ -3,8 +3,11 @@
 {% block content %}
 <h1> Movie Ticketing </h1>
 <h3> Showings List </h3>
+<div class="whitespace">
 <h5>Search:</h5>
+
 You can use as many or few fields as desired
+</div>
 <form action="{% url 'ticketingApps:showing-search' %}" type="get">
 	Theater Name: <input id="name" type="text" name="name"> <br>
 	Theater City: <input id="tCity" type="text" name="tCity"><br>
@@ -14,8 +17,9 @@ You can use as many or few fields as desired
 	<button id="theater_search_submit" type="submit">Search</button><br>
 </form>
 <br><br>
+<div class="whitespace">
 <h5>Showings</h5>
-<table style="margin:15px;">
+<table>
 	{% for movieshowing in movieshowing_list %}<!--add href for layout-->
 	<tr><!--pass roomnumber to linked page-->
 		<td style="text-align:left">{{movieshowing.room.theater.theatername}}: {{movieshowing.movie.movietitle}} in on {{movieshowing.time}}</td>
@@ -26,5 +30,6 @@ You can use as many or few fields as desired
 		<tr> No showings yet. </tr>
 	{% endfor %}
 </table>
+</div>
 <br><br><br>
 {% endblock %}

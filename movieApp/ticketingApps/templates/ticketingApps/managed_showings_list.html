@@ -5,15 +5,16 @@
 <h1> Movie Ticketing </h1>
 <h3> Showings List </h3>
 <h3> Search </h3>
+<div class="whitespace">
 Search:
 You can use as many or few fields as desired
 <form action="{% url 'ticketingApps:managed-showing-search' %}" type="get">
-	Theater Name: <input id="name" type="text" name="name">
-	Theater City: <input id="tCity" type="text" name="tCity">
-	Theater State: <input id="tState" type="text" name="tState">
-	Movie Name: <input id="mName" type="text" name="mName">
-	Date: <input id="day" type="date" name="day">
-	<button id="theater_search_submit" type="submit">Search</button><br>
+	Theater Name: <input id="name" type="text" name="name"><br>
+	Theater City: <input id="tCity" type="text" name="tCity"><br>
+	Theater State: <input id="tState" type="text" name="tState"><br>
+	Movie Name: <input id="mName" type="text" name="mName"><br>
+	Date: <input id="day" type="date" name="day"><br>
+	<button id="theater_search_submit" type="submit">Search</button><br><br>
 </form>
 <link rel="stylesheet" href="{% static 'css/movieApp.css' %}">
 <table>
@@ -21,12 +22,14 @@ You can use as many or few fields as desired
 	<tr><!--pass roomnumber to linked page-->
 		<td>{{movieshowing.room.theater.theatername}}: {{movieshowing.movie.movietitle}} in {{movieshowing.room.roomnumber}} on {{movieshowing.time}}</td>
 		<td>  </td>
-		<td><a href="{% url 'ticketingApps:delete-showing' pk=movieshowing.id %}">Delete Showing</a></td>
+		<td><a href="{% url 'ticketingApps:delete-showing' pk=movieshowing.id %}"><button>Delete Showing</button></a></td>
 		<td>  </td>
-		<td><a href="{% url 'ticketingApps:showing-stats' pk=movieshowing.id %}">See Analytics</a></td>
+		<td><a href="{% url 'ticketingApps:showing-stats' pk=movieshowing.id %}"><button>See Analytics</button></a></td>
 	</tr>
 	{% empty %}
 		<tr> No showings yet. </tr>
 	{% endfor %}
+</div>
 </table>
+<br>
 {% endblock %}

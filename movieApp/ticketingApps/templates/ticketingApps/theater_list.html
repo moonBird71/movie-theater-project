@@ -15,7 +15,9 @@
 	{% for theater in theater_list %}
 		<tr><td style="text-align: left">
 			<b>{{theater.theatername}}</b>
-			 located at {{theater.theaterstreet}} {{theater.theatercity}}, {{theater.theaterstate}} <a class="button button-small float-right" style="margin-left:1em;margin-right:1em;display:inline" href="{%url 'ticketingApps:add-showing' theaterId=theater.theaterid%}">Add Showing</a><a class="button button-small float-right" style="margin-left:1em;margin-right:1em;display:inline" href="{% url 'ticketingApps:theater-detail' pk=theater.theaterid %}">More Settings</a>
+			 located at {{theater.theaterstreet}} {{theater.theatercity}}, {{theater.theaterstate}}<br> 
+			 <a class="button button-small float-right" style="margin-top:1em;margin-bottom:2em;margin-left:1em;margin-right:1em;display:inline" href="{%url 'ticketingApps:add-showing' theaterId=theater.theaterid%}">Add Showing</a>
+			 <a class="button button-small float-right" style="margin-top:1em;margin-bottom:2em;margin-left:1em;margin-right:1em;display:inline" href="{% url 'ticketingApps:theater-detail' pk=theater.theaterid %}">More Settings</a>
         </td></tr>
 	{% empty %}
 		<li> No theaters yet. </li>

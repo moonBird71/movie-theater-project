@@ -3,7 +3,7 @@
 			<li><a href="/">Home</a></li>
 			{% if user.profile.isemployee %}
 			<li><a href="/manager">Management Dashboard</a></li>
-			<li><a href="/manager/theaters">My Theaters</a></li>				
+			<li><a href="/manager/theaters">Your Theaters</a></li>				
 			<li><a href="/accounts/logout">Log Out</a></li>
 			{% elif user.profile %}
 			<li><a href="/showings/list">Showings</a></li>

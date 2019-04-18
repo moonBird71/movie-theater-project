@@ -19,7 +19,7 @@
 	<tr><td style="text-align: left"><!--pass roomnumber to linked page-->
 		<h3> {{movieshowing.movie.movietitle}}</h3> 
 	</td></tr>
-	<tr><td>{{movieshowing.room.theater.theatername}} on {{movieshowing.time}} <a href="{% url 'ticketingApps:seat-selection' showing=movieshowing.id %}"><button class="button button-small float-right" style="margin-top:.1em; margin-bottom:2em; margin-left:2em">Look at Seats</button></a>
+	<tr><td>{{movieshowing.room.theater.theatername}} on {{movieshowing.time}} <a href="{% url 'ticketingApps:seat-selection' showing=movieshowing.id %}"><button class="btn button button-small float-right" style="margin-top:.1em; margin-bottom:2em; margin-left:2em">Look at Seats</button></a>
 	</td></tr>
 	{% empty %}
 		<tr> No showings yet. </tr>

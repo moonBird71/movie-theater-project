@@ -39,14 +39,19 @@
       <h3>Seats for [[movieTitle]] on {{showing.time}}</h3>
       <h3>at {{showing.room.theater.theatername}} in Theater {{showing.room.roomnumber}} </h3>
         <br>
-      <table class="flex-container">
+      <table class="flex-container" style="justify-content: flex-start">
         <tr>
             <td>
-                    <h3>Guide:</h3>
+                    
                     <!-- guide box -->
-                    <ul style="width:600px;" class="flex-container">
-                        <li style="margin-top:15px;">Available:</li><li style="background:#0544f0;margin-left:0px" class="flex-item"></li><li style="margin-top:15px;">Selected:</li><li style="background:#00f133;" class="flex-item"></li><li style="margin-top:15px;">Unavailable:</li><li style="background:#666666;" class="flex-item"></li>
+                    <div style="width:600px;justify-content: center">
+                        <h3>Guide:</h3>
+                        <ul style="width:600px;justify-content: center" class="flex-container">
+                        <li style="margin-top:15px;">Available:</li><li style="background:#0544f0;margin-left:12px;margin-right:30px" class="flex-item"></li>
+                        <li style="margin-top:15px;">Selected:</li><li style="background:#00f133;margin-left:12px;margin-right:30px" class="flex-item"></li>
+                        <li style="margin-top:15px;">Unavailable:</li><li style="background:#666666;margin-left:12px;margin-right:30px" class="flex-item"></li>
                     </ul>
+                    </div>
                     <br>
             </td>
         </tr>

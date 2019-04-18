@@ -5,15 +5,24 @@
 <br>
 <ul><!--add hrefs later -->
     {% buttons %}
-    <a class="btn btn-block" href="{% url 'ticketingApps:theaters-filtered' %}" role="button"> Your Theaters </a>
-    <a class="btn btn-block" href="{% url 'ticketingApps:add-theater' %}" role="button"> Create New Theater </a>
-    <a class="btn btn-block" href="{% url 'ticketingApps:add-movie' %}" role="button">Add a Movie</a>
-    <a class="btn btn-block" href="{% url 'ticketingApps:managed-showings-list' %}" role="button">Your Showings</a>
-    <a class="btn btn-block" href="{% url 'ticketingApps:price-group-list' %}" role="button">Your Pricing Groups</a>
-    <a class="btn btn-block" href="{% url 'ticketingApps:price-group-create' %}" role="button">Add a Pricing Group</a>
-    <a class="btn btn-block" href="{% url 'ticketingApps:price-point-create' %}" role="button">Add Price Point</a>
-    <a class="btn btn-block" href="{% url 'ticketingApps:promo-code-list' %}" role="button">Your Promo Codes</a>
-    <a class="btn btn-block" href="{% url 'ticketingApps:promo-code-create' %}" role="button">Add Promo Code</a>
+    <div class="row d-flex justify-content-center">
+    <div class="col-sm-5 center">
+    <h5>Theaters</h5>
+    <a class="button button-small" style="margin:1em;margin-right:1em;width:auto;display:list-item; " href="{% url 'ticketingApps:theaters-filtered' %}" role="button"> My Theaters </a>
+    <a class="button button-small" style="margin:1em;margin-right:1em;width:auto;display:list-item;" href="{% url 'ticketingApps:add-theater' %}" role="button"> Create New Theater </a>
+    <h5>Showings</h5>
+    <a class="button button-small" style="margin:1em;margin-right:1em;width:auto;display:list-item;" href="{% url 'ticketingApps:add-movie' %}" role="button">Add a Movie</a>
+    <a class="button button-small" style="margin:1em;margin-right:1em;width:auto;display:list-item;" href="{% url 'ticketingApps:managed-showings-list' %}" role="button">My Showings</a>
+    </div><div class="col-sm-5">
+    <h5>Pricing</h5>
+    <a class="button button-small" style="margin:1em;margin-right:1em;width:auto;display:list-item;" href="{% url 'ticketingApps:price-group-list' %}" role="button">My Pricing Groups</a>
+    <a class="button button-small" style="margin:1em;margin-right:1em;width:auto;display:list-item;" href="{% url 'ticketingApps:price-group-create' %}" role="button">Add a Pricing Group</a>
+    <a class="button button-small" style="margin:1em;margin-right:1em;width:auto;display:list-item;" href="{% url 'ticketingApps:price-point-create' %}" role="button">Add Price Point</a>
+    <h5>Promotions</h5>
+    <a class="button button-small" style="margin:1em;margin-right:1em;width:auto;display:list-item;" href="{% url 'ticketingApps:promo-code-list' %}" role="button">My Promo Codes</a>
+    <a class="button button-small" style="margin:1em;margin-right:1em;width:auto;display:list-item;" href="{% url 'ticketingApps:promo-code-create' %}" role="button">Add Promo Code</a>
+    </div>
+    </div>
     {% endbuttons %}
 </ul>
 {% endblock %}

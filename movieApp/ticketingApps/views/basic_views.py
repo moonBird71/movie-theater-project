@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, DetailView
 from django.urls import reverse_lazy, reverse
 from ticketingApps.models import *
 from ticketingApps.forms import *
@@ -62,6 +62,10 @@ class ShowingsSearchResults(ListView):
         objs=objs.filter(time__gte=timezone.now())
         objs=objs.order_by('time')
         return objs.all()
+class ShowingDetail(DetailView):
+    model = Movieshowing
+    template_name="ticketingApps/showing_detail.html"
+
 
 #Print ticket page
 class PrintTicket(TemplateView):

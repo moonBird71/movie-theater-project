@@ -120,7 +120,7 @@ class TicketTypeForm(forms.Form):
             numTix=numTix+int(cleaned_data.get(price.name))
         if numTix is not self.numTix:
             raise forms.ValidationError(
-                "Did not select as many tickets as seats chosen."
+                "The number of seats chosen does not match number of seats assigned to a ticket type."
             )
         return cleaned_data
 

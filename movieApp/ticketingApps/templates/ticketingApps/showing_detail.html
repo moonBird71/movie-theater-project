@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+<h3>Showing Detail</h3>
+<h5>Showing Details</h5>
+Movie: {{object.movie.movietitle}}<br>
+Time: {{object.time}}<br>
+Theater: {{object.room.theater.theatername}}<br>
+Room: {{object.room.roomnumber}}<br>
+<br><br>
+<h5>Movie Details</h5>
+Runtime: {{object.movie.movieruntime}} minutes<br>
+Rating: {{object.movie.movierating}}<br>
+Release Date: {{object.movie.moviereleasedate}}<br>
+Genre: {{object.movie.moviegenre}}<br>
+Description: {{object.moviedescription}}<br>
+<br>
+<a href="{% url 'ticketingApps:seat-selection' showing=object.id %}"><button class="btn button button-small float-left" style="margin-top:.1em; margin-bottom:2em; margin-left:2em">Look at Seats</button></a>
+    {% endblock %}

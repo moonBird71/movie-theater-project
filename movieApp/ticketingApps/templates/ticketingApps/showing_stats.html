@@ -2,8 +2,9 @@
 {% load bootstrap4 %}
 {% block content %}
 <h3>Showing Detail</h3>
-<div class="row">
-    <div class="col-sm-8">
+<div class="container">
+<div class="row justify-content-md-center">
+    <div class="col-sm-5">
         Movie: {{object.movie.movietitle}}<br>
         Time: {{object.time}}<br>
         Theater: {{object.room.theater.theatername}}<br>
@@ -11,12 +12,14 @@
         Seats Sold: {{percentSold}}%<br>
         Revenue: ${{revenue}}<br>
     </div>
-    <div class="col-sm-4">
+    <div class="col-md-auto">
             {% if object.movie.poster %}
-            <img src="{{ object.movie.poster.url }}" class="img-fluid float-right" styl="height:250px" />
+            <img src="{{ object.movie.poster.url }}" class="img-fluid float-left" style="max-height:250px" />
             {% endif %}
     </div>
 </div>
+<div class="row justify-content-md-center">
+<div class="col-md-auto">
 <br><br>
 <h4>All Orders</h4>
 {% for order in orders %}
@@ -42,3 +45,6 @@
 No orders yet.
 {% endfor %}
 {% endblock %}
+</div>
+</div>
+</div>

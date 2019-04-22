@@ -2,6 +2,7 @@
 {% load bootstrap4 %}
 {% block content %}
 <h3> Showings List </h3>
+<div class="container">
 <div id="form">
 <form style="width:90%" action="{% url 'ticketingApps:showing-search' %}" type="get">
 	<h5>Search:</h5>
@@ -15,18 +16,24 @@
 </div>
 <br><br>
 	{% for movieshowing in movieshowing_list %}
-	<div class="row">
-		<div class="col-sm-3">
+	<div class="row justify-content-md-center">
+		<div class="col-sm-1">
 			{% if movieshowing.movie.poster %}
-			<img src="{{ movieshowing.movie.poster.url }}" class="img-fluid float-right" style="height: 75px;"/>
+			<img src="{{ movieshowing.movie.poster.url }}" class="img-fluid float-right" style="max-height: 75px;"/>
 			{% endif %}
 		</div>
 		<div class="col-sm-9">
-		<table class="center">
-		<tr><td style="text-align: left"><!--pass roomnumber to linked page-->
+		<div class="container">
+		<div class="row">
+		<div class="col-md-auto">
 			<h3> {{movieshowing.movie.movietitle}}</h3> 
-		</td></tr>
-		<tr><td>{{movieshowing.room.theater.theatername}} on {{movieshowing.time}} 
+		</div>
+		</div>
+		<div class="row">
+		<div class="col-sm-5">
+		{{movieshowing.room.theater.theatername}} on {{movieshowing.time}}
+		</div>
+		<div class="col-md-auto"> 
 			<a href="{% url 'ticketingApps:seat-selection' showing=movieshowing.id %}">
 				<button class="btn button button-small float-right" style="margin-top:.1em; margin-bottom:2em; margin-left:2em">
 					Look at Seats
@@ -37,8 +44,9 @@
 					Details
 				</button>
 			</a>
-		</td></tr>
-		</table>
+		</div>
+		</div>
+		</div>
 		</div>	
 	</div>
 	{% empty %}
@@ -62,4 +70,5 @@
 		</span>
 	</div>
 <br><br><br>
+</div>
 {% endblock %}

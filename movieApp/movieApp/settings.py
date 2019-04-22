@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'bootstrap4',
     'django.contrib.sites',
     'qrcode',
-    #'rest_framework',
 ]
 
 MIDDLEWARE = [

@@ -2,7 +2,7 @@
 {% load bootstrap4 %}
 {% block content %}
 <h3> Promo Code List </h3>
-    {% for promo in promocode_list %}<!--add href for layout-->
+    {% for promo in promocode_list %}
     For {{promo.theater.theatername}}: <b>{{promo.code}}</b> gives {{promo.percent}}% off. <div> </div> <a href="{% url 'ticketingApps:promo-code-delete' pk=promo.id %}" class="button button-small" style="display:inline">Delete Code</a>
     <br><br>
     {% empty %}>

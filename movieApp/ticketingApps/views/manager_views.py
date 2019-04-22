@@ -79,7 +79,20 @@ class AddMovie(LoginRequiredMixin,UserPassesTestMixin,CreateView):
         return {'moviereleasedate':datetime.now()}
     def test_func(self):
         return getattr(self.request.user.profile, "isemployee")
-
+class EditMovie(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
+    model=Movie
+    form_class=AddMovieForm
+    success_url='/manager/'
+    def test_func(self):
+        return getattr(self.request.user.profile, "isemployee")
+class ListMovies(LoginRequiredMixin,UserPassesTestMixin, ListView):
+    model=Movie
+    paginate_by=25
+    def get_queryset(self):
+        objs = Movie.objects.order_by('-moviereleasedate')
+        return objs
+    def test_func(self):
+        return getattr(self.request.user.profile, "isemployee")
 
 class DeleteShowing(LoginRequiredMixin, UserPassesTestMixin,DeleteView):
     model = Movieshowing

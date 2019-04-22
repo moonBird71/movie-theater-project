@@ -30,7 +30,7 @@ class ManagedShowings(LoginRequiredMixin,UserPassesTestMixin,ListView):
     def test_func(self):
         return getattr(self.request.user.profile, "isemployee")
 
-class ManagedShowingsSearchResults(ListView):
+class ManagedShowingsSearchResults(LoginRequiredMixin,UserPassesTestMixin,ListView):
     model = Movieshowing
     template_name="ticketingApps/managed_showings_list.html"
     paginate_by=25
@@ -93,6 +93,19 @@ class ListMovies(LoginRequiredMixin,UserPassesTestMixin, ListView):
         return objs
     def test_func(self):
         return getattr(self.request.user.profile, "isemployee")
+class SearchMovies(LoginRequiredMixin,UserPassesTestMixin,ListView):
+    model = Movie
+    template_name="ticketingApps/movie_list.html"
+    paginate_by=25
+    def get_queryset(self):
+        objs=Movie.objects
+        mName = self.request.GET['mName']
+        if(mName!=""):
+            objs=objs.filter(movietitle__icontains=mName)
+        objs=objs.order_by('-moviereleasedate')
+        return objs 
+    def test_func(self):
+        return getattr(self.request.user.profile, "isemployee")      
 
 class DeleteShowing(LoginRequiredMixin, UserPassesTestMixin,DeleteView):
     model = Movieshowing

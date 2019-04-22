@@ -17,6 +17,7 @@
         Genre: {{object.movie.moviegenre}}<br>
         Description: {{object.moviedescription}}<br>
         <br>
+        <a href="{% url 'ticketingApps:seat-selection' showing=object.id %}"><button class="btn button button-small float-left" style="margin-top:.1em; margin-bottom:2em; margin-left:2em">Look at Seats</button></a>
     </div>
     <div class="col-sm-4">
 	    {% if object.movie.poster %}
@@ -24,6 +25,4 @@
     	{% endif %}
     </div>
 </div>
-
-<a href="{% url 'ticketingApps:seat-selection' showing=object.id %}"><button class="btn button button-small float-left" style="margin-top:.1em; margin-bottom:2em; margin-left:2em">Look at Seats</button></a>
     {% endblock %}

@@ -24,6 +24,7 @@ urlpatterns = [
     re_path(r'^manager/movie/add_movie/$', views.AddMovie.as_view(),name='add-movie'),
     re_path(r'^manager/movie/edit/(?P<pk>\d+)/$', views.EditMovie.as_view(), name='edit-movie'),
     re_path(r'^manager/movie/list/$',views.ListMovies.as_view(),name='list-movies'),
+    re_path(r'^manager/movie/list/search/$', views.SearchMovies.as_view(),name='search-movies'),
     re_path(r'^manager/theater/(?P<pk>\d+)/delete/$', views.DeleteTheater.as_view(), name='delete-theater'),
     re_path(r'^manager/theater/(?P<pk>\d+)/details/$', views.TheaterDetail.as_view(), name='theater-detail'),
     re_path(r'^manager/theater/room/(?P<pk>\d+)/delete/$', views.DeleteRoom.as_view(), name='delete-room'),

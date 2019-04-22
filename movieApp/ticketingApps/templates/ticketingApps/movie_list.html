@@ -1,17 +1,13 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 {% block content %}
-<h3> Showings List </h3>
+<h3> Movies List </h3>
 <div class="container">
 <div id="form">
-<form style="width:90%" action="{% url 'ticketingApps:showing-search' %}" type="get">
+<form style="width:90%" action="{% url 'ticketingApps:search-movies' %}" type="get">
 	<h5>Search:</h5>
-	<label style="display:inline; padding-left:0.5em;">Theater Name: </label><input id="name" type="text" name="name" style="margin-top:1em"><br>
-	<label style="display:inline; padding-left:0.5em;">Theater City: </label><input id="tCity" type="text" name="tCity" style="margin-top:2em">
-	<label style="display:inline; padding-left:0.5em;">Theater State: </label> <input id="tState" type="text" name="tState" style="margin-top:1em"><br>
-	<label style="display:inline; padding-left:0.5em;">Movie Name: </label><input id="mName" type="text" name="mName" style="margin-top:1em">
-	<label style="display:inline; padding-left:0.5em;">Date: </label><input id="day" type="date" name="day" style="margin-top:1em">
-	<button id="theater_search_submit" type="submit" class="button button-small" style="margin-left:2em">Search</button><br>
+	<label style="display:inline; padding-left:0.5em;">Movie Name: </label><input id="mName" type="text" name="mName" style="margin-top:.5em">
+	<button id="theater_search_submit" type="submit" class="button button-small" style="margin-left:2em;margin-top:.5em">Search</button><br>
 </form>
 </div>
 <br><br>

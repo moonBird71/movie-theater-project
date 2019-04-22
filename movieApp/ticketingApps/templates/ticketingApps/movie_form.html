@@ -2,7 +2,7 @@
 {% load bootstrap4 %}
 {% block content %}
 <h3> Add New Movie </h3>
-<form method="post">{% csrf_token %}
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
     {% bootstrap_form form %}
     {% buttons %}
     <input type="submit" value="Save" class="button button-small">

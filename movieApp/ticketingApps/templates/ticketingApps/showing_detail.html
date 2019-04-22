@@ -11,7 +11,9 @@
         Room: {{object.room.roomnumber}}<br>
     </div>
     <div class="col-sm-4">
+	{% if object.movie.poster %}
         <img src="{{ object.movie.poster.url }}" class="img-fluid" />
+    	{% endif %}
     </div>
 </div>
 <br><br>

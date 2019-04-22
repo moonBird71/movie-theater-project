@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '4)7v3j=k#m^@6o8b!t_g@4k(+7-_tpx87ri7@bb(co6c$mlbde'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True #will change to 'false' later
+DEBUG = False #will change to 'false' later
 
 ALLOWED_HOSTS = ['ec2-18-219-8-122.us-east-2.compute.amazonaws.com','127.0.0.1', 'ec2-3-17-161-231.us-east-2.compute.amazonaws.com',]#needed to include own ec2 for testing, will remove later
 

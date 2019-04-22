@@ -3,10 +3,17 @@
 {% block content %}
 <h3>Showing Detail</h3>
 <h5>Showing Details</h5>
-Movie: {{object.movie.movietitle}}<br>
-Time: {{object.time}}<br>
-Theater: {{object.room.theater.theatername}}<br>
-Room: {{object.room.roomnumber}}<br>
+<div class="row">
+    <div class="col-sm-8">
+        Movie: {{object.movie.movietitle}}<br>
+        Time: {{object.time}}<br>
+        Theater: {{object.room.theater.theatername}}<br>
+        Room: {{object.room.roomnumber}}<br>
+    </div>
+    <div class="col-sm-4">
+        <img src="{{ object.movie.poster.url }}" class="img-fluid" />
+    </div>
+</div>
 <br><br>
 <h5>Movie Details</h5>
 Runtime: {{object.movie.movieruntime}} minutes<br>

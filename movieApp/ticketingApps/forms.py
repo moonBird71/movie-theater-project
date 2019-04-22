@@ -9,7 +9,7 @@ from django.utils import timezone
 class AddMovieForm(ModelForm):
     class Meta:
         model=Movie
-        fields=['movietitle','movieruntime','movierating','moviereleasedate','moviegenre','moviedescription']
+        fields=['movietitle','movieruntime','movierating','moviereleasedate','moviegenre','moviedescription','poster']
         labels={
             'movietitle':'Title',
             'movieruntime':"Runtime (minutes)",

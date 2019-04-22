@@ -2,12 +2,21 @@
 {% load bootstrap4 %}
 {% block content %}
 <h3>Showing Detail</h3>
-Movie: {{object.movie.movietitle}}<br>
-Time: {{object.time}}<br>
-Theater: {{object.room.theater.theatername}}<br>
-Room: {{object.room.roomnumber}}<br>
-Seats Sold: {{percentSold}}%<br>
-Revenue: ${{revenue}}<br>
+<div class="row">
+    <div class="col-sm-4">
+        {% if object.movie.poster %}
+        <img src="{{ object.movie.poster.url }}" class="img-fluid" />
+        {% endif %}
+    </div>
+    <div class="col-sm-8">
+        Movie: {{object.movie.movietitle}}<br>
+        Time: {{object.time}}<br>
+        Theater: {{object.room.theater.theatername}}<br>
+        Room: {{object.room.roomnumber}}<br>
+        Seats Sold: {{percentSold}}%<br>
+        Revenue: ${{revenue}}<br>
+    </div>
+</div>
 <br><br>
 <h4>All Orders</h4>
 {% for order in orders %}

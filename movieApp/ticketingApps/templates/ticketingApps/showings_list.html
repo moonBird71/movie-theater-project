@@ -14,16 +14,15 @@
 </form>
 </div>
 <br><br>
-<table class="center">
 	{% for movieshowing in movieshowing_list %}
 	<div class="row">
 		<div class="col-sm-3">
-			{% if object.movie.poster %}
-			<img src="{{ object.movie.poster.url }}" class="img-fluid" style="height: 75px;"/>
+			{% if movieshowing.movie.poster %}
+			<img src="{{ movieshowing.movie.poster.url }}" class="img-fluid float-right" style="height: 75px;"/>
 			{% endif %}
 		</div>
 		<div class="col-sm-9">
-		
+		<table class="center">
 		<tr><td style="text-align: left"><!--pass roomnumber to linked page-->
 			<h3> {{movieshowing.movie.movietitle}}</h3> 
 		</td></tr>
@@ -39,12 +38,12 @@
 				</button>
 			</a>
 		</td></tr>
+		</table>
 		</div>	
 	</div>
 	{% empty %}
 		<tr> No showings yet. </tr>
 	{% endfor %}
-</table>
 <div class="pagination" style="justify-content: center">
 		<span class="step-links">
 			{% if page_obj.has_previous %}

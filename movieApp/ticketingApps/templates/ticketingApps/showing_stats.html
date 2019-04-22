@@ -3,11 +3,6 @@
 {% block content %}
 <h3>Showing Detail</h3>
 <div class="row">
-    <div class="col-sm-4">
-        {% if object.movie.poster %}
-        <img src="{{ object.movie.poster.url }}" class="img-fluid" />
-        {% endif %}
-    </div>
     <div class="col-sm-8">
         Movie: {{object.movie.movietitle}}<br>
         Time: {{object.time}}<br>
@@ -15,6 +10,11 @@
         Room: {{object.room.roomnumber}}<br>
         Seats Sold: {{percentSold}}%<br>
         Revenue: ${{revenue}}<br>
+    </div>
+    <div class="col-sm-4">
+            {% if object.movie.poster %}
+            <img src="{{ object.movie.poster.url }}" class="img-fluid float-right" styl="height:250px" />
+            {% endif %}
     </div>
 </div>
 <br><br>

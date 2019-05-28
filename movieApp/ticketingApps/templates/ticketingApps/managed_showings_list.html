@@ -3,46 +3,35 @@
 {% block content %}
 {% load static %}
 <h3> Showings List </h3>
-<div id="form">
-<form style="width:90%" action="{% url 'ticketingApps:managed-showing-search' %}" type="get">
-	<h5>Search:</h5>
-	<label style="display:inline; padding-left:0.5em;">Theater Name: </label><input id="name" type="text" name="name" style="margin-top:1em"><br>
-	<label style="display:inline; padding-left:0.5em;">Theater City: </label><input id="tCity" type="text" name="tCity" style="margin-top:2em">
-	<label style="display:inline; padding-left:0.5em;">Theater State: </label> <input id="tState" type="text" name="tState" style="margin-top:1em"><br>
-	<label style="display:inline; padding-left:0.5em;">Movie Name: </label><input id="mName" type="text" name="mName" style="margin-top:1em">
-	<label style="display:inline; padding-left:0.5em;">Date: </label><input id="day" type="date" name="day" style="margin-top:1em">
-	<button id="theater_search_submit" type="submit" class="button button-small" style="margin-left:2em">Search</button><br>
+<h3> Search </h3>
+<div class="whitespace">
+Search:
+You can use as many or few fields as desired
+<form action="{% url 'ticketingApps:managed-showing-search' %}" type="get">
+	Theater Name: <input id="name" type="text" name="name"><br>
+	Theater City: <input id="tCity" type="text" name="tCity"><br>
+	Theater State: <input id="tState" type="text" name="tState"><br>
+	Movie Name: <input id="mName" type="text" name="mName"><br>
+	Date: <input id="day" type="date" name="day"><br>
+	<button id="theater_search_submit" type="submit">Search</button><br><br>
+
 </form>
 </div>
 <br><br>
 <link rel="stylesheet" href="{% static 'css/movieApp.css' %}">
-<table class="center">
-		{% for movieshowing in movieshowing_list %}<!--add href for layout-->
-		<tr><td style="text-align: left"><!--pass roomnumber to linked page-->
-			<h3> {{movieshowing.movie.movietitle}}</h3> 
-		</td></tr>
-		<tr><td>{{movieshowing.room.theater.theatername}} on {{movieshowing.time}} <a href="{% url 'ticketingApps:showing-stats' pk=movieshowing.id %}"><button class="button button-small float-right" style="margin-top:.1em; margin-bottom:2em; margin-left:2em">Details</button></a><a href="{% url 'ticketingApps:delete-showing' pk=movieshowing.id %}"><button class="button button-small float-right" style="margin-top:.1em; margin-bottom:2em; margin-left:2em">Delete Showing</button></a>
-		</td></tr>
-		{% empty %}
-			<tr> No showings yet. </tr>
-		{% endfor %}
-	</table>
-	<br><br><br>
-	<div class="pagination" style="justify-content: center">
-			<span class="step-links">
-				{% if page_obj.has_previous %}
-					<a class="button button-small" href="?page=1">&laquo; first</a>
-					<a class="button button-small" href="?page={{ page_obj.previous_page_number }}">previous</a>
-				{% endif %}
-		
-				<span class="current">
-					Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-				</span>
-		
-				{% if page_obj.has_next %}
-					<a class="button button-small" href="?page={{ page_obj.next_page_number }}">next</a>
-					<a class="button button-small" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-				{% endif %}
-			</span>
-		</div>
+<table>
+	{% for movieshowing in movieshowing_list %}<!--add href for layout-->
+	<tr><!--pass roomnumber to linked page-->
+		<td>{{movieshowing.room.theater.theatername}}: {{movieshowing.movie.movietitle}} in {{movieshowing.room.roomnumber}} on {{movieshowing.time}}</td>
+		<td>  </td>
+		<td><a href="{% url 'ticketingApps:delete-showing' pk=movieshowing.id %}"><button>Delete Showing</button></a></td>
+		<td>  </td>
+		<td><a href="{% url 'ticketingApps:showing-stats' pk=movieshowing.id %}"><button>See Analytics</button></a></td>
+	</tr>
+	{% empty %}
+		<tr> No showings yet. </tr>
+	{% endfor %}
+</div>
+</table>
+<br>
 {% endblock %}

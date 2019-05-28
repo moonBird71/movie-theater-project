@@ -2,6 +2,9 @@
 {% load bootstrap4 %}
 {% block content %}
 <h1> Ticket Order </h1>
-Thank you! Your order has been successful.<br>
-<a href="{% url 'ticketingApps:print-ticket' orderId=orderIdH %}" class="button button-small">Print Tickets</a>
+<div class="whitespace">
+Thank you! Your order has been successful.
+To print out tickets: 
+<a href="{% url 'ticketingApps:print-ticket' orderId=orderIdH %}"><button>Print Tickets</button></a>
+</div>
 {% endblock %}

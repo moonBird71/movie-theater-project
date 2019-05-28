@@ -1,21 +1,16 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 {% block content %}
-<h3>Theater Detail for {{object.theatername}} </h3>
-<div style="width:450px">
-<br>
-<h5>Rooms</h5> <ul style="margin-top:0;margin-left:2em;">{% for room in object.room_set.all %}
-    <li style="margin-bottom:1.5em">Theater {{room.roomnumber}}: {{room.rows}} rows, {{room.columns}} seats per row <a class="button button-small float-right" style="margin-left:1em;margin-right:1em;margin-top:0;display:inline; " href="{% url 'ticketingApps:delete-room' pk=room.id %}">Delete Room</a></li>
+<h3>Theater Detail</h3>
+<div class="whitespace">
+Theater: {{object.theatername}}<br>
+Rooms: <ul>{% for room in object.room_set.all %}
+    <li>{{room.roomnumber}}: {{room.rows}}x{{room.columns}}  <a href="{% url 'ticketingApps:delete-room' pk=room.id %}"><button>Delete Room</button></a></li>
     {% endfor %}
     </ul>
+Add Employee to this Theater: <a href="{% url 'ticketingApps:add-employee' pk=object.theaterid %}"><button>Add Employee</button></a><br>
+Add Room: <a href="{% url 'ticketingApps:add-room' theaterId=object.theaterid%}"><button>Add Room</button></a><br>
+Add Showing: <a href="{%url 'ticketingApps:add-showing' theaterId=object.theaterid%}"><button>Add Showing</button></a><br>
+Delete: <a href="{% url 'ticketingApps:delete-theater' pk=object.theaterid %}" ><button>Delete Theater</button></a>
 </div>
-<br>
-<h5>More Options</h5>
-<div style="width:50%">
-    <a class="button button-small" style="margin-left:1em;margin-right:1em;display:inline-flex;margin-top:0;margin-bottom:1em; " href="{% url 'ticketingApps:add-employee' pk=object.theaterid %}">Add Employee</a>
-    <a class="button button-small " style="margin-left:1em;margin-right:1em;display:inline-flex;margin-top:0;margin-bottom:1em;" href="{% url 'ticketingApps:add-room' theaterId=object.theaterid%}">Add Room</a>
-    <a class="button button-small " style="margin-left:1em;margin-right:1em;display:inline-flex;margin-top:0;margin-bottom:1em;" href="{%url 'ticketingApps:add-showing' theaterId=object.theaterid%}">Add Showing</a>
-    <a class="button button-small " style="margin-left:1em;margin-right:1em;display:inline-flex;margin-top:0;margin-bottom:1em;" href="{% url 'ticketingApps:delete-theater' pk=object.theaterid %}" >Delete Theater</a>
-
-</div>
-    {% endblock %}
+{% endblock %}

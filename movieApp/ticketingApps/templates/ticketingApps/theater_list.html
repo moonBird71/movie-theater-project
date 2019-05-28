@@ -1,43 +1,29 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 {% block content %}
-<form action="{% url 'ticketingApps:search-theater' %}" type="get" style="width:90%;text-align:center">
-	<h3>Search:</h3>
-	You can use as many or few fields as desired<br><br>
-	<div>Theater Name: <input style="margin-left:1em;margin-bottom:1em;margin-right:1em;" id="name" type="text" name="name"></div>
-	Theater City: <input style="margin-left:1em;margin-right:1em" id="tCity" type="text" name="tCity">
-	Theater State: <input style="margin-left:1em;margin-right:1em;" id="tState" type="text" name="tState">
-	<button id="theater_search_submit" type="submit" class="button button-small" style="margin-top:1em">Search</button><br>
+<h1> Movie Ticketing </h1>
+<h3> Search </h3>
+<div class="whitespace">	
+Search:
+You can use as many or few fields as desired
+</div>
+<form action="{% url 'ticketingApps:search-theater' %}" type="get">
+	Theater Name: <input id="name" type="text" name="name"><br>
+	Theater City: <input id="tCity" type="text" name="tCity"><br>
+	Theater State: <input id="tState" type="text" name="tState"><br>
+	<button id="theater_search_submit" type="submit">Search</button><br>
 </form>
 <br>
 <h3> Theater List </h3>
 <table class="centered">
 	{% for theater in theater_list %}
-		<tr><td style="text-align: left">
-			<b>{{theater.theatername}}</b>
-			 located at {{theater.theaterstreet}} {{theater.theatercity}}, {{theater.theaterstate}}<br> 
-			 <a class="button button-small float-right" style="margin-top:1em;margin-bottom:2em;margin-left:1em;margin-right:1em;display:inline" href="{%url 'ticketingApps:add-showing' theaterId=theater.theaterid%}">Add Showing</a>
-			 <a class="button button-small float-right" style="margin-top:1em;margin-bottom:2em;margin-left:1em;margin-right:1em;display:inline" href="{% url 'ticketingApps:theater-detail' pk=theater.theaterid %}">More Settings</a>
-        </td></tr>
+		<tr>
+			<th> <a href="{% url 'ticketingApps:theater-detail' pk=theater.theaterid %}"><b>{{theater.theatername}}</b></a> located at {{theater.theaterstreet}} {{theater.theatercity}}, {{theater.theaterstate}}</th>
+			<th></th>
+			<th><a href="{%url 'ticketingApps:add-showing' theaterId=theater.theaterid%}"><button>Add Showing</button></a></th>
+        </tr>
 	{% empty %}
 		<li> No theaters yet. </li>
 	{% endfor %}
 </table>
-<div class="pagination" style="justify-content: center">
-		<span class="step-links">
-			{% if page_obj.has_previous %}
-				<a class="button button-small" href="?page=1">&laquo; first</a>
-				<a class="button button-small" href="?page={{ page_obj.previous_page_number }}">previous</a>
-			{% endif %}
-	
-			<span class="current">
-				Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-			</span>
-	
-			{% if page_obj.has_next %}
-				<a class="button button-small" href="?page={{ page_obj.next_page_number }}">next</a>
-				<a class="button button-small" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-			{% endif %}
-		</span>
-	</div>
 {% endblock %}

@@ -2,6 +2,7 @@
 {% load bootstrap4 %}
 {% block content %}
 <h3> Pricings List </h3>
+<div class="whitespace">
 	{% for group in pricinggroup_list %}
     <h5>{{group.name}}:</h5>
     <table>
@@ -15,22 +16,6 @@
 
 	{% empty %}
 		<tr> No showings yet. </tr>
-  {% endfor %}
-  <div class="pagination" style="justify-content: center">
-      <span class="step-links">
-        {% if page_obj.has_previous %}
-          <a class="button button-small" href="?page=1">&laquo; first</a>
-          <a class="button button-small" href="?page={{ page_obj.previous_page_number }}">previous</a>
-        {% endif %}
-    
-        <span class="current">
-          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-        </span>
-    
-        {% if page_obj.has_next %}
-          <a class="button button-small" href="?page={{ page_obj.next_page_number }}">next</a>
-          <a class="button button-small" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-      </span>
-    </div>
+	{% endfor %}
+</div>
 {% endblock %}

@@ -3,6 +3,7 @@
 {% block content %}
 {% load qr_tags %}
 <h3>All Tickets</h3>
+<div class="whitespace">
 {% for order2 in object_list %}
     {% if valid %}
     {% with order2.order_of.all|first as seat %}
@@ -29,26 +30,11 @@
     {% qr_from_text order2.qrcodetext 'l' %}
     {% endif %}
     <br>
-    <a href="{% url 'ticketingApps:print-ticket' orderId=order2.orderid %}" class="button button-small">Print the Tickets for the Order Above</a>
+    <a href="{% url 'ticketingApps:print-ticket' orderId=order2.orderid %}"><button>Print the Tickets Above</button></a>
+
     <br><br>
     {% empty %}
      No tickets yet.
 {% endfor %}
-<div class="pagination" style="justify-content: center">
-		<span class="step-links">
-			{% if page_obj.has_previous %}
-				<a class="button button-small" href="?page=1">&laquo; first</a>
-				<a class="button button-small" href="?page={{ page_obj.previous_page_number }}">previous</a>
-			{% endif %}
-	
-			<span class="current">
-				Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-			</span>
-	
-			{% if page_obj.has_next %}
-				<a class="button button-small" href="?page={{ page_obj.next_page_number }}">next</a>
-				<a class="button button-small" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-			{% endif %}
-		</span>
-	</div>
+</div>
 {% endblock %}
